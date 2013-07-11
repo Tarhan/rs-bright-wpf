@@ -26,37 +26,37 @@
             <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
         <Custom:Ribbon Grid.IsSharedSizeScope="True">
-            <Custom:RibbonTab Header="ダウンローダー" d:IsLocked="True">
-                <Custom:RibbonGroup Header="タブ" d:IsLocked="True">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource2}" Label="増やす" d:IsLocked="True" />
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource3}" Label="減らす" d:IsLocked="True"/>
+            <Custom:RibbonTab Header="ダウンローダー">
+                <Custom:RibbonGroup Header="タブ">
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource2}" Label="増やす" />
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource3}" Label="減らす"/>
                 </Custom:RibbonGroup>
 
-                <Custom:RibbonGroup Header="ダウンロード" d:IsLocked="True">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource4}" Label="ダウンロード" d:IsLocked="True"/>
-                    <Custom:RibbonComboBox Label="方法" d:IsLocked="True">
-                        <Custom:RibbonGallery d:IsLocked="True">
-                            <Custom:RibbonGalleryItem Content="URLから" IsSelected="True" d:IsLocked="True"/>
+                <Custom:RibbonGroup Header="ダウンロード">
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource4}" Label="ダウンロード"/>
+                    <Custom:RibbonComboBox Label="方法">
+                        <Custom:RibbonGallery>
+                            <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
-                    <Custom:RibbonTextBox Label="URL" Width="346" Text="" TextBoxWidth="300" d:IsLocked="True"/>
+                    <Custom:RibbonTextBox Label="URL" Width="346" Text="" TextBoxWidth="300"/>
                 </Custom:RibbonGroup>
 
-                <Custom:RibbonGroup Header="変換" d:IsLocked="True">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource5}" Label="MP3" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource6}" Label="MP4" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource7}" Label="WAV" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource8}" Label="MOV" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource9}" Label="AIFF" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource10}" Label="AVI" d:IsLocked="True"/>
+                <Custom:RibbonGroup Header="変換">
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource5}" Label="MP3"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource6}" Label="MP4"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource7}" Label="WAV"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource8}" Label="MOV"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource9}" Label="AIFF"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource10}" Label="AVI"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5" d:IsLocked="True">
-                <Custom:RibbonGroup Header="コントロール" d:IsLocked="True">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Back}" Label="早戻し" d:IsLocked="True" />
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Play}" Label="再生＆停止" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Stop}"  Label="一時停止" d:IsLocked="True"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Next}" Label="早送り" d:IsLocked="True"/>
+            <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5">
+                <Custom:RibbonGroup Header="コントロール">
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Back}" Label="早戻し" />
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Play}" Label="再生＆停止"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Stop}"  Label="一時停止"/>
+                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Next}" Label="早送り"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
         </Custom:Ribbon>
