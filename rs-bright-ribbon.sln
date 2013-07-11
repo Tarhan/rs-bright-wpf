@@ -8,9 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kkAsync", "kkAsync\kkAsync.csproj", "{4B7E7D5D-4F9B-4AA8-925B-B1F5C268C8DD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76BC129E-AEC2-47FB-8472-9AB807987F0E}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Visual Studio 11\Projects\Litemov\Litemov\dlviaytapi.vb = ..\..\..\Visual Studio 11\Projects\Litemov\Litemov\dlviaytapi.vb
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
