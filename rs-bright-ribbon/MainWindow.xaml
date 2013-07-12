@@ -28,12 +28,12 @@
         <Custom:Ribbon Grid.IsSharedSizeScope="True">
             <Custom:RibbonTab Header="ダウンローダー">
                 <Custom:RibbonGroup Header="タブ">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource2}" Label="増やす" />
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource3}" Label="減らす"/>
+                    <Custom:RibbonButton Label="増やす" LargeImageSource="ribbonIcons\Comment Add.png" />
+                    <Custom:RibbonButton Label="減らす" LargeImageSource="ribbonIcons\Comment Remove.png" />
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Header="ダウンロード">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource4}" Label="ダウンロード"/>
+                    <Custom:RibbonButton Label="ダウンロード" LargeImageSource="ribbonIcons\kuroda.png"/>
                     <Custom:RibbonComboBox Label="方法">
                         <Custom:RibbonGallery>
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
@@ -43,12 +43,12 @@
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Header="変換">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource5}" Label="MP3"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource6}" Label="MP4"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource7}" Label="WAV"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource8}" Label="MOV"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource9}" Label="AIFF"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource ImageSource10}" Label="AVI"/>
+                    <Custom:RibbonButton Label="MP3" LargeImageSource="ribbonIcons\オリジナル\64\mp3.png"/>
+                    <Custom:RibbonButton Label="MP4" LargeImageSource="ribbonIcons\オリジナル\64\MP4.png"/>
+                    <Custom:RibbonButton Label="WAV" LargeImageSource="ribbonIcons\オリジナル\64\wav.png"/>
+                    <Custom:RibbonButton Label="MOV" LargeImageSource="ribbonIcons\オリジナル\64\mov.png"/>
+                    <Custom:RibbonButton Label="AIFF" LargeImageSource="ribbonIcons\オリジナル\64\aiff.png" />
+                    <Custom:RibbonButton Label="AVI" LargeImageSource="ribbonIcons\オリジナル\64\avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5">
