@@ -10,12 +10,13 @@
             <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
         <Custom:Ribbon>
-            <Custom:RibbonTab Header="ダウンローダー">
+            <Custom:RibbonTab Header="ブラウザ">
                 <Custom:RibbonGroup Header="タブ">
                     <Custom:RibbonButton Label="増やす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Add.png" />
                     <Custom:RibbonButton Label="減らす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Remove.png" />
                 </Custom:RibbonGroup>
-
+            </Custom:RibbonTab>
+            <Custom:RibbonTab Header="ダウンローダー">
                 <Custom:RibbonGroup Header="ダウンロード">
                     <Custom:RibbonButton Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png"/>
                     <Custom:RibbonComboBox Label="方法">
