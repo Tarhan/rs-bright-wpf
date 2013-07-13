@@ -4,28 +4,40 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" Height="70" Width="300">
-    <Grid Name="root">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="10"/>
-        </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1">
-            <Button>
-                <Button.Content>
+    <Grid>
+        <ProgressBar Name="monitor" IsIndeterminate="True"/>
+        <Grid x:Name="detail" Opacity="0.8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="Black" BorderThickness="1">
+                <Button Name="Pause" d:IsLocked="True">
                     <DockPanel Height="64" Width="280">
                         <Image Width="64" />
-                        <Grid Height="64">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="15"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"/>
                                 <RowDefinition Height="2*"/>
-                                <RowDefinition Height="3*"/>
-                                <RowDefinition Height="3*"/>
                                 <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
+                            <TextBlock x:Name="speed" Grid.Row="2" TextWrapping="Wrap" Text="速度" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="86,2,91,2" />
+                            <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="***ファイル >> ***ファイル" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,1"/>
+                            <TextBlock Name="title" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Text="タイトル" VerticalAlignment="Center" Margin="0,6" d:IsLocked="True"/>
+                            <Button Grid.Column="1" Grid.Row="1">
+                                <Button.Content>
+                                    <Image Source="pack://application:,,,/ribbonIcons/停止　64.png"></Image>
+                                </Button.Content>
+                            </Button>
                         </Grid>
                     </DockPanel>
-                </Button.Content>
-            </Button>
-        </Border>
-        <Button Content="" Grid.Column="1" Grid.ColumnSpan="2" d:IsLocked="True"/>
+                </Button>
+            </Border>
+            <Button Content="" Grid.Column="1" Grid.ColumnSpan="2"/>
+        </Grid>
     </Grid>
 </UserControl>

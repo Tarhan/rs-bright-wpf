@@ -10,21 +10,21 @@
             <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
         <Custom:Ribbon>
-            <Custom:RibbonTab Header="ブラウザ">
+            <!--<Custom:RibbonTab Header="ブラウザ">
                 <Custom:RibbonGroup Header="タブ">
                     <Custom:RibbonButton Label="増やす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Add.png" />
                     <Custom:RibbonButton Label="減らす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Remove.png" />
                 </Custom:RibbonGroup>
-            </Custom:RibbonTab>
+            </Custom:RibbonTab>-->
             <Custom:RibbonTab Header="ダウンローダー">
                 <Custom:RibbonGroup Header="ダウンロード">
-                    <Custom:RibbonButton Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png"/>
+                    <Custom:RibbonButton Name="dlbutton" Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png" IsEnabled="False" IsDefault="True"/>
                     <Custom:RibbonComboBox Label="方法">
                         <Custom:RibbonGallery>
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
-                    <Custom:RibbonTextBox Label="URL" Width="346" Text="" TextBoxWidth="300"/>
+                    <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged"/>
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Header="変換">
