@@ -3,37 +3,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
     Title="MainWindow" Height="622" Width="1204" WindowStartupLocation="CenterScreen">
-    <Custom:RibbonWindow.Resources>
-        <BitmapImage x:Key="ImageSource1" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\早戻し.png"/>
-        <BitmapImage x:Key="ImageSource2" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\Comment Add.png"/>
-        <BitmapImage x:Key="ImageSource3" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\Comment Remove.png"/>
-        <BitmapImage x:Key="ImageSource4" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\kuroda.png"/>
-        <BitmapImage x:Key="ImageSource5" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\オリジナル\64\mp3.png"/>
-        <BitmapImage x:Key="ImageSource6" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\オリジナル\64\MP4.png"/>
-        <BitmapImage x:Key="ImageSource7" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\オリジナル\64\wav.png"/>
-        <BitmapImage x:Key="ImageSource8" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\オリジナル\64\mov.png"/>
-        <BitmapImage x:Key="ImageSource9" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\オリジナル\64\aiff.png"/>
-        <BitmapImage x:Key="ImageSource10" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\オリジナル\64\avi.png"/>
-        <BitmapImage x:Key="i_Back" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\早戻し　64.png"/>
-        <BitmapImage x:Key="i_Play" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\再生　64.png"/>
-        <BitmapImage x:Key="i_Stop" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\停止　64.png"/>
-        <BitmapImage x:Key="i_Next" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="ribbonIcons\早送り　64.png"/>
-    </Custom:RibbonWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="64"/>
         </Grid.RowDefinitions>
-        <Custom:Ribbon Grid.IsSharedSizeScope="True">
+        <Custom:Ribbon>
             <Custom:RibbonTab Header="ダウンローダー">
                 <Custom:RibbonGroup Header="タブ">
-                    <Custom:RibbonButton Label="増やす" LargeImageSource="ribbonIcons\Comment Add.png" />
-                    <Custom:RibbonButton Label="減らす" LargeImageSource="ribbonIcons\Comment Remove.png" />
+                    <Custom:RibbonButton Label="増やす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Add.png" />
+                    <Custom:RibbonButton Label="減らす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Remove.png" />
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Header="ダウンロード">
-                    <Custom:RibbonButton Label="ダウンロード" LargeImageSource="ribbonIcons\kuroda.png"/>
+                    <Custom:RibbonButton Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png"/>
                     <Custom:RibbonComboBox Label="方法">
                         <Custom:RibbonGallery>
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
@@ -43,20 +27,20 @@
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Header="変換">
-                    <Custom:RibbonButton Label="MP3" LargeImageSource="ribbonIcons\オリジナル\64\mp3.png"/>
-                    <Custom:RibbonButton Label="MP4" LargeImageSource="ribbonIcons\オリジナル\64\MP4.png"/>
-                    <Custom:RibbonButton Label="WAV" LargeImageSource="ribbonIcons\オリジナル\64\wav.png"/>
-                    <Custom:RibbonButton Label="MOV" LargeImageSource="ribbonIcons\オリジナル\64\mov.png"/>
-                    <Custom:RibbonButton Label="AIFF" LargeImageSource="ribbonIcons\オリジナル\64\aiff.png" />
-                    <Custom:RibbonButton Label="AVI" LargeImageSource="ribbonIcons\オリジナル\64\avi.png"/>
+                    <Custom:RibbonButton Label="MP3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
+                    <Custom:RibbonButton Label="MP4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
+                    <Custom:RibbonButton Label="WAV" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\wav.png"/>
+                    <Custom:RibbonButton Label="MOV" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mov.png"/>
+                    <Custom:RibbonButton Label="AIFF" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\aiff.png" />
+                    <Custom:RibbonButton Label="AVI" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5">
                 <Custom:RibbonGroup Header="コントロール">
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Back}" Label="早戻し" />
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Play}" Label="再生＆停止"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Stop}"  Label="一時停止"/>
-                    <Custom:RibbonButton LargeImageSource="{DynamicResource i_Next}" Label="早送り"/>
+                    <Custom:RibbonButton Label="早戻し" LargeImageSource="pack://application:,,,/ribbonIcons/早戻し　64.png"/>
+                    <Custom:RibbonButton Label="再生＆停止" LargeImageSource="pack://application:,,,/ribbonIcons/再生　64.png"/>
+                    <Custom:RibbonButton  Label="一時停止" LargeImageSource="pack://application:,,,/ribbonIcons/停止　64.png"/>
+                    <Custom:RibbonButton Label="早送り" LargeImageSource="pack://application:,,,/ribbonIcons/早送り　64.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
         </Custom:Ribbon>
