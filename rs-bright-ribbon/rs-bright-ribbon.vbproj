@@ -62,15 +62,19 @@
   <ItemGroup>
     <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\Google\Google Data API SDK\Redist\Google.GData.Client.dll</HintPath>
+      <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
     </Reference>
     <Reference Include="Google.GData.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\Google\Google Data API SDK\Redist\Google.GData.Extensions.dll</HintPath>
+      <HintPath>..\packages\Google.GData.Extensions.2.2.0.0\lib\Google.GData.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Google.GData.YouTube, Version=2.2.0.0, Culture=neutral, PublicKeyToken=af04a32718ae8833, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\Google\Google Data API SDK\Redist\Google.GData.YouTube.dll</HintPath>
+      <HintPath>..\packages\Google.GData.YouTube.2.2.0.0\lib\Google.GData.YouTube.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -177,6 +181,7 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <AppDesigner Include="My Project\" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -190,6 +195,37 @@
       <Project>{4b7e7d5d-4f9b-4aa8-925b-b1f5c268c8dd}</Project>
       <Name>kkAsync</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ribbonIcons\1373224036_camill_file1_mp4.png" />
+    <Resource Include="ribbonIcons\1373224062_camill_file1_wav.png" />
+    <Resource Include="ribbonIcons\1373224077_camill_file1_mp3.png" />
+    <Resource Include="ribbonIcons\20130708111825510_easyicon_net_256.png" />
+    <Resource Include="ribbonIcons\20130708111901913_easyicon_net_128.png" />
+    <Resource Include="ribbonIcons\20130708111911165_easyicon_net_256.png" />
+    <Resource Include="ribbonIcons\Comment Add.png" />
+    <Resource Include="ribbonIcons\Comment Remove.png" />
+    <Resource Include="ribbonIcons\kuroda.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\aiff.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\avi.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\mov.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\mp3.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\MP4.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\wav.png" />
+    <Resource Include="ribbonIcons\オリジナル\aiff.png" />
+    <Resource Include="ribbonIcons\オリジナル\avi.png" />
+    <Resource Include="ribbonIcons\オリジナル\mov.png" />
+    <Resource Include="ribbonIcons\オリジナル\mp3.png" />
+    <Resource Include="ribbonIcons\オリジナル\MP4.png" />
+    <Resource Include="ribbonIcons\オリジナル\wav.png" />
+    <Resource Include="ribbonIcons\停止.png" />
+    <Resource Include="ribbonIcons\停止　64.png" />
+    <Resource Include="ribbonIcons\再生.png" />
+    <Resource Include="ribbonIcons\再生　64.png" />
+    <Resource Include="ribbonIcons\早戻し.png" />
+    <Resource Include="ribbonIcons\早戻し　64.png" />
+    <Resource Include="ribbonIcons\早送り.png" />
+    <Resource Include="ribbonIcons\早送り　64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
