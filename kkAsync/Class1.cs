@@ -15,11 +15,6 @@ using System.Reactive.Disposables;
 
 namespace AsynchronousExtensions
 {
-    public class none
-    {
-        public void empty() {
-        }
-    }
     public static class Progress
     {
         public static Progress<T> Create<T>(T value, double currentLength, double totalLength)
