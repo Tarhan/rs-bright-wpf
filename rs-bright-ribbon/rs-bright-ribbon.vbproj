@@ -130,6 +130,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Startuppath.vb" />
     <Compile Include="tabbrowser.xaml.vb">
       <DependentUpon>tabbrowser.xaml</DependentUpon>
     </Compile>
