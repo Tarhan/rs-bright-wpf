@@ -27,7 +27,7 @@ Module rs_loadconvertCfg
             Next
         Else
             For Each e As XmlElement In _xml.GetElementsByTagName("root")
-                For Each e2 As XmlElement In e.ChildNodes
+                For Each e2 As XmlNode In e.ChildNodes
                     For Each e3 As XmlElement In e2.ChildNodes
                         l.Add(e3.Name, e3.GetAttribute("arg"))
                     Next

@@ -113,20 +113,20 @@ Public Class dlqueue
                 End With
                 AddHandler .ErrorDataReceived, AddressOf logging
                 .EnableRaisingEvents = True
-                AddHandler .Exited, Sub()
-                                        If .ExitCode <> 0 Then
-                                            Debug.Print("""" + getStartupPath() + "\ffmpeg.exe""" & " " & Me._linestr.Replace(vbCrLf, ""))
-                                            MsgBox(.ExitCode)
-                                        End If
-                                        .Dispose()
-                                        IO.File.Delete(info.dst)
-                                        Release()
-                                    End Sub
-                .Start()
-                .BeginErrorReadLine()
             End With
+            AddHandler FFMProcess.Exited, Sub()
+                                              If FFMProcess.ExitCode <> 0 Then
+                                                  Debug.Print("""" + getStartupPath() + "\ffmpeg.exe""" & " " & Me._linestr.Replace(vbCrLf, ""))
+                                                  MsgBox(FFMProcess.ExitCode)
+                                              End If
+                                              FFMProcess.Dispose()
+                                              IO.File.Delete(info.dst)
+                                              Release()
+                                          End Sub
+            FFMProcess.Start()
+            FFMProcess.BeginErrorReadLine()
         Else
-            Release()
+                Release()
         End If
     End Sub
 #End Region

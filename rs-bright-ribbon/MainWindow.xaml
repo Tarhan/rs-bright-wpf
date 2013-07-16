@@ -33,7 +33,7 @@
                     </Custom:RibbonTextBox>
                 </Custom:RibbonGroup>
 
-                <Custom:RibbonGroup Name="convertgroup" Header="変換" Custom:RibbonButton.Click="Click">
+                <Custom:RibbonGroup Name="convertgroup" Header="変換" Custom:RibbonButton.Click="Click" Visibility="Collapsed">
                     <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
                     <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
                     <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\wav.png"/>
