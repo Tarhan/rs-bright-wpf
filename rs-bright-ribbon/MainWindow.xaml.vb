@@ -41,11 +41,13 @@ Class MainWindow
         End Select
     End Sub
 #End Region
-
 #Region "ロジック"
     Private Sub ytdl(url As String)
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
-
+        Dim ctrl_Inst As New dlqueue
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\" + Uri.EscapeDataString(param.VideoInfo.Title), "", param.cookie, "")
+        'TODO ダウンロード用のディレクトリを作成↑
+        ctrl_Inst.start()
     End Sub
 #End Region
 End Class

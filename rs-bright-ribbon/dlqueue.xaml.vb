@@ -1,13 +1,12 @@
 ﻿Imports System.Net
 Imports System.Text.RegularExpressions
 Imports AsynchronousExtensions
+Imports System.Reactive.Linq
 
 Public Class dlqueue
 
     Dim _Dulation As TimeSpan
 
-    Public Property MaxValue As Integer
-    Public Property Value As Integer
     Sub New()
 
         ' この呼び出しはデザイナーで必要です。
@@ -44,16 +43,35 @@ Public Class dlqueue
     Dim thumbUri As Uri 'Thumbnail URI
 #End Region
 
-
-#Region "UI処理"
-
+#Region "中断用オブジェクトの付与"
+    Private Function setOperation() As IDisposable
+        Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
+                                                                 Dim s As String = String.Format("{0}/{1} - {2}%", p.BytesReceived, p.TotalBytesToReceive, p.ProgressPercentage)
+                                                                 Dispatcher.Invoke(Sub() speed.Text = s)
+                                                             End Sub).
+                                  Aggregate(data,
+                                            Function(list, p)
+                                                Debug.WriteLine(String.Format("AddRange {0} +{1}", list.Count, p.Value.Length))
+                                                list.AddRange(p.Value)
+                                                Return list
+                                            End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
+                                                                                       If TryCast(ex, Net.WebException) Is Nothing Then
+                                                                                       ElseIf DirectCast(ex, Net.WebException).Status = Net.WebExceptionStatus.RequestCanceled Then
+                                                                                           'TODO
+                                                                                       Else
+                                                                                           Dispatcher.Invoke(Sub() speed.Text = DirectCast(ex, Net.WebException).Message)
+                                                                                       End If
+                                                                                   End Sub, AddressOf Oncompleted)
+    End Function
 #End Region
 
+#Region "値チェック/開始"
     Public Sub SetInfo(ByVal Url As Uri, ByVal dst As String, ByVal contentTitle As String, Optional ByVal ck As String = "", Optional ByVal rf As String = "", Optional linestr As String = "", Optional ByVal img As Uri = Nothing)
         Me.speed.Text = "Waiting..."
         Me.title.Text = contentTitle
         info = New dlInfo With {.url = Url, .ck = ck, .rf = rf, .dst = dst}
         _linestr = linestr
+        DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Add(Me)
     End Sub
     Public Sub start()
         Me.speed.Text = "Connecting..."
@@ -61,28 +79,14 @@ Public Class dlqueue
             Proc(.url, .dst, .ck, .rf)
         End With
     End Sub
+#End Region
+#Region "メイン"
     Private Sub Proc(ByVal Url As Uri, ByVal dst As String, Optional ByVal ck As String = "", Optional ByVal rf As String = "")
         resume_req = CType(Net.WebRequest.Create(info.url), Net.HttpWebRequest)
         Dim cc As New Net.CookieContainer
         resume_req.CookieContainer = cc
         cc.SetCookies(info.url, info.ck)
-        ReqDisposeProvider = resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
-                                                                               Dim s As String = String.Format("{0}/{1} - {2}%", p.BytesReceived, p.TotalBytesToReceive, p.ProgressPercentage)
-                                                                               Me.Invoke(Sub() speed.Text = s)
-                                                                           End Sub).
-                                          Aggregate(data,
-                                                    Function(list, p)
-                                                        Debug.WriteLine(String.Format("AddRange {0} +{1}", list.Count, p.Value.Length))
-                                                        list.AddRange(p.Value)
-                                                        Return list
-                                                    End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
-                                                                                               If TryCast(ex, Net.WebException) Is Nothing Then
-                                                                                               ElseIf DirectCast(ex, Net.WebException).Status = Net.WebExceptionStatus.RequestCanceled Then
-                                                                                                   'TODO
-                                                                                               Else
-                                                                                                   Dispatcher.Invoke(Sub() speed.Text = DirectCast(ex, Net.WebException).Message)
-                                                                                               End If
-                                                                                           End Sub, AddressOf Oncompleted)
+        ReqDisposeProvider = setOperation()
     End Sub
     Sub Oncompleted()
         IO.File.WriteAllBytes(info.dst, data.ToArray)
@@ -97,30 +101,42 @@ Public Class dlqueue
     Private Sub StartConvert()
         If Not String.IsNullOrWhiteSpace(_linestr) Then
             FFMProcess = New Process
-            FFMProcess.StartInfo.FileName = getStartupPath() + "\ffmpeg.exe"
-            FFMProcess.StartInfo.Arguments = Me._linestr.Replace(vbCrLf, "")
-            FFMProcess.StartInfo.ErrorDialog = True
-            FFMProcess.StartInfo.WindowStyle = ProcessWindowStyle.Minimized
-            FFMProcess.StartInfo.UseShellExecute = False
-            FFMProcess.StartInfo.CreateNoWindow = True
-            FFMProcess.StartInfo.RedirectStandardError = True
-            AddHandler FFMProcess.ErrorDataReceived, AddressOf logging
-            FFMProcess.EnableRaisingEvents = True
-            AddHandler FFMProcess.Exited, Sub()
-                                              If FFMProcess.ExitCode <> 0 Then
-                                                  Debug.Print("""" + getStartupPath() + "\ffmpeg.exe""" & " " & Me._linestr.Replace(vbCrLf, ""))
-                                                  MsgBox(FFMProcess.ExitCode)
-                                              End If
-                                              FFMProcess.Dispose()
-                                              IO.File.Delete(info.dst)
-                                              Release()
-                                          End Sub
-            FFMProcess.Start()
-            FFMProcess.BeginErrorReadLine()
+            With FFMProcess
+                With .StartInfo
+                    .FileName = getStartupPath() + "\ffmpeg.exe"
+                    .Arguments = Me._linestr.Replace(vbCrLf, "")
+                    .ErrorDialog = True
+                    .WindowStyle = ProcessWindowStyle.Minimized
+                    .UseShellExecute = False
+                    .CreateNoWindow = True
+                    .RedirectStandardError = True
+                End With
+                AddHandler .ErrorDataReceived, AddressOf logging
+                .EnableRaisingEvents = True
+                AddHandler .Exited, Sub()
+                                        If .ExitCode <> 0 Then
+                                            Debug.Print("""" + getStartupPath() + "\ffmpeg.exe""" & " " & Me._linestr.Replace(vbCrLf, ""))
+                                            MsgBox(.ExitCode)
+                                        End If
+                                        .Dispose()
+                                        IO.File.Delete(info.dst)
+                                        Release()
+                                    End Sub
+                .Start()
+                .BeginErrorReadLine()
+            End With
         Else
             Release()
         End If
     End Sub
+#End Region
+#Region "演算系"
+    ' download
+
+
+
+    ' ffmpeg
+
     Private Sub logging(sender As Object, e As System.Diagnostics.DataReceivedEventArgs)
         '正規表現でffmpegの進捗状況をとる
         Dim d As Net.WebRequest
@@ -145,18 +161,27 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\.]+")
                                   monitor.Value = current
                               End Sub)
         End If
-
     End Sub
+
+#End Region
+#Region "レジューム制御"
+    Private Sub restart_connection()
+        IsStopped = False
+        resume_req = CType(Net.WebRequest.Create(info.url), Net.HttpWebRequest)
+        resume_req.AddRange(data.Count)
+        Dim cc As New Net.CookieContainer
+        resume_req.CookieContainer = cc
+        cc.SetCookies(info.url, info.ck)
+        ReqDisposeProvider = setOperation()
+    End Sub
+
+#End Region
+
     Private Sub Release()
         Dispatcher.Invoke(Sub()
-                              'TODO
+                              'TODO コントロールの削除
+                              DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Remove(Me)
                           End Sub)
     End Sub
 
-    Function getStartupPath() As String
-        Dim exePath As String = Environment.GetCommandLineArgs()(0)
-        Dim exeFullPath As String = System.IO.Path.GetFullPath(exePath)
-        Dim startupPath As String = System.IO.Path.GetDirectoryName(exeFullPath)
-        Return startupPath
-    End Function
 End Class
