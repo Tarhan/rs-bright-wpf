@@ -1,4 +1,4 @@
-﻿<Custom:RibbonWindow
+<Custom:RibbonWindow
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
@@ -25,6 +25,11 @@
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
                     <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged"/>
+                    <RibbonTextbox.ContextMenu>
+                    <ContextMenu>
+                    <menuItem header="貼り付け">
+                    </ContextMenu>
+                    </RibbonTextbox.ContextMenu>
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Header="変換">
