@@ -18,7 +18,7 @@ Class MainWindow
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        If Regex.IsMatch(Urlbox.Text, "http://(www\.)?youtube\.com/watch?.*") Then
+        If Regex.IsMatch(Urlbox.Text, "http://(www\.)?youtube\.com/watch\?.*") Then
             dlbutton.Tag = vServiceKind.Youtube
         ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
             dlbutton.Tag = vServiceKind.Niconico
@@ -43,15 +43,13 @@ Class MainWindow
             Case vServiceKind.Niconico
                 'TODO
         End Select
-
     End Sub
 #End Region
 #Region "ロジック"
     Private Sub ytdl(url As String)
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\" + Uri.EscapeDataString(param.VideoInfo.Title), "", param.cookie, "")
-        'TODO ダウンロード用のディレクトリを作成↑共通設定みたいな
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\Download\" + downloadViaGDataapi.getStringFromVideoId(downloadViaGDataapi.getVideoIdFromUrl(url)), param.VideoInfo.Title, param.cookie, "")
         ctrl_Inst.start()
     End Sub
     Private Sub ytdl(url As String, ext As String)
@@ -60,7 +58,7 @@ Class MainWindow
         Dim ctrl_Inst As New dlqueue
         Dim saveto As String = getStartupPath() + "\" + Uri.EscapeDataString(param.VideoInfo.Title)
         'TODO ダウンロード用のディレクトリを作成↑共通設定みたいな
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\Download\" + downloadViaGDataapi.getStringFromVideoId(downloadViaGDataapi.getVideoIdFromUrl(url)), param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
         ctrl_Inst.start()
     End Sub
 

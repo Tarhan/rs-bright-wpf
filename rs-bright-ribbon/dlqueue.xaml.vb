@@ -6,15 +6,6 @@ Imports System.Reactive.Linq
 Public Class dlqueue
 
     Dim _Dulation As TimeSpan
-
-    Sub New()
-
-        ' この呼び出しはデザイナーで必要です。
-        InitializeComponent()
-
-        ' InitializeComponent() 呼び出しの後で初期化を追加します。
-        monitor.IsIndeterminate = False
-    End Sub
     Friend Structure dlInfo
         Dim url As Uri      'uri.
         Dim ck As String    'cookie.
@@ -47,7 +38,10 @@ Public Class dlqueue
     Private Function setOperation() As IDisposable
         Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
                                                                  Dim s As String = String.Format("{0}/{1} - {2}%", p.BytesReceived, p.TotalBytesToReceive, p.ProgressPercentage)
-                                                                 Dispatcher.Invoke(Sub() speed.Text = s)
+                                                                 Dispatcher.Invoke(Sub()
+                                                                                       speed.Text = s
+                                                                                       monitor.Value = p.ProgressPercentage
+                                                                                   End Sub)
                                                              End Sub).
                                   Aggregate(data,
                                             Function(list, p)
