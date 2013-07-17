@@ -1,4 +1,4 @@
-<Custom:RibbonWindow
+﻿<Custom:RibbonWindow
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
@@ -7,7 +7,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="64"/>
+            <RowDefinition Height="71"/>
         </Grid.RowDefinitions>
         <Custom:Ribbon>
             <!--<Custom:RibbonTab Header="ブラウザ">
@@ -16,7 +16,7 @@
                     <Custom:RibbonButton Label="減らす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Remove.png" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>-->
-            <Custom:RibbonTab Header="ダウンローダー">
+            <Custom:RibbonTab Header="ダウンローダー"> 
                 <Custom:RibbonGroup Header="ダウンロード">
                     <Custom:RibbonButton Name="dlbutton" Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png" IsEnabled="False" IsDefault="True"/>
                     <Custom:RibbonComboBox Label="方法">
@@ -24,21 +24,22 @@
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
-                    <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged"/>
-                    <RibbonTextbox.ContextMenu>
-                    <ContextMenu>
-                    <menuItem header="貼り付け">
-                    </ContextMenu>
-                    </RibbonTextbox.ContextMenu>
+                    <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged">
+                        <Custom:RibbonTextBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="貼り付け" Click="MenuItem_Click"></MenuItem>
+                            </ContextMenu>
+                        </Custom:RibbonTextBox.ContextMenu>
+                    </Custom:RibbonTextBox>
                 </Custom:RibbonGroup>
 
-                <Custom:RibbonGroup Header="変換">
-                    <Custom:RibbonButton Label="MP3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
-                    <Custom:RibbonButton Label="MP4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
-                    <Custom:RibbonButton Label="WAV" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\wav.png"/>
-                    <Custom:RibbonButton Label="MOV" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mov.png"/>
-                    <Custom:RibbonButton Label="AIFF" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\aiff.png" />
-                    <Custom:RibbonButton Label="AVI" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\avi.png"/>
+                <Custom:RibbonGroup Name="convertgroup" Header="変換" Custom:RibbonButton.Click="Click" Visibility="Collapsed">
+                    <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
+                    <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
+                    <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\wav.png"/>
+                    <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mov.png"/>
+                    <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\aiff.png" />
+                    <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5">
