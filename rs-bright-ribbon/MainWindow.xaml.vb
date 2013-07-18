@@ -57,8 +57,8 @@ Class MainWindow
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
         Dim saveto As String = getStartupPath() + "\" + Uri.EscapeDataString(param.VideoInfo.Title)
-        'TODO ダウンロード用のディレクトリを作成↑共通設定みたいな
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\Download\" + downloadViaGDataapi.getStringFromVideoId(downloadViaGDataapi.getVideoIdFromUrl(url)), param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
+        'TODO fmt値
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value), param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
         ctrl_Inst.start()
     End Sub
 

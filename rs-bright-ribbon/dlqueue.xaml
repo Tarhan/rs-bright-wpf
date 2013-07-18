@@ -8,8 +8,7 @@ mc:Ignorable="d" Height="70" Width="300" HorizontalAlignment="Left">
         <Color x:Key="Color2">#7FDDDDDD</Color>
     </UserControl.Resources>
     <Grid>
-        <ProgressBar Name="monitor" IsIndeterminate="True"/>
-        <Border CornerRadius="10">
+        <Border CornerRadius="10" BorderBrush="Black">
             <Border.Background>
                 <SolidColorBrush Color="{DynamicResource Color2}"/>
             </Border.Background>
@@ -28,13 +27,13 @@ mc:Ignorable="d" Height="70" Width="300" HorizontalAlignment="Left">
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="8"/>
-                                <RowDefinition Height="3*"/>
+                                <RowDefinition Height="2*"/>
                                 <RowDefinition Height="2*"/>
                                 <RowDefinition Height="2*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock x:Name="speed" Grid.Row="3" TextWrapping="NoWrap" FontSize="10" FontStyle="Oblique" UseLayoutRounding="False" TextTrimming="CharacterEllipsis" Text="6764646747486748787" VerticalAlignment="Center" Margin="3,2" Height="13" />
+                            <TextBlock x:Name="speed" Grid.Row="3" TextWrapping="NoWrap" FontSize="10" FontStyle="Oblique" UseLayoutRounding="False" TextTrimming="CharacterEllipsis" Text="6764646747486748787" VerticalAlignment="Center" Margin="3,0" Height="20" />
                             <TextBlock Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,19,10" FontSize="4" FontStyle="Italic" FontWeight="Medium" Grid.Column="1" Height="6" Width="0"/>
-                            <TextBlock x:Name="title" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Text="タイトル" VerticalAlignment="Top" FontFamily="HGPSoeiKakugothicUB" Grid.Row="1" TextTrimming="CharacterEllipsis" Height="12" Width="38"/>
+                            <TextBlock x:Name="title" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Text="タイトル" VerticalAlignment="Top" FontFamily="HGPSoeiKakugothicUB" Grid.Row="1" TextTrimming="CharacterEllipsis" Height="20" Width="243"/>
                             <Button x:Name="Pause" Grid.Column="1" Grid.Row="1" Margin="3,6,2,6" RenderTransformOrigin="0.5,0.5">
                                 <Button.RenderTransform>
                                     <TransformGroup>
@@ -59,10 +58,20 @@ mc:Ignorable="d" Height="70" Width="300" HorizontalAlignment="Left">
                 </Grid>
                 <Button Content="" Grid.Column="1" Grid.ColumnSpan="2">
                     <Button.Background>
-                        <SolidColorBrush Color="{DynamicResource Color1}"/>
+                        <SolidColorBrush Color="{DynamicResource Color2}"/>
                     </Button.Background>
                 </Button>
             </Grid>
         </Border>
+        <ProgressBar x:Name="monitor" Opacity="0.15" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" IsTabStop="False">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleX="0.95"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
     </Grid>
 </UserControl>

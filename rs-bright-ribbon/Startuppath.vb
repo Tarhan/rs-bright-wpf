@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Drawing
 
-Module Startuppath
+Module Utils
     Function getStartupPath() As String
         Dim exePath As String = Environment.GetCommandLineArgs()(0)
         Dim exeFullPath As String = System.IO.Path.GetFullPath(exePath)
@@ -33,7 +33,6 @@ Module Startuppath
     Dim IconIndex As Integer = 0
 
 #End Region
-
     Function GetIconImage(ByVal FilePath As String, Optional ByVal LargeSize As Boolean = True) As Icon
         Dim shinfo As New SHFILEINFO()
         Dim _SHGFI_ICON As Integer
