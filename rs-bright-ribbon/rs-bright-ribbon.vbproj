@@ -130,6 +130,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfigurationHost.vb" />
+    <Compile Include="rsun_loadconvertCfg.vb" />
     <Compile Include="Startuppath.vb" />
     <Compile Include="tabbrowser.xaml.vb">
       <DependentUpon>tabbrowser.xaml</DependentUpon>
