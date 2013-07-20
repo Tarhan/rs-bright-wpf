@@ -8,13 +8,25 @@ Class MainWindow
         Niconama
         Youtube
     End Enum
+
+    Sub New()
+
+        ' この呼び出しはデザイナーで必要です。
+        InitializeComponent()
+
+        ' InitializeComponent() 呼び出しの後で初期化を追加します。
+        For Each entry As DictionaryEntry In getResolution()
+            ' TODO
+        Next
+    End Sub
+
 #Region "イベントハンドラ"
     Private Sub dlbutton_Click(sender As Object, e As RoutedEventArgs) Handles dlbutton.Click
         Select Case DirectCast(DirectCast(e.Source, RibbonButton).Tag, vServiceKind)
             Case vServiceKind.Youtube
                 ytdl(Urlbox.Text)
             Case vServiceKind.Niconico
-                'TODO
+                ncdl(Urlbox.Text)
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
@@ -44,27 +56,41 @@ Class MainWindow
                 'TODO
         End Select
     End Sub
+    Private Sub RibbonSplitButton_Click(sender As Object, e As RoutedEventArgs)
+        If sender.IsChecked Then
+            Rapid.IsChecked = False
+            Medium.IsChecked = False
+            Fine.IsChecked = False
+        Else
+            sender.IsChecked = True
+        End If
+    End Sub
+    Private Sub DefaultResolutionClicked() Handles Rapid.Checked, Medium.Checked, Fine.Checked
+        CustomRes.IsChecked = False
+    End Sub
 #End Region
 #Region "ロジック"
     Private Sub ytdl(url As String)
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
-        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value)
+        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
         ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "")
         ctrl_Inst.start()
     End Sub
     Private Sub ytdl(url As String, ext As String)
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
-        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value)
+        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
         'TODO fmt値 Uris(18)ってとこ
         ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
         ctrl_Inst.start()
     End Sub
     Private Sub ncdl(url As String)
-        Dim param As UriCookiePair = nc_dl.getDownloadParam(url)
+        Dim res As New Dictionary(Of String, String)
+        Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
+        Dim saveto As String = getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext
         Dim ctrl_Inst As New dlqueue
-        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), getStartupPath() + "\Download\" + "video.flv", param.VideoInfo.Title, param.cookie, "")
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "")
         ' ↑拡張子の判定も
 
         ctrl_Inst.start()

@@ -63,6 +63,9 @@ Public Class dlqueue
     Public Sub SetInfo(ByVal Url As Uri, ByVal dst As String, ByVal contentTitle As String, Optional ByVal ck As String = "", Optional ByVal rf As String = "", Optional linestr As String = "", Optional ByVal img As Uri = Nothing)
         Me.speed.Text = "Waiting..."
         Me.title.Text = contentTitle
+        If String.IsNullOrWhiteSpace(contentTitle) Then
+            Me.title.Text = IO.Path.GetFileName(dst)
+        End If
         info = New dlInfo With {.url = Url, .ck = ck, .rf = rf, .dst = dst}
         _linestr = linestr
         DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Add(Me)
@@ -83,7 +86,8 @@ Public Class dlqueue
         ReqDisposeProvider = setOperation()
     End Sub
     Sub Oncompleted()
-        IO.File.WriteAllBytes(info.dst, data.ToArray)
+        IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(info.dst))
+        My.Computer.FileSystem.WriteAllBytes(info.dst, data.ToArray, False)
         Dispatcher.Invoke(Sub()
                               Me.Pause.IsEnabled = False
                               Me.speed.Text = Me.speed.Text + vbCrLf + "変換中…"

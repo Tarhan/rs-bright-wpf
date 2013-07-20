@@ -16,19 +16,19 @@
                     <Custom:RibbonButton Label="減らす" LargeImageSource="pack://application:,,,/ribbonIcons/Comment Remove.png" />
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>-->
-            <Custom:RibbonTab Header="ダウンローダー"> 
+            <Custom:RibbonTab Header="ダウンローダー">
                 <Custom:RibbonGroup Header="ダウンロード">
                     <Custom:RibbonButton Name="dlbutton" Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png" IsEnabled="False" IsDefault="True"/>
-                    <Custom:RibbonComboBox Label="方法">
+                    <Custom:RibbonComboBox Label="方法" Visibility="Hidden">
                         <Custom:RibbonGallery>
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
                     <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged">
                         <Custom:RibbonTextBox.ContextMenu>
-                            <ContextMenu>
+                            <Custom:RibbonContextMenu>
                                 <MenuItem Header="貼り付け" Click="MenuItem_Click"></MenuItem>
-                            </ContextMenu>
+                            </Custom:RibbonContextMenu>
                         </Custom:RibbonTextBox.ContextMenu>
                     </Custom:RibbonTextBox>
                 </Custom:RibbonGroup>
@@ -51,17 +51,38 @@
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="設定">
-                <Custom:RibbonGroup Header="画質">
-                    <Custom:RibbonButton Label="高速" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/高速.png"></Custom:RibbonButton>
-                    <Custom:RibbonButton Label="普通" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"></Custom:RibbonButton>
-                    <Custom:RibbonButton Label="高画質" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"></Custom:RibbonButton>
-                    <Custom:RibbonButton Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/カスタム.png"></Custom:RibbonButton>
+                <Custom:RibbonGroup x:Name="cfgGroup" Header="YouTube 画質">
+                    <Custom:RibbonRadioButton x:Name="Rapid" Label="高速" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/高速.png"></Custom:RibbonRadioButton>
+                    <Custom:RibbonRadioButton x:Name="Medium" Label="普通" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"></Custom:RibbonRadioButton>
+                    <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"></Custom:RibbonRadioButton>
+                    <Custom:RibbonSplitButton x:Name="CustomRes" Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/カスタム.png" Click="RibbonSplitButton_Click" IsCheckable="True">
+                        <Custom:RibbonSplitButton.ContextMenu>
+                            <Custom:RibbonContextMenu Name="ResolutionCollection"></Custom:RibbonContextMenu>
+                        </Custom:RibbonSplitButton.ContextMenu>
+                    </Custom:RibbonSplitButton>
                 </Custom:RibbonGroup>
-                <Custom:RibbonGroup Header="保存先">
-                    
+                <Custom:RibbonGroup Header="保存先"/>
+            </Custom:RibbonTab>
+            <!--<Custom:RibbonTab Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
+                <Custom:RibbonGroup Name="convertgroup_b" Header="変換" Custom:RibbonButton.Click="Click" Visibility="Collapsed">
+                    <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
+                    <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
+                    <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\wav.png"/>
+                    <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mov.png"/>
+                    <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\aiff.png" />
+                    <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            
+                <Custom:Ribbon.ContextualTabGroups>
+                <Custom:RibbonContextualTabGroup Header="ダウンロード ツール">
+                    <Custom:RibbonContextualTabGroup.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="#FF37872B"/>
+                            <GradientStop Color="#FF33EA17" Offset="0.741"/>
+                        </LinearGradientBrush>
+                    </Custom:RibbonContextualTabGroup.Background>
+                </Custom:RibbonContextualTabGroup>
+            </Custom:Ribbon.ContextualTabGroups>-->
         </Custom:Ribbon>
         <WebBrowser Grid.Row="1" Source="http://www.youtube.com"/>
         <StackPanel x:FieldModifier="Public" x:Name="Queueboard" Grid.Row="2"/>
