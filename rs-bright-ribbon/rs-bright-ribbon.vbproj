@@ -285,6 +285,11 @@
     <Content Include="config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="ribbonIcons\オリジナル\64\カスタム.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\ダウンロード.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\普通.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\画質.png" />
+    <Resource Include="ribbonIcons\オリジナル\64\高速.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

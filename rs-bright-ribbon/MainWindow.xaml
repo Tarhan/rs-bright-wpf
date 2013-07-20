@@ -52,10 +52,10 @@
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="設定">
                 <Custom:RibbonGroup Header="画質">
-                    <Custom:RibbonButton Label="高速" LargeImageSource="C:\Users\Takahiro Kitagaki\Dropbox\dcmch_tool\ribbonIcons\オリジナル\64\高速.png"></Custom:RibbonButton>
-                    <Custom:RibbonButton Label="普通" LargeImageSource="C:\Users\Takahiro Kitagaki\Dropbox\dcmch_tool\ribbonIcons\オリジナル\64\普通.png"></Custom:RibbonButton>
-                    <Custom:RibbonButton Label="高画質" LargeImageSource="C:\Users\Takahiro Kitagaki\Dropbox\dcmch_tool\ribbonIcons\オリジナル\64\画質.png"></Custom:RibbonButton>
-                    <Custom:RibbonButton Label="カスタム" LargeImageSource="C:\Users\Takahiro Kitagaki\Dropbox\dcmch_tool\ribbonIcons\オリジナル\64\カスタム.png"></Custom:RibbonButton>
+                    <Custom:RibbonButton Label="高速" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/高速.png"></Custom:RibbonButton>
+                    <Custom:RibbonButton Label="普通" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"></Custom:RibbonButton>
+                    <Custom:RibbonButton Label="高画質" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"></Custom:RibbonButton>
+                    <Custom:RibbonButton Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/カスタム.png"></Custom:RibbonButton>
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup Header="保存先">
                     
