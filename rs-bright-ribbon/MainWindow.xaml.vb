@@ -49,16 +49,24 @@ Class MainWindow
     Private Sub ytdl(url As String)
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\Download\" + downloadViaGDataapi.getStringFromVideoId(downloadViaGDataapi.getVideoIdFromUrl(url)), param.VideoInfo.Title, param.cookie, "")
+        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value)
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "")
         ctrl_Inst.start()
     End Sub
     Private Sub ytdl(url As String, ext As String)
-
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
-        Dim saveto As String = getStartupPath() + "\" + Uri.EscapeDataString(param.VideoInfo.Title)
-        'TODO fmt値
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value), param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
+        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value)
+        'TODO fmt値 Uris(18)ってとこ
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
+        ctrl_Inst.start()
+    End Sub
+    Private Sub ncdl(url As String)
+        Dim param As UriCookiePair = nc_dl.getDownloadParam(url)
+        Dim ctrl_Inst As New dlqueue
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), getStartupPath() + "\Download\" + "video.flv", param.VideoInfo.Title, param.cookie, "")
+        ' ↑拡張子の判定も
+
         ctrl_Inst.start()
     End Sub
 

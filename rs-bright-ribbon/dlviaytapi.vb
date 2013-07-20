@@ -45,8 +45,9 @@ Module downloadViaGDataapi
     Structure UriCookiePair
         Dim Uris As SortedDictionary(Of Integer, String)
         Dim cookie As String
-        Dim VideoInfo As Video
-        Function getFmtIdWhichContains() As List(Of Integer)
+        Dim VideoInfo As Object
+        Dim sourceext As String
+        Public Function getFmtIdWhichContains() As List(Of Integer)
             Dim l As New List(Of Integer)
             For Each key As Integer In Me.Uris.Keys
                 If key > 0 Then l.Add(key)
@@ -74,4 +75,8 @@ Module downloadViaGDataapi
         Next
         Return l
     End Function
+End Module
+
+Module ytfmt
+
 End Module

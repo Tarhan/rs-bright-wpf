@@ -8,10 +8,6 @@ Public Class n_getflv
     End Enum
     Property x_niconico_authflag As Integer
 
-    'コンテナ
-
-    Dim client As New Net.WebClient
-
     Private Shared Function setWatchTicket(ByVal watchId As String, ByRef thumbplaykey As String, ByRef response As String, ByRef p As String) As Net.Cookie
         Dim req As HttpWebRequest = CType(WebRequest.Create("http://ext.nicovideo.jp/thumb_watch/" & watchId), HttpWebRequest)
         Dim res As HttpWebResponse
