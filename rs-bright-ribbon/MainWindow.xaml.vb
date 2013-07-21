@@ -15,9 +15,9 @@ Class MainWindow
         InitializeComponent()
 
         ' InitializeComponent() 呼び出しの後で初期化を追加します。
-        For Each entry As DictionaryEntry In getResolution()
-            ' TODO
-        Next
+        'For Each entry As DictionaryEntry In getResolution()
+        '    ' TODO
+        'Next
     End Sub
 
 #Region "イベントハンドラ"
