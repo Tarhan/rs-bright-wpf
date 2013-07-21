@@ -53,7 +53,7 @@ Class MainWindow
             Case vServiceKind.Youtube
                 ytdl(Urlbox.Text, CStr(ext))
             Case vServiceKind.Niconico
-                'TODO
+                ncdl(Urlbox.Text, CStr(ext))
         End Select
     End Sub
     Private Sub RibbonSplitButton_Click(sender As Object, e As RoutedEventArgs)
@@ -91,8 +91,14 @@ Class MainWindow
         Dim saveto As String = getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext
         Dim ctrl_Inst As New dlqueue
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "")
-        ' ↑拡張子の判定も
-
+        ctrl_Inst.start()
+    End Sub
+    Private Sub ncdl(url As String, ext As String)
+        Dim res As New Dictionary(Of String, String)
+        Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
+        Dim saveto As String = getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext
+        Dim ctrl_Inst As New dlqueue
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "", getlinestr(param.sourceext, saveto))
         ctrl_Inst.start()
     End Sub
 
