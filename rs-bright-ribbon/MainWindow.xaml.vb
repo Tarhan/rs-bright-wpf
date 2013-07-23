@@ -120,9 +120,4 @@ Class MainWindow
         Return linestr
     End Function
 #End Region
-
-    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
-        Dim t As Hashtable = getResolution()
-
-    End Sub
 End Class
