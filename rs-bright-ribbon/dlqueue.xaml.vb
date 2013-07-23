@@ -23,8 +23,10 @@ Public Class dlqueue
         End Get
         Set(ByVal value As Boolean)
             If value Then
+                pause()
                 Debug.WriteIf(value, String.Format("I/Oは{0}バイトで正常に中断", data.Count))
             Else
+                restart_connection()
             End If
             _stopflag = value
         End Set
@@ -34,30 +36,6 @@ Public Class dlqueue
     Dim thumbUri As Uri 'Thumbnail URI
 #End Region
 
-#Region "中断用オブジェクトの付与"
-    Private Function setOperation() As IDisposable
-        Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
-                                                                 Dim s As String = String.Format("{0}/{1} - {2}%", p.BytesReceived, p.TotalBytesToReceive, p.ProgressPercentage)
-                                                                 Dispatcher.Invoke(Sub()
-                                                                                       speed.Text = s
-                                                                                       monitor.Value = p.ProgressPercentage
-                                                                                   End Sub)
-                                                             End Sub).
-                                  Aggregate(data,
-                                            Function(list, p)
-                                                Debug.WriteLine(String.Format("AddRange {0} +{1}", list.Count, p.Value.Length))
-                                                list.AddRange(p.Value)
-                                                Return list
-                                            End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
-                                                                                       If TryCast(ex, Net.WebException) Is Nothing Then
-                                                                                       ElseIf DirectCast(ex, Net.WebException).Status = Net.WebExceptionStatus.RequestCanceled Then
-                                                                                           'TODO
-                                                                                       Else
-                                                                                           Dispatcher.Invoke(Sub() speed.Text = DirectCast(ex, Net.WebException).Message)
-                                                                                       End If
-                                                                                   End Sub, AddressOf Oncompleted)
-    End Function
-#End Region
 
 #Region "値チェック/開始"
     Public Sub SetInfo(ByVal Url As Uri, ByVal dst As String, ByVal contentTitle As String, Optional ByVal ck As String = "", Optional ByVal rf As String = "", Optional linestr As String = "", Optional ByVal img As Uri = Nothing)
@@ -89,7 +67,7 @@ Public Class dlqueue
         IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(info.dst))
         My.Computer.FileSystem.WriteAllBytes(info.dst, data.ToArray, False)
         Dispatcher.Invoke(Sub()
-                              Me.Pause.IsEnabled = False
+                              Me.PauseButton.IsEnabled = False
                               Me.speed.Text = Me.speed.Text + vbCrLf + "変換中…"
                               StartConvert()
                           End Sub)
@@ -109,7 +87,6 @@ Public Class dlqueue
                     .CreateNoWindow = True
                     .RedirectStandardError = True
                 End With
-                AddHandler .ErrorDataReceived, AddressOf logging
                 .EnableRaisingEvents = True
             End With
             AddHandler FFMProcess.Exited, Sub()
@@ -121,6 +98,7 @@ Public Class dlqueue
                                               IO.File.Delete(info.dst)
                                               Release()
                                           End Sub
+            AddHandler FFMProcess.ErrorDataReceived, AddressOf logging
             FFMProcess.Start()
             FFMProcess.BeginErrorReadLine()
         Else
@@ -131,13 +109,36 @@ Public Class dlqueue
 #Region "演算系"
     ' download
 
+#Region "中断用オブジェクトの付与"
+    Private Function setOperation() As IDisposable
+        Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
+                                                                 Dim s As String = String.Format("{0}/{1} - {2}%", p.BytesReceived, p.TotalBytesToReceive, p.ProgressPercentage)
+                                                                 Dispatcher.Invoke(Sub()
+                                                                                       speed.Text = s
+                                                                                       monitor.Value = p.ProgressPercentage
+                                                                                   End Sub)
+                                                             End Sub).
+                                  Aggregate(data,
+                                            Function(list, p)
+                                                Debug.WriteLine(String.Format("AddRange {0} +{1}", list.Count, p.Value.Length))
+                                                list.AddRange(p.Value)
+                                                Return list
+                                            End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
+                                                                                       If TryCast(ex, Net.WebException) Is Nothing Then
+                                                                                       ElseIf DirectCast(ex, Net.WebException).Status = Net.WebExceptionStatus.RequestCanceled Then
+                                                                                           'TODO
+                                                                                       Else
+                                                                                           Dispatcher.Invoke(Sub() speed.Text = DirectCast(ex, Net.WebException).Message)
+                                                                                       End If
+                                                                                   End Sub, AddressOf Oncompleted)
+    End Function
+#End Region
 
 
     ' ffmpeg
 
     Private Sub logging(sender As Object, e As System.Diagnostics.DataReceivedEventArgs)
         '正規表現でffmpegの進捗状況をとる
-        Dim d As Net.WebRequest
         Dim t As String = CStr(e.Data)
         On Error Resume Next
         Debug.WriteLine(t)
@@ -150,9 +151,9 @@ Public Class dlqueue
             Exit Sub
         End If
         On Error Resume Next
-Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\.]+")
+Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
         If r1.Count > 0 Then
-            Dim current As Double = CInt(TimeSpan.FromSeconds(CDbl(r1.Item(0).Value)).TotalMilliseconds)
+            Dim current As Double = CInt(TimeSpan.Parse(r1.Item(0).Value).TotalMilliseconds)
             Dim total As Double = CInt(_Dulation.TotalMilliseconds)
             Dispatcher.Invoke(Sub()
                                   monitor.Maximum = total
@@ -160,11 +161,9 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\.]+")
                               End Sub)
         End If
     End Sub
-
 #End Region
 #Region "レジューム制御"
     Private Sub restart_connection()
-        IsStopped = False
         resume_req = CType(Net.WebRequest.Create(info.url), Net.HttpWebRequest)
         resume_req.AddRange(data.Count)
         Dim cc As New Net.CookieContainer
@@ -172,14 +171,23 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\.]+")
         cc.SetCookies(info.url, info.ck)
         ReqDisposeProvider = setOperation()
     End Sub
-
+    Public Sub pause()
+        ReqDisposeProvider.Dispose()
+        speed.Text += " (中断中)"
+    End Sub
 #End Region
 
     Private Sub Release()
         Dispatcher.Invoke(Sub()
-                              'TODO コントロールの削除
                               DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Remove(Me)
                           End Sub)
     End Sub
 
+    Private Sub PauseButton_Checked(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles PauseButton.Checked
+        IsStopped = True
+    End Sub
+
+    Private Sub PauseButton_Unchecked(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles PauseButton.Unchecked
+        IsStopped = False
+    End Sub
 End Class

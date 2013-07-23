@@ -80,9 +80,10 @@ Class MainWindow
     Private Sub ytdl(url As String, ext As String)
         Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
         Dim ctrl_Inst As New dlqueue
-        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
+        Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
+        Dim output As String = IO.Path.ChangeExtension(getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext, ext)
         'TODO fmt値 Uris(18)ってとこ
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto))
+        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto, output))
         ctrl_Inst.start()
     End Sub
     Private Sub ncdl(url As String)
@@ -96,9 +97,10 @@ Class MainWindow
     Private Sub ncdl(url As String, ext As String)
         Dim res As New Dictionary(Of String, String)
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
-        Dim saveto As String = getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext
+        Dim saveto As String = getStartupPath() + "\temp\" + res("thread_id") + "." + param.sourceext
+        Dim output As String = IO.Path.ChangeExtension(getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext, ext)
         Dim ctrl_Inst As New dlqueue
-        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "", getlinestr(param.sourceext, saveto))
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "", getlinestr(ext, saveto, output))
         ctrl_Inst.start()
     End Sub
 
@@ -113,9 +115,14 @@ Class MainWindow
         If out = "" Then
             linestr = linestr.Replace("<output>", IO.Path.ChangeExtension(input, ext))
         Else
-            linestr = linestr.Replace("<output>", IO.Path.ChangeExtension(out, ext))
+            linestr = linestr.Replace("<output>", out)
         End If
         Return linestr
     End Function
 #End Region
+
+    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+        Dim t As Hashtable = getResolution()
+
+    End Sub
 End Class

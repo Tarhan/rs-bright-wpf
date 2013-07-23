@@ -26,11 +26,12 @@
                     </Custom:RibbonComboBox>
                     <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged">
                         <Custom:RibbonTextBox.ContextMenu>
-                            <Custom:RibbonContextMenu>
+                            <ContextMenu>
                                 <MenuItem Header="貼り付け" Click="MenuItem_Click"></MenuItem>
-                            </Custom:RibbonContextMenu>
+                            </ContextMenu>
                         </Custom:RibbonTextBox.ContextMenu>
                     </Custom:RibbonTextBox>
+                    <Button Content="#JSON2Hashtable#" Click="Button_Click"></Button>
                 </Custom:RibbonGroup>
 
                 <Custom:RibbonGroup Name="convertgroup" Header="変換" Custom:RibbonButton.Click="Click" Visibility="Collapsed">
