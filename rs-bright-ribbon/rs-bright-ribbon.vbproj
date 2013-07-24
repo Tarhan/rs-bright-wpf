@@ -134,10 +134,13 @@
     </ApplicationDefinition>
     <Compile Include="ConfigurationHost.vb" />
     <Compile Include="nc_dl.vb" />
+    <Compile Include="Zero_core.xaml.vb">
+      <DependentUpon>Zero_core.xaml</DependentUpon>
+    </Compile>
     <Compile Include="rsun_loadconvertCfg.vb" />
     <Compile Include="Startuppath.vb" />
-    <Compile Include="tabbrowser.xaml.vb">
-      <DependentUpon>tabbrowser.xaml</DependentUpon>
+    <Compile Include="Zero_UI.xaml.vb">
+      <DependentUpon>Zero_UI.xaml</DependentUpon>
     </Compile>
     <Page Include="dlqueue.xaml">
       <SubType>Designer</SubType>
@@ -159,7 +162,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="tabbrowser.xaml">
+    <Page Include="Zero_core.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Zero_UI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

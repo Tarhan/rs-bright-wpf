@@ -1,6 +1,7 @@
 ﻿<Custom:RibbonWindow
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:me="clr-namespace:rs_bright_ribbon"
     xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
     Title="MainWindow" Height="622" Width="1204" WindowStartupLocation="CenterScreen">
     <Grid>
@@ -31,9 +32,7 @@
                             </ContextMenu>
                         </Custom:RibbonTextBox.ContextMenu>
                     </Custom:RibbonTextBox>
-                    <Button Content="#JSON2Hashtable#" Click="Button_Click"></Button>
                 </Custom:RibbonGroup>
-
                 <Custom:RibbonGroup Name="convertgroup" Header="変換" Custom:RibbonButton.Click="Click" Visibility="Collapsed">
                     <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
                     <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
@@ -57,9 +56,26 @@
                     <Custom:RibbonRadioButton x:Name="Medium" Label="普通" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"></Custom:RibbonRadioButton>
                     <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"></Custom:RibbonRadioButton>
                     <Custom:RibbonSplitButton x:Name="CustomRes" Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/カスタム.png" Click="RibbonSplitButton_Click" IsCheckable="True">
-                        <Custom:RibbonSplitButton.ContextMenu>
-                            <Custom:RibbonContextMenu Name="ResolutionCollection"></Custom:RibbonContextMenu>
-                        </Custom:RibbonSplitButton.ContextMenu>
+                        <Custom:RibbonGallery Name="ResolutionCollection">
+                            <Custom:RibbonGalleryCategory Header="画質 オプション" ScrollViewer.CanContentScroll="True">
+                                <Custom:RibbonGalleryItem Content="5: Low Quality, 240p, FLV (MP3, SVQ)" />
+                                <Custom:RibbonGalleryItem Content="34: Low Definition, 360p, FLV (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="35: Standard Definition, 480p, FLV (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="18: Low Definition, 360p, MP4 (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="22: High Definition, 720p, MP4 (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="37: Full High Definition, 1080p, MP4 (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="43: Low Definition, 360p, WebM (Vorbis, VP8)" />
+                                <Custom:RibbonGalleryItem Content="44: Standard Definition, 480p, WebM (Vorbis, VP8)" />
+                                <Custom:RibbonGalleryItem Content="45: High Definition, 720p, WebM (Vorbis, VP8)" />
+                                <Custom:RibbonGalleryItem Content="46: Full High Definition, 1080p, WebM (Vorbis, VP8)" />
+                                <Custom:RibbonGalleryItem Content="82: Low Definition 3D, 360p, MP4 (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="84: High Definition 3D, 720p, MP4 (AAC, H.264)" />
+                                <Custom:RibbonGalleryItem Content="100: Low Definition 3D, 360p, WebM (Vorbis, VP8)" />
+                                <Custom:RibbonGalleryItem Content="102: High Definition 3D, 720p, WebM (Vorbis, VP8)" />
+                                <Custom:RibbonGalleryItem Content="17: Low Quality, 144p, 3GP (AAC, )" />
+                                <Custom:RibbonGalleryItem Content="36: Low Quality, 240p, 3GP (AAC, )" />
+                            </Custom:RibbonGalleryCategory>
+                        </Custom:RibbonGallery>
                     </Custom:RibbonSplitButton>
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup Header="保存先"/>
@@ -85,7 +101,16 @@
                 </Custom:RibbonContextualTabGroup>
             </Custom:Ribbon.ContextualTabGroups>-->
         </Custom:Ribbon>
-        <WebBrowser Grid.Row="1" Source="http://www.youtube.com"/>
-        <StackPanel x:FieldModifier="Public" x:Name="Queueboard" Grid.Row="2"/>
+        <WebBrowser Grid.Row="1">
+            
+        </WebBrowser>
+        <StackPanel x:FieldModifier="Public" x:Name="Queueboard" Grid.Row="2">
+            <StackPanel.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
+                    <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
+                </RadialGradientBrush>
+            </StackPanel.Background>
+        </StackPanel>
     </Grid>
 </Custom:RibbonWindow>

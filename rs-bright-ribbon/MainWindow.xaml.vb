@@ -9,17 +9,6 @@ Class MainWindow
         Youtube
     End Enum
 
-    Sub New()
-
-        ' この呼び出しはデザイナーで必要です。
-        InitializeComponent()
-
-        ' InitializeComponent() 呼び出しの後で初期化を追加します。
-        'For Each entry As DictionaryEntry In getResolution()
-        '    ' TODO
-        'Next
-    End Sub
-
 #Region "イベントハンドラ"
     Private Sub dlbutton_Click(sender As Object, e As RoutedEventArgs) Handles dlbutton.Click
         Select Case DirectCast(DirectCast(e.Source, RibbonButton).Tag, vServiceKind)
@@ -68,6 +57,9 @@ Class MainWindow
     Private Sub DefaultResolutionClicked() Handles Rapid.Checked, Medium.Checked, Fine.Checked
         CustomRes.IsChecked = False
     End Sub
+    Private Sub Ribbon_Loaded(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
+        If Not _loaded Then setCustomRes()
+    End Sub
 #End Region
 #Region "ロジック"
     Private Sub ytdl(url As String)
@@ -103,12 +95,6 @@ Class MainWindow
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "", getlinestr(ext, saveto, output))
         ctrl_Inst.start()
     End Sub
-
-    ' TODO: config.xmlの自動読み込み
-    Private Sub loadffmcfg()
-
-    End Sub
-    ' TODO: outは未実装
     Function getlinestr(ext As String, input As String, Optional out As String = "") As String
         Dim linestr As String = rs_loadconvertCfg.getConvertablefileKinds(False)(ext)
         linestr = linestr.Replace("<input>", input)
@@ -119,5 +105,22 @@ Class MainWindow
         End If
         Return linestr
     End Function
+
+    ' TODO: config.xmlの自動読み込み
+    Private Sub loadffmcfg()
+
+    End Sub
+    ' yt画質の設定の読込
+    Private _loaded As Boolean = False
+    Private Sub setCustomRes()
+        _loaded = True
+        Dim t As Hashtable = getResolution()
+        For Each v As Newtonsoft.Json.Linq.JObject In t.Values
+            Dim s As String = String.Format("{0}: {1}, {2} ({3}, {4})", v("itag"), v("description"), v("format"), v("acodec"), v("vcodec"))
+            Debug.WriteLine(s)
+            'Dim c As RibbonGalleryItem = (New RibbonGalleryItem With {.Content = s, .Tag = v.DeepClone, .IsSelected = My.Settings.yt_qTarget = CInt(v("itag"))})
+            'AddHandler c.Ch, New RoutedEventHandler(Sub(sender As Object, e As RoutedEventArgs) My.Settings.yt_qTarget = v("itag"))
+        Next
+    End Sub
 #End Region
 End Class
