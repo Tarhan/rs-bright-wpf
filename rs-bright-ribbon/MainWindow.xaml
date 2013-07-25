@@ -101,7 +101,7 @@
                 </Custom:RibbonContextualTabGroup>
             </Custom:Ribbon.ContextualTabGroups>-->
         </Custom:Ribbon>
-        <WebBrowser Grid.Row="1">
+        <WebBrowser Grid.Row="1" Source="http://www.youtube.com">
             
         </WebBrowser>
         <StackPanel x:FieldModifier="Public" x:Name="Queueboard" Grid.Row="2">
