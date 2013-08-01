@@ -54,8 +54,12 @@ Class MainWindow
             sender.IsChecked = True
         End If
     End Sub
-    Private Sub DefaultResolutionClicked() Handles Rapid.Checked, Medium.Checked, Fine.Checked
+    Private Sub ytconfigure(itag As Integer)
+        My.Settings.yt_qTarget = itag
+    End Sub
+    Private Sub DefaultResolutionClicked(sender As Object, e As RoutedEventArgs) Handles Rapid.Checked, Medium.Checked, Fine.Checked
         CustomRes.IsChecked = False
+        ytconfigure(CInt(sender.Tag))
     End Sub
     Private Sub Ribbon_Loaded(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
         If Not _loaded Then setCustomRes()

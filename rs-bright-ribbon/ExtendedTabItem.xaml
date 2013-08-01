@@ -1,0 +1,12 @@
+﻿<TabItem x:Class="ExtendedTabItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             xmlns:me="clr-namespace:rs_bright_ribbon"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+    <me:Zero_core TitleChanged="Zero_core_TitleChanged"/>
+    </Grid>
+</TabItem>

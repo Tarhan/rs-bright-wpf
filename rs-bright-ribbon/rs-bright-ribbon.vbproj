@@ -95,6 +95,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="PresentationUI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Core" />
@@ -132,17 +133,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ConfigurationHost.vb" />
+    <Compile Include="ExtendedTabItem.xaml.vb">
+      <DependentUpon>ExtendedTabItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="nc_dl.vb" />
+    <Compile Include="rsun_loadconvertCfg.vb" />
+    <Compile Include="Startuppath.vb" />
     <Compile Include="Zero_core.xaml.vb">
       <DependentUpon>Zero_core.xaml</DependentUpon>
     </Compile>
-    <Compile Include="rsun_loadconvertCfg.vb" />
-    <Compile Include="Startuppath.vb" />
     <Compile Include="Zero_UI.xaml.vb">
       <DependentUpon>Zero_UI.xaml</DependentUpon>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="dlqueue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExtendedTabItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -292,11 +303,26 @@
     <Content Include="config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="ribbonIcons\Tab.png" />
+    <Resource Include="ribbonIcons\Tab_hover.png" />
+    <Resource Include="ribbonIcons\close.gif" />
+    <Resource Include="ribbonIcons\close_disable.gif" />
     <Resource Include="ribbonIcons\オリジナル\64\カスタム.png" />
     <Resource Include="ribbonIcons\オリジナル\64\ダウンロード.png" />
     <Resource Include="ribbonIcons\オリジナル\64\普通.png" />
     <Resource Include="ribbonIcons\オリジナル\64\画質.png" />
     <Resource Include="ribbonIcons\オリジナル\64\高速.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="MSHTML">
+      <Guid>{3050F1C5-98B5-11CF-BB82-00AA00BDCE0B}</Guid>
+      <VersionMajor>4</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

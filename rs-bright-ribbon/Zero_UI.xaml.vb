@@ -1,58 +1,80 @@
-﻿Public Class Zero_UI
-    Inherits TabControl
-
-End Class
-''' <summary>
-''' 閉じるボタンにより閉じることが可能なTabItem
+﻿''' <summary>
+''' ページが閉じられた際に発生するイベントを処理するハンドラのデリゲート
 ''' </summary>
-Public Class ExtendedTabItem
-    Inherits TabItem
+''' <param name="sender"></param>
+''' <param name="e"></param>
+Public Delegate Sub PageCloseEventHandler(sender As [Object], e As PageCloseEventArgs)
+
+
+''' <summary>
+''' TabItemを閉じることが出来るTabControl
+''' </summary>
+Public Class Zero_UI
+    Inherits TabControl
     Shared Sub New()
-        DefaultStyleKeyProperty.OverrideMetadata(GetType(ExtendedTabItem), New FrameworkPropertyMetadata(GetType(ExtendedTabItem)))
+        '外観はカスタマイズしないので、TabControlのスタイルを適用する
+        'DefaultStyleKeyProperty.OverrideMetadata(GetType(TabControl), New FrameworkPropertyMetadata(GetType(TabControl)))
     End Sub
 
     ''' <summary>
-    ''' 閉じるボタンがクリックされた場合に発生させるルーティングイベントの識別子
+    ''' TagPageのCloseButtonClickEventのハンドラを登録する
     ''' </summary>
-    Public Shared ReadOnly CloseButtonClickEvent As RoutedEvent = EventManager.RegisterRoutedEvent("CloseButtonClick", RoutingStrategy.Bubble, GetType(RoutedEventHandler), GetType(ExtendedTabItem))
-
-    ''' <summary>
-    ''' イベント
-    ''' </summary>
-    Public Custom Event CloseButtonClick As RoutedEventHandler
-        AddHandler(ByVal value As RoutedEventHandler)
-            [AddHandler](CloseButtonClickEvent, value)
-        End AddHandler
-        RemoveHandler(ByVal value As RoutedEventHandler)
-            [RemoveHandler](CloseButtonClickEvent, value)
-        End RemoveHandler
-        RaiseEvent()
-
-        End RaiseEvent
-    End Event
-
-    ''' <summary>
-    ''' テンプレートが摘要された際に発生するイベントのハンドラ
-    ''' 閉じるボタンがクリックされた際のイベントハンドラを登録する
-    ''' </summary>
-    Public Overrides Sub OnApplyTemplate()
-        MyBase.OnApplyTemplate()
-
-        Dim closeButton As Button = TryCast(MyBase.GetTemplateChild("CloseButton"), Button)
-        AddHandler closeButton.Click, New RoutedEventHandler(AddressOf closeButton_Click)
+    Public Sub New()
+        InitializeComponent()
+        [AddHandler](ExtendedTabItem.CloseButtonClickEvent, New RoutedEventHandler(AddressOf PageCloseButtonClick))
     End Sub
 
     ''' <summary>
-    ''' 閉じるボタンがクリックされた際のイベントハンドラ
+    ''' Pageが閉じられた際に発生するルーティングイベントを識別するための識別子
+    ''' </summary>
+    Public Shared ReadOnly PageCloseEvent As RoutedEvent = EventManager.RegisterRoutedEvent("PageClose", RoutingStrategy.Bubble, GetType(PageCloseEventHandler), GetType(Zero_UI))
+
+    ''' <summary>
+    ''' TabPageの閉じるボタンのクリックイベントを処理して
+    ''' PageCloseEventを発生させる 
     ''' </summary>
     ''' <param name="sender"></param>
     ''' <param name="e"></param>
-    Private Sub closeButton_Click(sender As Object, e As RoutedEventArgs)
-        'CloseButtonClickEventを発生させる
-        [RaiseEvent](New RoutedEventArgs(CloseButtonClickEvent, Me))
+    Private Sub PageCloseButtonClick(sender As [Object], e As RoutedEventArgs)
+        Dim page As ExtendedTabItem = TryCast(e.OriginalSource, ExtendedTabItem)
 
-        '処理済にする
-        e.Handled = True
+        '自身からページを削除する
+        Items.Remove(page)
+
+        'ルーティングイベントを発生させる
+        [RaiseEvent](New PageCloseEventArgs(PageCloseEvent, Me, page))
     End Sub
 
+    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+        root.Items.Insert(root.Items.IndexOf(addtab), New ExtendedTabItem)
+    End Sub
+End Class
+
+
+Public Class PageCloseEventArgs
+    Inherits RoutedEventArgs
+    Private _closedItem As ExtendedTabItem = Nothing
+
+    ''' <summary>
+    ''' コンストラクタ
+    ''' </summary>
+    ''' <param name="routedEvent"></param>
+    ''' <param name="originalSource"></param>
+    ''' <param name="closedPage"></param>
+    Public Sub New(routedEvent As RoutedEvent, originalSource As [Object], closedItem As ExtendedTabItem)
+        MyBase.New(routedEvent, originalSource)
+        _closedItem = closedItem
+    End Sub
+
+    ''' <summary>
+    ''' 閉じられたページ
+    ''' </summary>
+    Public Property ClosedItem() As ExtendedTabItem
+        Get
+            Return _closedItem
+        End Get
+        Set(value As ExtendedTabItem)
+            _closedItem = value
+        End Set
+    End Property
 End Class

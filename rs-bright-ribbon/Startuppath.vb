@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Drawing
-
 Module Utils
+    Public selecteduri As String
     Function getStartupPath() As String
         Dim exePath As String = Environment.GetCommandLineArgs()(0)
         Dim exeFullPath As String = System.IO.Path.GetFullPath(exePath)

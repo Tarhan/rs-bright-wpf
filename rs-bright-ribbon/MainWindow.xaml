@@ -4,6 +4,26 @@
     xmlns:me="clr-namespace:rs_bright_ribbon"
     xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
     Title="MainWindow" Height="622" Width="1204" WindowStartupLocation="CenterScreen">
+    <Custom:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="newTabButtonContentTemplate">
+                <Grid/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="newTabButtonHeaderTemplate">
+                <Button Content="+"
+        Command="{Binding ElementName=parentUserControl, Path=DataContext.NewCommand}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="itemContentTemplate">
+                <Grid/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="itemHeaderTemplate">
+                <TextBlock Text="TabItem_test"/>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Custom:RibbonWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -52,9 +72,9 @@
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="設定">
                 <Custom:RibbonGroup x:Name="cfgGroup" Header="YouTube 画質">
-                    <Custom:RibbonRadioButton x:Name="Rapid" Label="高速" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/高速.png"></Custom:RibbonRadioButton>
-                    <Custom:RibbonRadioButton x:Name="Medium" Label="普通" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"></Custom:RibbonRadioButton>
-                    <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"></Custom:RibbonRadioButton>
+                    <Custom:RibbonRadioButton x:Name="Rapid" Label="高速" Tag="18" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/高速.png"></Custom:RibbonRadioButton>
+                    <Custom:RibbonRadioButton x:Name="Medium" Label="普通" Tag="35" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"></Custom:RibbonRadioButton>
+                    <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" Tag="22" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"></Custom:RibbonRadioButton>
                     <Custom:RibbonSplitButton x:Name="CustomRes" Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/カスタム.png" Click="RibbonSplitButton_Click" IsCheckable="True">
                         <Custom:RibbonGallery Name="ResolutionCollection">
                             <Custom:RibbonGalleryCategory Header="画質 オプション" ScrollViewer.CanContentScroll="True">
@@ -101,9 +121,7 @@
                 </Custom:RibbonContextualTabGroup>
             </Custom:Ribbon.ContextualTabGroups>-->
         </Custom:Ribbon>
-        <WebBrowser Grid.Row="1">
-            
-        </WebBrowser>
+        <me:Zero_UI Grid.Row="1" />
         <StackPanel x:FieldModifier="Public" x:Name="Queueboard" Grid.Row="2">
             <StackPanel.Background>
                 <RadialGradientBrush>
