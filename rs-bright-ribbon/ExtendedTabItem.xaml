@@ -6,7 +6,6 @@
              mc:Ignorable="d" 
              xmlns:me="clr-namespace:rs_bright_ribbon"
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-    <me:Zero_core TitleChanged="Zero_core_TitleChanged"/>
-    </Grid>
+    <me:Zero_core TitleChanged="Zero_core_TitleChanged" UriChanged="Zero_core_UriChanged"/>
+    
 </TabItem>

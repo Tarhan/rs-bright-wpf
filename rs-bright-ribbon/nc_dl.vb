@@ -18,11 +18,4 @@ Module nc_dl
         getflv_param = Nothing
         Return returnvalue
     End Function
-    Structure ncEntry
-        Sub New(url As String)
-
-        End Sub
-        Dim title As String
-
-    End Structure
 End Module

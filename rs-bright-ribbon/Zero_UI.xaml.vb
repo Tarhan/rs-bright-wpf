@@ -46,10 +46,39 @@ Public Class Zero_UI
     End Sub
 
     Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
-        root.Items.Insert(root.Items.IndexOf(addtab), New ExtendedTabItem)
+        Dim newtab As New ExtendedTabItem
+        AddHandler newtab.CurrentUriStateChanged, AddressOf ExtendedTabItem_CurrentUriStateChanged
+        root.Items.Insert(root.Items.IndexOf(addtab), newtab)
+        root.SelectedIndex = root.Items.IndexOf(newtab)
+    End Sub
+
+    Private Sub root_SelectionChanged(sender As System.Object, e As System.Windows.Controls.SelectionChangedEventArgs) Handles MyBase.SelectionChanged
+        If root.Items.Count = 1 Then Return
+        If Not TypeOf root.SelectedItem Is ExtendedTabItem Then
+            root.SelectedItem = root.Items(root.Items.Count - 2)
+        Else
+            _url = DirectCast(DirectCast(root.SelectedItem, ExtendedTabItem).Content, Zero_core).url.Text
+            RaiseEvent UrlOfCurrentTabChanged()
+        End If
+    End Sub
+
+#Region "現在のタブのURLを取得する"
+    Dim _url As String
+    ReadOnly Property UrlOfCurrentTab As String
+        Get
+            Return _url
+        End Get
+    End Property
+#End Region
+    Event UrlOfCurrentTabChanged()
+    Private Sub ExtendedTabItem_CurrentUriStateChanged(sender As Object, e As RoutedEventArgs)
+        Dim t As TabUriChangedRoutedEventArgs = CType(e, TabUriChangedRoutedEventArgs)
+        If root.SelectedIndex = t.Index Then
+            _url = t.Uri
+            RaiseEvent UrlOfCurrentTabChanged()
+        End If
     End Sub
 End Class
-
 
 Public Class PageCloseEventArgs
     Inherits RoutedEventArgs

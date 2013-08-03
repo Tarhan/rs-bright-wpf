@@ -4,11 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:me="clr-namespace:rs_bright_ribbon" x:Name="root" x:Class="Zero_UI" 
-             mc:Ignorable="d" 
+             mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="385" 
              >
-    <me:ExtendedTabItem Header="Zero(test)"  VerticalAlignment="Top"/>
+    <me:ExtendedTabItem CurrentUriStateChanged="ExtendedTabItem_CurrentUriStateChanged"/>
          <!--AddTab Method-->
-   <TabItem x:Name="addtab" Header="+">
+    <TabItem x:Name="addtab" Header="+">
         <TabItem.Resources>
             <ControlTemplate x:Key="templateTabItemButton5" TargetType="Button">
                 <Border

@@ -4,6 +4,7 @@ Imports System.Text.RegularExpressions
 Class MainWindow
     Inherits RibbonWindow
     Enum vServiceKind
+        No
         Niconico
         Niconama
         Youtube
@@ -19,7 +20,7 @@ Class MainWindow
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        If Regex.IsMatch(Urlbox.Text, "http://(www\.)?youtube\.com/watch\?.*") Then
+        If Regex.IsMatch(Urlbox.Text, "http://(www\.)?youtube\.com/watch\?.*") OrElse Regex.IsMatch(Urlbox.Text, "http://youtu\.be/\w+") Then
             dlbutton.Tag = vServiceKind.Youtube
         ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
             dlbutton.Tag = vServiceKind.Niconico
@@ -64,23 +65,42 @@ Class MainWindow
     Private Sub Ribbon_Loaded(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
         If Not _loaded Then setCustomRes()
     End Sub
+    Private Sub currrenturichanged() Handles uiCtl.UrlOfCurrentTabChanged
+        Dim attribute As vServiceKind
+        If Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?youtube\.com/watch\?.*") OrElse Regex.IsMatch(Urlbox.Text, "http://youtu\.be/\w+") Then
+            attribute = vServiceKind.Youtube
+        ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
+            attribute = vServiceKind.Niconico
+        Else
+            attribute = vServiceKind.No
+        End If
+        ActivateContextTab(uiCtl.UrlOfCurrentTab, attribute)
+    End Sub
 #End Region
 #Region "ロジック"
     Private Sub ytdl(url As String)
-        Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
-        Dim ctrl_Inst As New dlqueue
-        Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "")
-        ctrl_Inst.start()
+        Try
+            Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
+            Dim ctrl_Inst As New dlqueue
+            Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
+            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "")
+            ctrl_Inst.start()
+        Catch ex As Net.WebException
+
+        End Try
     End Sub
     Private Sub ytdl(url As String, ext As String)
-        Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
-        Dim ctrl_Inst As New dlqueue
-        Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
-        Dim output As String = IO.Path.ChangeExtension(getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext, ext)
-        'TODO fmt値 Uris(18)ってとこ
-        ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto, output))
-        ctrl_Inst.start()
+        Try
+            Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
+            Dim ctrl_Inst As New dlqueue
+            Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
+            Dim output As String = IO.Path.ChangeExtension(getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext, ext)
+            'TODO fmt値 Uris(18)ってとこ
+            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto, output))
+            ctrl_Inst.start()
+        Catch ex As Net.WebException
+
+        End Try
     End Sub
     Private Sub ncdl(url As String)
         Dim res As New Dictionary(Of String, String)
@@ -126,5 +146,24 @@ Class MainWindow
             'AddHandler c.Ch, New RoutedEventHandler(Sub(sender As Object, e As RoutedEventArgs) My.Settings.yt_qTarget = v("itag"))
         Next
     End Sub
+#Region "contextualtabctl"
+    Private Sub ActivateContextTab(uri As String, attr As vServiceKind)
+        Select Case attr
+            Case vServiceKind.No
+                context.Visibility = Windows.Visibility.Hidden
+                context.Tag = Nothing
+            Case Else
+                context.Visibility = Windows.Visibility.Visible
+                Content.tag = New contextattributecollection With {.uri = uri, .attribute = attr}
+        End Select
+    End Sub
+    Private Structure contextattributecollection
+        Dim attribute As vServiceKind
+        Dim uri As String
+    End Structure
+    Private Sub ContextClick(sender As Object, e As RoutedEventArgs)
+        'TODO: コンテキストタブのボタンの命令
+    End Sub
+#End Region
 #End Region
 End Class

@@ -100,8 +100,8 @@
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup Header="保存先"/>
             </Custom:RibbonTab>
-            <!--<Custom:RibbonTab Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
-                <Custom:RibbonGroup Name="convertgroup_b" Header="変換" Custom:RibbonButton.Click="Click" Visibility="Collapsed">
+            <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
+                <Custom:RibbonGroup Name="convertgroup_b" Header="変換" Custom:RibbonButton.Click="ContextClick" Visibility="Collapsed">
                     <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\mp3.png"/>
                     <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\MP4.png"/>
                     <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル\64\wav.png"/>
@@ -119,9 +119,9 @@
                         </LinearGradientBrush>
                     </Custom:RibbonContextualTabGroup.Background>
                 </Custom:RibbonContextualTabGroup>
-            </Custom:Ribbon.ContextualTabGroups>-->
+            </Custom:Ribbon.ContextualTabGroups>
         </Custom:Ribbon>
-        <me:Zero_UI Grid.Row="1" />
+        <me:Zero_UI x:Name="uiCtl" Grid.Row="1" />
         <StackPanel x:FieldModifier="Public" x:Name="Queueboard" Grid.Row="2">
             <StackPanel.Background>
                 <RadialGradientBrush>

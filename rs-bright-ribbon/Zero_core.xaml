@@ -10,10 +10,11 @@
             <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ToolBar>
-            <Image Width="20"/>
+        <ToolBar Header="メニュー">
             <TextBox x:Name="url" Width="244"/>
-            <Button Width="20"/>
+            <Button Width="20">
+                <Image Width="20" Height="25" VerticalAlignment="Bottom"/>
+            </Button>
         </ToolBar>
         <WebBrowser Grid.Row="1" Source="http://www.youtube.com" Navigated="Frame_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>
     </Grid>

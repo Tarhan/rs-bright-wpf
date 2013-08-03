@@ -303,6 +303,7 @@
     <Content Include="config.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ffmpeg.exe" />
     <Resource Include="ribbonIcons\Tab.png" />
     <Resource Include="ribbonIcons\Tab_hover.png" />
     <Resource Include="ribbonIcons\close.gif" />
