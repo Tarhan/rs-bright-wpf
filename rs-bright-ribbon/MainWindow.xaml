@@ -45,7 +45,7 @@
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
-                    <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged">
+                    <Custom:RibbonTextBox Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged" RenderTransformOrigin="0.494,0.417">
                         <Custom:RibbonTextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="貼り付け" Click="MenuItem_Click"></MenuItem>
@@ -98,7 +98,9 @@
                         </Custom:RibbonGallery>
                     </Custom:RibbonSplitButton>
                 </Custom:RibbonGroup>
-                <Custom:RibbonGroup Header="保存先"/>
+                <Custom:RibbonGroup Header="保存先">
+                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="C:\Users\Takahiro Kitagaki\Dropbox\dcmch_tool\ribbonIcons\オリジナル\64\folder.png"></Custom:RibbonButton>
+                </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
                 <Custom:RibbonGroup Name="convertgroup_b" Header="変換" Custom:RibbonButton.Click="ContextClick" Visibility="Collapsed">
