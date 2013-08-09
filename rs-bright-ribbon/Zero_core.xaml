@@ -7,13 +7,13 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <ToolBar Header="メニュー">
             <TextBox x:Name="url" Width="244"/>
-            <Button Width="20">
-                <Image Width="20" Height="25" VerticalAlignment="Bottom"/>
+            <Button BorderThickness="0" ClipToBounds="True">
+                <Image Width="24" Height="24" VerticalAlignment="Bottom"/>
             </Button>
         </ToolBar>
         <WebBrowser Grid.Row="1" Source="http://www.youtube.com" Navigated="Frame_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>

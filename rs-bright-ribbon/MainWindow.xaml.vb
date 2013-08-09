@@ -36,7 +36,6 @@ Class MainWindow
     Private Sub MenuItem_Click(sender As Object, e As RoutedEventArgs)
         Urlbox.Paste()
     End Sub
-
     Private Sub Click(sender As Object, e As RoutedEventArgs)
         Dim ext As Object = DirectCast(e.OriginalSource, RibbonButton).Tag
         Select Case DirectCast(DirectCast(dlbutton, RibbonButton).Tag, vServiceKind)
@@ -55,12 +54,19 @@ Class MainWindow
             sender.IsChecked = True
         End If
     End Sub
+    Private Sub CustomResItemClicked(sender As Object, e As RoutedEventArgs)
+        ytconfigure(sender.Tag)
+        CustomRes.IsChecked = True
+    End Sub
     Private Sub ytconfigure(itag As Integer)
         My.Settings.yt_qTarget = itag
     End Sub
     Private Sub DefaultResolutionClicked(sender As Object, e As RoutedEventArgs) Handles Rapid.Checked, Medium.Checked, Fine.Checked
         CustomRes.IsChecked = False
         ytconfigure(CInt(sender.Tag))
+        For Each i As RibbonGalleryItem In Res_Cat.Items
+            i.IsSelected = CInt(i.Tag) = CInt(sender.tag)
+        Next
     End Sub
     Private Sub Ribbon_Loaded(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
         If Not _loaded Then setCustomRes()
@@ -82,7 +88,13 @@ Class MainWindow
         Try
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
-            Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
+            Dim fmt As Integer
+            If param.getFmtIdWhichContains(My.Settings.yt_qTarget) Then
+                fmt = My.Settings.yt_qTarget
+            Else
+                fmt = 18
+            End If
+            Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
             ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "")
             ctrl_Inst.start()
         Catch ex As Net.WebException
@@ -93,8 +105,14 @@ Class MainWindow
         Try
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
-            Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext
-            Dim output As String = IO.Path.ChangeExtension(getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + param.sourceext, ext)
+            Dim fmt As Integer
+            If param.getFmtIdWhichContains(My.Settings.yt_qTarget) Then
+                fmt = My.Settings.yt_qTarget
+            Else
+                fmt = 18
+            End If
+            Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
+            Dim output As String = getStartupPath() + "\Download\" + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
             'TODO fmt値 Uris(18)ってとこ
             ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto, output))
             ctrl_Inst.start()
@@ -114,7 +132,7 @@ Class MainWindow
         Dim res As New Dictionary(Of String, String)
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
         Dim saveto As String = getStartupPath() + "\temp\" + res("thread_id") + "." + param.sourceext
-        Dim output As String = IO.Path.ChangeExtension(getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext, ext)
+        Dim output As String = IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
         Dim ctrl_Inst As New dlqueue
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "", getlinestr(ext, saveto, output))
         ctrl_Inst.start()
@@ -142,8 +160,6 @@ Class MainWindow
         For Each v As Newtonsoft.Json.Linq.JObject In t.Values
             Dim s As String = String.Format("{0}: {1}, {2} ({3}, {4})", v("itag"), v("description"), v("format"), v("acodec"), v("vcodec"))
             Debug.WriteLine(s)
-            'Dim c As RibbonGalleryItem = (New RibbonGalleryItem With {.Content = s, .Tag = v.DeepClone, .IsSelected = My.Settings.yt_qTarget = CInt(v("itag"))})
-            'AddHandler c.Ch, New RoutedEventHandler(Sub(sender As Object, e As RoutedEventArgs) My.Settings.yt_qTarget = v("itag"))
         Next
     End Sub
 #Region "contextualtabctl"
@@ -154,7 +170,7 @@ Class MainWindow
                 context.Tag = Nothing
             Case Else
                 context.Visibility = Windows.Visibility.Visible
-                Content.tag = New contextattributecollection With {.uri = uri, .attribute = attr}
+                context.Tag = New contextattributecollection With {.uri = uri, .attribute = attr}
         End Select
     End Sub
     Private Structure contextattributecollection
