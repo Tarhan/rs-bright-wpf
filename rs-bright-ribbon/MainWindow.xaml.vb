@@ -147,10 +147,22 @@ Class MainWindow
         End If
         Return linestr
     End Function
+        ' TODO: 画質設定の自動読み込み
+    Private Sub loadytcfg() Handles MyBase.Initialized
+        Select Case My.Settings.yt_qTarget
+            Case 18
+                Rapid.IsChecked = True
+            Case 22
+                Fine.IsChecked = True
+            Case 35
+                Medium.IsChecked = True
+            Case Else
+                For Each i As RibbonGalleryItem In Res_Cat.Items
+                    i.IsSelected = CInt(i.Tag) = CInt(My.Settings.yt_qTarget)
+                Next
+        End Select
 
-    ' TODO: config.xmlの自動読み込み
-    Private Sub loadffmcfg()
-
+        AddHandler My.Settings.PropertyChanged, Sub() My.Settings.Save()
     End Sub
     ' yt画質の設定の読込
     Private _loaded As Boolean = False
@@ -182,4 +194,12 @@ Class MainWindow
     End Sub
 #End Region
 #End Region
+
+    Private Sub Expander_Changed(sender As Object, e As RoutedEventArgs)
+        sender.Height = sender.ActualHeight
+    End Sub
+
+    Private Sub RibbonButton_Click(sender As Object, e As RoutedEventArgs)
+        'TODO
+    End Sub
 End Class

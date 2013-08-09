@@ -308,8 +308,6 @@
     <Resource Include="ribbonIcons\64\高速.png" />
     <Resource Include="ribbonIcons\Tab.png" />
     <Resource Include="ribbonIcons\Tab_hover.png" />
-    <Resource Include="ribbonIcons\close.gif" />
-    <Resource Include="ribbonIcons\close_disable.gif" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MSHTML">

@@ -2,6 +2,9 @@
 Imports System.Drawing
 Module Utils
     Public selecteduri As String
+    Function getDownloadPath() As String
+        'TODO:
+    End Function
     Function getStartupPath() As String
         Dim exePath As String = Environment.GetCommandLineArgs()(0)
         Dim exeFullPath As String = System.IO.Path.GetFullPath(exePath)

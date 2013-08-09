@@ -14,18 +14,21 @@
                 <Button Content="+"
         Command="{Binding ElementName=parentUserControl, Path=DataContext.NewCommand}"/>
             </DataTemplate>
-
             <DataTemplate x:Key="itemContentTemplate">
                 <Grid/>
             </DataTemplate>
-
             <DataTemplate x:Key="itemHeaderTemplate">
                 <TextBlock Text="TabItem_test"/>
             </DataTemplate>
         </ResourceDictionary>
     </Custom:RibbonWindow.Resources>
-    <DockPanel>
-        <Custom:Ribbon DockPanel.Dock="Top">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="71"/>
+        </Grid.RowDefinitions>
+        <Custom:Ribbon>
             <Custom:Ribbon.ContextualTabGroups>
                 <Custom:RibbonContextualTabGroup Header="ダウンロード ツール">
                     <Custom:RibbonContextualTabGroup.Background>
@@ -44,7 +47,7 @@
                             <Custom:RibbonGalleryItem Content="URLから" IsSelected="True"/>
                         </Custom:RibbonGallery>
                     </Custom:RibbonComboBox>
-                    <Custom:RibbonTextBox x:Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged" RenderTransformOrigin="0.494,0.417">
+                    <Custom:RibbonTextBox x:Name="Urlbox" Label="URL" Width="346" Text="" TextBoxWidth="300" TextChanged="RibbonTextBox_TextChanged">
                         <Custom:RibbonTextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="貼り付け" Click="MenuItem_Click"/>
@@ -61,7 +64,7 @@
                     <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5">
+            <Custom:RibbonTab Header="プレイヤー">
                 <Custom:RibbonGroup Header="コントロール">
                     <Custom:RibbonButton Label="早戻し" LargeImageSource="pack://application:,,,/ribbonIcons/早戻し　64.png"/>
                     <Custom:RibbonButton Label="再生＆停止" LargeImageSource="pack://application:,,,/ribbonIcons/再生　64.png"/>
@@ -98,7 +101,7 @@
                     </Custom:RibbonSplitButton>
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup Header="保存先">
-                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png"/>
+                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png" Click="RibbonButton_Click"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
@@ -112,20 +115,20 @@
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
         </Custom:Ribbon>
-        <Grid Height="70" DockPanel.Dock="Bottom">
+        <me:Zero_UI x:Name="uiCtl" Grid.Row="1"/>
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="25*"/>
+                <ColumnDefinition Width="25"/>
             </Grid.ColumnDefinitions>
             <StackPanel x:Name="Queueboard">
-            <StackPanel.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
-                    <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
-                </RadialGradientBrush>
-            </StackPanel.Background>
-        </StackPanel>
+                <StackPanel.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
+                        <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
+                    </RadialGradientBrush>
+                </StackPanel.Background>
+            </StackPanel>
         </Grid>
-        <me:Zero_UI x:Name="uiCtl"/>
-    </DockPanel>
+    </Grid>
 </Custom:RibbonWindow>
