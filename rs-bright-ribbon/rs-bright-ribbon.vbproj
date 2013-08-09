@@ -255,18 +255,6 @@
     <Resource Include="ribbonIcons\Comment Add.png" />
     <Resource Include="ribbonIcons\Comment Remove.png" />
     <Resource Include="ribbonIcons\kuroda.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\aiff.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\avi.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\mov.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\mp3.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\MP4.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\wav.png" />
-    <Resource Include="ribbonIcons\オリジナル\aiff.png" />
-    <Resource Include="ribbonIcons\オリジナル\avi.png" />
-    <Resource Include="ribbonIcons\オリジナル\mov.png" />
-    <Resource Include="ribbonIcons\オリジナル\mp3.png" />
-    <Resource Include="ribbonIcons\オリジナル\MP4.png" />
-    <Resource Include="ribbonIcons\オリジナル\wav.png" />
     <Resource Include="ribbonIcons\停止.png" />
     <Resource Include="ribbonIcons\停止　64.png" />
     <Resource Include="ribbonIcons\再生.png" />
@@ -304,16 +292,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ffmpeg.exe" />
-    <Resource Include="ribbonIcons\オリジナル\folder.png" />
+    <Resource Include="ribbonIcons\64\aiff.png" />
+    <Resource Include="ribbonIcons\64\avi.png" />
+    <Resource Include="ribbonIcons\64\folder.png" />
+    <Resource Include="ribbonIcons\64\mov.png" />
+    <Resource Include="ribbonIcons\64\mp3.png" />
+    <Resource Include="ribbonIcons\64\MP4.png" />
+    <Resource Include="ribbonIcons\64\music_codec.png" />
+    <Resource Include="ribbonIcons\64\video_codec.png" />
+    <Resource Include="ribbonIcons\64\wav.png" />
+    <Resource Include="ribbonIcons\64\カスタム.png" />
+    <Resource Include="ribbonIcons\64\ダウンロード.png" />
+    <Resource Include="ribbonIcons\64\普通.png" />
+    <Resource Include="ribbonIcons\64\画質.png" />
+    <Resource Include="ribbonIcons\64\高速.png" />
     <Resource Include="ribbonIcons\Tab.png" />
     <Resource Include="ribbonIcons\Tab_hover.png" />
     <Resource Include="ribbonIcons\close.gif" />
     <Resource Include="ribbonIcons\close_disable.gif" />
-    <Resource Include="ribbonIcons\オリジナル\64\カスタム.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\ダウンロード.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\普通.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\画質.png" />
-    <Resource Include="ribbonIcons\オリジナル\64\高速.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="MSHTML">

@@ -53,12 +53,12 @@
                     </Custom:RibbonTextBox>
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup x:Name="convertgroup" Header="変換" ButtonBase.Click="Click" Visibility="Collapsed">
-                    <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/mp3.png"/>
-                    <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/MP4.png"/>
-                    <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/wav.png"/>
-                    <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/mov.png"/>
-                    <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/aiff.png" />
-                    <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/avi.png"/>
+                    <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/64/mp3.png"/>
+                    <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/64/MP4.png"/>
+                    <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/64/wav.png"/>
+                    <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/64/mov.png"/>
+                    <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/64/aiff.png" />
+                    <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="プレイヤー" RenderTransformOrigin="0.5,0.5">
@@ -71,10 +71,10 @@
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="設定">
                 <Custom:RibbonGroup x:Name="cfgGroup" Header="YouTube 画質">
-                    <Custom:RibbonRadioButton x:Name="Rapid" Label="高速" Tag="18" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/高速.png"/>
-                    <Custom:RibbonRadioButton x:Name="Medium" Label="普通" Tag="35" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/普通.png"/>
-                    <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" Tag="22" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/画質.png"/>
-                    <Custom:RibbonSplitButton x:Name="CustomRes" Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/カスタム.png" Click="RibbonSplitButton_Click" IsCheckable="True">
+                    <Custom:RibbonRadioButton x:Name="Rapid" Label="高速" Tag="18" LargeImageSource="pack://application:,,,/ribbonIcons/64/高速.png"/>
+                    <Custom:RibbonRadioButton x:Name="Medium" Label="普通" Tag="35" LargeImageSource="pack://application:,,,/ribbonIcons/64/普通.png"/>
+                    <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" Tag="22" LargeImageSource="pack://application:,,,/ribbonIcons/64/画質.png"/>
+                    <Custom:RibbonSplitButton x:Name="CustomRes" Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/64/カスタム.png" Click="RibbonSplitButton_Click" IsCheckable="True">
                         <Custom:RibbonGallery x:Name="ResolutionCollection">
                             <Custom:RibbonGalleryCategory x:Name="Res_Cat" Header="画質 オプション" ScrollViewer.CanContentScroll="True" Custom:RibbonGalleryItem.Selected="CustomResItemClicked">
                                 <Custom:RibbonGalleryItem Tag="5" Content="5: Low Quality, 240p, FLV (MP3, SVQ)" />
@@ -98,17 +98,17 @@
                     </Custom:RibbonSplitButton>
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup Header="保存先">
-                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/folder.png"/>
+                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
                 <Custom:RibbonGroup x:Name="convertgroup_b" Header="変換" ButtonBase.Click="ContextClick" Visibility="Collapsed">
-                    <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/mp3.png"/>
-                    <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/MP4.png"/>
-                    <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/wav.png"/>
-                    <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/mov.png"/>
-                    <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/aiff.png" />
-                    <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/オリジナル/64/avi.png"/>
+                    <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/64/mp3.png"/>
+                    <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/64/MP4.png"/>
+                    <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/64/wav.png"/>
+                    <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/64/mov.png"/>
+                    <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/64/aiff.png" />
+                    <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
         </Custom:Ribbon>
