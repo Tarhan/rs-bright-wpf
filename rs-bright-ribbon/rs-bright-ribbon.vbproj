@@ -73,11 +73,9 @@
     <OptionStrict>Off</OptionStrict>
   </PropertyGroup>
   <PropertyGroup>
-    <OptionInfer>Off</OptionInfer>
+    <OptionInfer>On</OptionInfer>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -138,6 +136,7 @@
     </Compile>
     <Compile Include="nc_dl.vb" />
     <Compile Include="rsun_loadconvertCfg.vb" />
+    <Compile Include="Settings.vb" />
     <Compile Include="Startuppath.vb" />
     <Compile Include="Zero_core.xaml.vb">
       <DependentUpon>Zero_core.xaml</DependentUpon>
@@ -224,16 +223,15 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="app.manifest" />
     <None Include="My Project\app.manifest" />
     <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <AppDesigner Include="My Project\" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\httpComp\libSpirit.vbproj">
@@ -292,6 +290,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ffmpeg.exe" />
+    <Resource Include="ribbonIcons\24\戻る.png" />
+    <Resource Include="ribbonIcons\24\戻る　カーソル.png" />
+    <Resource Include="ribbonIcons\24\進む.png" />
+    <Resource Include="ribbonIcons\24\進む　カーソル.png" />
     <Resource Include="ribbonIcons\64\aiff.png" />
     <Resource Include="ribbonIcons\64\avi.png" />
     <Resource Include="ribbonIcons\64\folder.png" />

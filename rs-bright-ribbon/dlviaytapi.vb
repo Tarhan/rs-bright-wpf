@@ -57,7 +57,7 @@ Module downloadViaGDataapi
             Return l
         End Function
         Public Shared Function getExtention(Fmt As Integer) As String
-            Return CType(getResolution().Item(Fmt), Hashtable).Item("format")
+            Return CType(getResolution().Item(CStr(Fmt)), JObject).Item("format")
         End Function
     End Structure
     Public Function getDownloadParam(Url As String) As UriCookiePair

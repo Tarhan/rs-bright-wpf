@@ -41,5 +41,31 @@
             Title = myDocument.title
             RaiseEvent TitleChanged(Me, New RoutedEventArgs(TitleChangedEvent, sender))
         End If
+        back.IsEnabled = b.CanGoBack
+        forward.IsEnabled = b.CanGoForward
+    End Sub
+
+    Private Sub Button_Click()
+        If url.Tag Then
+            b.Refresh()
+        Else
+            b.Navigate(New Uri(url.Text))
+        End If
+    End Sub
+
+    Private Sub url_TextChanged(sender As Object, e As TextChangedEventArgs) Handles url.TextChanged
+        sender.tag = Uri = sender.text
+    End Sub
+
+    Private Sub url_KeyUp(sender As Object, e As KeyEventArgs) Handles url.KeyUp
+        If e.Key = Key.Enter Then Button_Click()
+    End Sub
+
+    Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
+        b.GoBack()
+    End Sub
+
+    Private Sub forward_Click(sender As Object, e As RoutedEventArgs) Handles forward.Click
+        b.GoForward()
     End Sub
 End Class

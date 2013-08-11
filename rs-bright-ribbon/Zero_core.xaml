@@ -11,11 +11,23 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <ToolBar Header="メニュー">
+            <ToolBar.Background>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="#FFB3F9B6" Offset="0.293"/>
+                    <GradientStop Color="#FFF1F7F1" Offset="1"/>
+                </LinearGradientBrush>
+            </ToolBar.Background>
+            <Button x:Name="back" BorderThickness="0" ClipToBounds="True" Click="Button_Click_1">
+                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/戻る.png"/>
+            </Button>
+            <Button x:Name="forward" BorderThickness="0" ClipToBounds="True">
+                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/進む.png"/>
+            </Button>
             <TextBox x:Name="url" Width="244"/>
-            <Button BorderThickness="0" ClipToBounds="True">
-                <Image Width="24" Height="24" VerticalAlignment="Bottom"/>
+            <Button BorderThickness="0" ClipToBounds="True" Click="Button_Click">
+                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/進む.png"/>
             </Button>
         </ToolBar>
-        <WebBrowser Grid.Row="1" Source="http://www.youtube.com" Navigated="Frame_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>
+        <WebBrowser x:Name="b" Grid.Row="1" Source="http://www.youtube.com" Navigated="Frame_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>
     </Grid>
 </UserControl>

@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
         <Custom:Ribbon>
             <Custom:Ribbon.ContextualTabGroups>
-                <Custom:RibbonContextualTabGroup Header="ダウンロード ツール">
+                <Custom:RibbonContextualTabGroup x:Name="cGroup"  Header="ダウンロード ツール">
                     <Custom:RibbonContextualTabGroup.Background>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
                             <GradientStop Color="#FF37872B"/>
@@ -78,8 +78,8 @@
                     <Custom:RibbonRadioButton x:Name="Medium" Label="普通" Tag="35" LargeImageSource="pack://application:,,,/ribbonIcons/64/普通.png"/>
                     <Custom:RibbonRadioButton x:Name="Fine" Label="高画質" Tag="22" LargeImageSource="pack://application:,,,/ribbonIcons/64/画質.png"/>
                     <Custom:RibbonSplitButton x:Name="CustomRes" Label="カスタム" LargeImageSource="pack://application:,,,/ribbonIcons/64/カスタム.png" Click="RibbonSplitButton_Click" IsCheckable="True">
-                        <Custom:RibbonGallery x:Name="ResolutionCollection">
-                            <Custom:RibbonGalleryCategory x:Name="Res_Cat" Header="画質 オプション" ScrollViewer.CanContentScroll="True" Custom:RibbonGalleryItem.Selected="CustomResItemClicked">
+                        <Custom:RibbonGallery x:Name="ResolutionCollection" SelectionChanged="CustomResItemClicked">
+                            <Custom:RibbonGalleryCategory x:Name="Res_Cat" Header="画質 オプション" ScrollViewer.CanContentScroll="True">
                                 <Custom:RibbonGalleryItem Tag="5" Content="5: Low Quality, 240p, FLV (MP3, SVQ)" />
                                 <Custom:RibbonGalleryItem Tag="34" Content="34: Low Definition, 360p, FLV (AAC, H.264)" />
                                 <Custom:RibbonGalleryItem Tag="35" Content="35: Standard Definition, 480p, FLV (AAC, H.264)" />
@@ -101,7 +101,7 @@
                     </Custom:RibbonSplitButton>
                 </Custom:RibbonGroup>
                 <Custom:RibbonGroup Header="保存先">
-                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png" Click="RibbonButton_Click"/>
+                    <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png" Click="FolderChangeButton_Click"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">

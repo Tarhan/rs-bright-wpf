@@ -55,11 +55,16 @@ Class MainWindow
         End If
     End Sub
     Private Sub CustomResItemClicked(sender As Object, e As RoutedEventArgs)
-        ytconfigure(sender.Tag)
+        ytconfigure(DirectCast(sender, RibbonGallery).SelectedItem.Tag)
         CustomRes.IsChecked = True
+        Rapid.IsChecked = False
+        Medium.IsChecked = False
+        Fine.IsChecked = False
     End Sub
     Private Sub ytconfigure(itag As Integer)
-        My.Settings.yt_qTarget = itag
+        If itag = 0 Then Return
+        My.Settings.ytTarget = itag
+        Debug.WriteLine(itag)
     End Sub
     Private Sub DefaultResolutionClicked(sender As Object, e As RoutedEventArgs) Handles Rapid.Checked, Medium.Checked, Fine.Checked
         CustomRes.IsChecked = False
@@ -67,9 +72,6 @@ Class MainWindow
         For Each i As RibbonGalleryItem In Res_Cat.Items
             i.IsSelected = CInt(i.Tag) = CInt(sender.tag)
         Next
-    End Sub
-    Private Sub Ribbon_Loaded(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
-        If Not _loaded Then setCustomRes()
     End Sub
     Private Sub currrenturichanged() Handles uiCtl.UrlOfCurrentTabChanged
         Dim attribute As vServiceKind
@@ -89,8 +91,8 @@ Class MainWindow
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
             Dim fmt As Integer
-            If param.getFmtIdWhichContains(My.Settings.yt_qTarget) Then
-                fmt = My.Settings.yt_qTarget
+            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget) Then
+                fmt = My.Settings.ytTarget
             Else
                 fmt = 18
             End If
@@ -106,8 +108,8 @@ Class MainWindow
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
             Dim fmt As Integer
-            If param.getFmtIdWhichContains(My.Settings.yt_qTarget) Then
-                fmt = My.Settings.yt_qTarget
+            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget) Then
+                fmt = My.Settings.ytTarget
             Else
                 fmt = 18
             End If
@@ -147,9 +149,8 @@ Class MainWindow
         End If
         Return linestr
     End Function
-        ' TODO: 画質設定の自動読み込み
-    Private Sub loadytcfg() Handles MyBase.Initialized
-        Select Case My.Settings.yt_qTarget
+    Private Sub loadytcfg() Handles Me.Loaded
+        Select Case My.Settings.ytTarget
             Case 18
                 Rapid.IsChecked = True
             Case 22
@@ -157,32 +158,33 @@ Class MainWindow
             Case 35
                 Medium.IsChecked = True
             Case Else
+                CustomRes.IsChecked = True
                 For Each i As RibbonGalleryItem In Res_Cat.Items
-                    i.IsSelected = CInt(i.Tag) = CInt(My.Settings.yt_qTarget)
+                    i.IsSelected = CInt(i.Tag) = CInt(My.Settings.ytTarget)
                 Next
         End Select
 
         AddHandler My.Settings.PropertyChanged, Sub() My.Settings.Save()
     End Sub
     ' yt画質の設定の読込
-    Private _loaded As Boolean = False
-    Private Sub setCustomRes()
-        _loaded = True
-        Dim t As Hashtable = getResolution()
-        For Each v As Newtonsoft.Json.Linq.JObject In t.Values
-            Dim s As String = String.Format("{0}: {1}, {2} ({3}, {4})", v("itag"), v("description"), v("format"), v("acodec"), v("vcodec"))
-            Debug.WriteLine(s)
-        Next
-    End Sub
+    'Private _loaded As Boolean = False
+    'Private Sub setCustomRes()
+    '    _loaded = True
+    '    Dim t As Hashtable = getResolution()
+    '    For Each v As Newtonsoft.Json.Linq.JObject In t.Values
+    '        Dim s As String = String.Format("{0}: {1}, {2} ({3}, {4})", v("itag"), v("description"), v("format"), v("acodec"), v("vcodec"))
+    '        Debug.WriteLine(s)
+    '    Next
+    'End Sub
 #Region "contextualtabctl"
     Private Sub ActivateContextTab(uri As String, attr As vServiceKind)
         Select Case attr
             Case vServiceKind.No
-                context.Visibility = Windows.Visibility.Hidden
-                context.Tag = Nothing
+                cGroup.Visibility = Windows.Visibility.Hidden
+                cGroup.Tag = Nothing
             Case Else
-                context.Visibility = Windows.Visibility.Visible
-                context.Tag = New contextattributecollection With {.uri = uri, .attribute = attr}
+                cGroup.Visibility = Windows.Visibility.Visible
+                cGroup.Tag = New contextattributecollection With {.uri = uri, .attribute = attr}
         End Select
     End Sub
     Private Structure contextattributecollection
@@ -199,7 +201,7 @@ Class MainWindow
         sender.Height = sender.ActualHeight
     End Sub
 
-    Private Sub RibbonButton_Click(sender As Object, e As RoutedEventArgs)
-        'TODO
+    Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
+        'TODO フォルダ指定
     End Sub
 End Class
