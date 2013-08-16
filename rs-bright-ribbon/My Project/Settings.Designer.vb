@@ -55,13 +55,14 @@ Partial Public NotInheritable Class MySettings
     
     <Global.System.Configuration.UserScopedSettingAttribute(), _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-     Global.System.Configuration.DefaultSettingValueAttribute("22")> _
-    Public Property ytTarget() As Integer
+     Global.System.Configuration.DefaultSettingValueAttribute("35"), _
+     Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)> _
+    Public Property ytTarget_custom() As Integer
         Get
-            Return CType(Me("ytTarget"), Integer)
+            Return CType(Me("ytTarget_custom"), Integer)
         End Get
         Set(value As Integer)
-            Me("ytTarget") = value
+            Me("ytTarget_custom") = value
         End Set
     End Property
 
@@ -74,6 +75,31 @@ Partial Public NotInheritable Class MySettings
         End Get
         Set(value As String)
             Me("Downloadpath") = value
+        End Set
+    End Property
+
+    <Global.System.Configuration.UserScopedSettingAttribute(), _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+     Global.System.Configuration.DefaultSettingValueAttribute("22"), _
+     Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)> _
+    Public Property ytTarget_ClickedState() As Integer
+        Get
+            Return CType(Me("ytTarget_ClickedState"), Integer)
+        End Get
+        Set(value As Integer)
+            Me("ytTarget_ClickedState") = value
+        End Set
+    End Property
+
+    <Global.System.Configuration.UserScopedSettingAttribute(), _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+     Global.System.Configuration.DefaultSettingValueAttribute("False")> _
+    Public Property settingstate() As Boolean
+        Get
+            Return CType(Me("settingstate"), Boolean)
+        End Get
+        Set(value As Boolean)
+            Me("settingstate") = value
         End Set
     End Property
 End Class

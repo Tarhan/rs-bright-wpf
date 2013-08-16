@@ -1,61 +1,32 @@
-﻿<UserControl x:Class="dlqueue"
+﻿<UserControl
 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-mc:Ignorable="d" Height="70" Width="300" HorizontalAlignment="Left">
-    <UserControl.Resources>
-        <Color x:Key="Color2">#7FDDDDDD</Color>
-    </UserControl.Resources>
-    <Grid>
-        <Border CornerRadius="10" BorderBrush="Black">
-            <Border.Background>
-                <SolidColorBrush Color="{DynamicResource Color2}"/>
-            </Border.Background>
-            <Grid x:Name="detail" Opacity="0.8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="10"/>
-                </Grid.ColumnDefinitions>
-                <Grid>
-                    <DockPanel Margin="1">
-                        <Image Width="0" MinWidth="26" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="19"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="8"/>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="2*"/>
-                                <RowDefinition Height="2*"/>
-                            </Grid.RowDefinitions>
-                            <TextBlock x:Name="speed" Grid.Row="3" TextWrapping="NoWrap" FontSize="10" FontStyle="Oblique" UseLayoutRounding="False" TextTrimming="CharacterEllipsis" Text="6764646747486748787" VerticalAlignment="Center" Margin="3,0" Height="20" />
-                            <TextBlock Grid.Row="1" TextWrapping="Wrap" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,10,19,10" FontSize="4" FontStyle="Italic" FontWeight="Medium" Grid.Column="1" Height="6" Width="0"/>
-                            <TextBlock x:Name="title" HorizontalAlignment="Left" TextWrapping="WrapWithOverflow" Text="タイトル" VerticalAlignment="Top" FontFamily="HGPSoeiKakugothicUB" Grid.Row="1" TextTrimming="CharacterEllipsis" Height="20" Width="243"/>
-                            <ToggleButton x:Name="PauseButton" Grid.Column="1" Grid.Row="1" Width="18" Height="18">
-                                <Image Source="pack://application:,,,/ribbonIcons/停止　64.png"/>
-                            </ToggleButton>
-                        </Grid>
-                    </DockPanel>
-                </Grid>
-                <Button Content="" Grid.Column="1" Grid.ColumnSpan="2">
-                    <Button.Background>
-                        <SolidColorBrush Color="{DynamicResource Color2}"/>
-                    </Button.Background>
-                </Button>
-            </Grid>
-        </Border>
-        <ProgressBar x:Name="monitor" Opacity="0.15" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" IsTabStop="False">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleX="0.95"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
+xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Class="dlqueue"
+mc:Ignorable="d" Height="60" Width="320" HorizontalAlignment="Left" OpacityMask="#FFE6E6E6" Background="#FFE6E6E6" BorderThickness="0.6" BorderBrush="Black">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem x:Name="PauseButton" Header="Stop" IsCheckable="True" Checked="PauseButton_Checked" Unchecked="PauseButton_Unchecked"></MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+    <Grid Margin="8,2,10,1">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <ProgressBar x:Name="monitor" Grid.Row="3" Grid.ColumnSpan="3" Value="50"/>
+        <TextBlock x:Name="speed" TextWrapping="Wrap" Text="{}{0}MB / {1}MB" Grid.Row="2" FontSize="9.666" TextAlignment="Center"/>
+        <Image Grid.RowSpan="2" Source="Image1.png"/>
+        <TextBlock x:Name="title" TextWrapping="Wrap" Text="TextBlock" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="15" FontFamily="Microsoft YaHei UI"/>
+        <TextBlock TextWrapping="NoWrap"  Grid.Column="1" Grid.Row="1" Text="{}{0} kB/s" FontSize="11.666" VerticalAlignment="Center"/>
+        <TextBlock TextWrapping="NoWrap" Grid.Column="2" Grid.Row="1" TextAlignment="Right" Text="あと何分" FontSize="11.666" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

@@ -112,7 +112,7 @@ Public Class dlqueue
 #Region "中断用オブジェクトの付与"
     Private Function setOperation() As IDisposable
         Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
-                                                                 Dim s As String = String.Format("{0}/{1} - {2}%", p.BytesReceived, p.TotalBytesToReceive, p.ProgressPercentage)
+                                                                 Dim s As String = String.Format("{0}MB / {1}MB", Format(p.BytesReceived / 1000000, "0.00"), Format(p.TotalBytesToReceive / 1000000, "0.00"))
                                                                  Dispatcher.Invoke(Sub()
                                                                                        speed.Text = s
                                                                                        monitor.Value = p.ProgressPercentage
@@ -183,11 +183,13 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
                           End Sub)
     End Sub
 
-    Private Sub PauseButton_Checked(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles PauseButton.Checked
+    Private Sub PauseButton_Checked(sender As System.Object, e As System.Windows.RoutedEventArgs)
         IsStopped = True
+        sender.Header = "再開"
     End Sub
 
-    Private Sub PauseButton_Unchecked(sender As System.Object, e As System.Windows.RoutedEventArgs) Handles PauseButton.Unchecked
+    Private Sub PauseButton_Unchecked(sender As System.Object, e As System.Windows.RoutedEventArgs)
         IsStopped = False
+        sender.Header = "中断"
     End Sub
 End Class

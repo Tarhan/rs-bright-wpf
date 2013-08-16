@@ -45,33 +45,72 @@ Class MainWindow
                 ncdl(Urlbox.Text, CStr(ext))
         End Select
     End Sub
-    Private Sub RibbonSplitButton_Click(sender As Object, e As RoutedEventArgs)
-        If sender.IsChecked Then
-            Rapid.IsChecked = False
-            Medium.IsChecked = False
-            Fine.IsChecked = False
-        Else
-            sender.IsChecked = True
-        End If
+    Private Sub CustomResButtonClick(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
+        With CustomRes
+            My.Settings.settingstate = .IsChecked
+            If .IsChecked Then
+                Medium.IsChecked = False
+                Rapid.IsChecked = False
+                Fine.IsChecked = False
+            Else
+                Select Case getCurrentfmt()
+                    Case 18
+                        Rapid.IsChecked = True
+                    Case 22
+                        Fine.IsChecked = True
+                    Case 35
+                        Medium.IsChecked = True
+                End Select
+            End If
+        End With
+        Debug.Print(getCurrentfmt)
     End Sub
     Private Sub CustomResItemClicked(sender As Object, e As RoutedEventArgs)
         ytconfigure(DirectCast(sender, RibbonGallery).SelectedItem.Tag)
-        CustomRes.IsChecked = True
-        Rapid.IsChecked = False
-        Medium.IsChecked = False
-        Fine.IsChecked = False
     End Sub
     Private Sub ytconfigure(itag As Integer)
         If itag = 0 Then Return
-        My.Settings.ytTarget = itag
+        My.Settings.ytTarget_custom = itag
         Debug.WriteLine(itag)
-    End Sub
-    Private Sub DefaultResolutionClicked(sender As Object, e As RoutedEventArgs) Handles Rapid.Checked, Medium.Checked, Fine.Checked
-        CustomRes.IsChecked = False
-        ytconfigure(CInt(sender.Tag))
+        Select Case itag
+            Case 18
+                CustomRes.IsChecked = False
+                Medium.IsChecked = False
+                Rapid.IsChecked = True
+                Fine.IsChecked = False
+            Case 22
+                CustomRes.IsChecked = False
+                Medium.IsChecked = False
+                Rapid.IsChecked = False
+                Fine.IsChecked = True
+            Case 35
+                CustomRes.IsChecked = False
+                Medium.IsChecked = True
+                Rapid.IsChecked = False
+                Fine.IsChecked = False
+            Case Else
+                CustomRes.IsChecked = True
+                Medium.IsChecked = False
+                Rapid.IsChecked = False
+                Fine.IsChecked = False
+        End Select
+        My.Settings.settingstate = CustomRes.IsChecked
         For Each i As RibbonGalleryItem In Res_Cat.Items
-            i.IsSelected = CInt(i.Tag) = CInt(sender.tag)
+            i.IsSelected = CInt(i.Tag) = CInt(itag)
         Next
+    End Sub
+    Private Function getCurrentfmt() As Integer
+        If My.Settings.settingstate Then
+            Return My.Settings.ytTarget_custom
+        Else
+            Return My.Settings.ytTarget_ClickedState
+        End If
+    End Function
+    Private Sub DefaultResolutionClicked(sender As Object, e As RoutedEventArgs) Handles Rapid.Checked, Medium.Checked, Fine.Checked
+        My.Settings.ytTarget_ClickedState = sender.tag
+        My.Settings.settingstate = False
+        CustomRes.IsChecked = False
+        Debug.WriteLine(getCurrentfmt)
     End Sub
     Private Sub currrenturichanged() Handles uiCtl.UrlOfCurrentTabChanged
         Dim attribute As vServiceKind
@@ -91,8 +130,8 @@ Class MainWindow
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
             Dim fmt As Integer
-            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget) Then
-                fmt = My.Settings.ytTarget
+            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget_custom) Then
+                fmt = getCurrentfmt()
             Else
                 fmt = 18
             End If
@@ -108,8 +147,8 @@ Class MainWindow
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
             Dim fmt As Integer
-            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget) Then
-                fmt = My.Settings.ytTarget
+            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget_custom) Then
+                fmt = getCurrentfmt()
             Else
                 fmt = 18
             End If
@@ -150,20 +189,7 @@ Class MainWindow
         Return linestr
     End Function
     Private Sub loadytcfg() Handles Me.Loaded
-        Select Case My.Settings.ytTarget
-            Case 18
-                Rapid.IsChecked = True
-            Case 22
-                Fine.IsChecked = True
-            Case 35
-                Medium.IsChecked = True
-            Case Else
-                CustomRes.IsChecked = True
-                For Each i As RibbonGalleryItem In Res_Cat.Items
-                    i.IsSelected = CInt(i.Tag) = CInt(My.Settings.ytTarget)
-                Next
-        End Select
-
+        ytconfigure(My.Settings.ytTarget_custom)
         AddHandler My.Settings.PropertyChanged, Sub() My.Settings.Save()
     End Sub
     ' yt画質の設定の読込
@@ -196,10 +222,6 @@ Class MainWindow
     End Sub
 #End Region
 #End Region
-
-    Private Sub Expander_Changed(sender As Object, e As RoutedEventArgs)
-        sender.Height = sender.ActualHeight
-    End Sub
 
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定
