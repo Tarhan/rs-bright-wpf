@@ -7,7 +7,7 @@ xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Class="dlqueue
 mc:Ignorable="d" Height="60" Width="320" HorizontalAlignment="Left" OpacityMask="#FFE6E6E6" Background="#FFE6E6E6" BorderThickness="0.6" BorderBrush="Black">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem x:Name="PauseButton" Header="Stop" IsCheckable="True" Checked="PauseButton_Checked" Unchecked="PauseButton_Unchecked"></MenuItem>
+            <MenuItem x:Name="PauseButton" Header="一時停止" IsCheckable="True" Checked="PauseButton_Checked" Unchecked="PauseButton_Unchecked"/>
         </ContextMenu>
     </UserControl.ContextMenu>
     <Grid Margin="8,2,10,1">
