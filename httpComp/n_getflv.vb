@@ -68,4 +68,9 @@ Public Class n_getflv
         Next
         Return d
     End Function
+    Shared Function getthumbinfo(watchId As String) As Xml.XmlDocument
+        Dim d As New Xml.XmlDocument()
+        d.Load(String.Format("http://ext.nicovideo.jp/api/getthumbinfo/{0}", watchId))
+        Return d
+    End Function
 End Class

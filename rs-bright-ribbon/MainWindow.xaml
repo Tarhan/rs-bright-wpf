@@ -26,7 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="77"/>
+            <RowDefinition Height="79"/>
         </Grid.RowDefinitions>
         <Custom:Ribbon>
             <Custom:Ribbon.ContextualTabGroups>
@@ -104,19 +104,20 @@
                     <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png" Click="FolderChangeButton_Click"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
-            <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール">
-                <Custom:RibbonGroup x:Name="convertgroup_b" Header="変換" ButtonBase.Click="ContextClick" Visibility="Collapsed">
+            <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール" Custom:RibbonButton.Click="ContextClick">
+                <Custom:RibbonGroup x:Name="convertgroup_b" Header="変換">
                     <Custom:RibbonButton Label="MP3" Tag="mp3" LargeImageSource="pack://application:,,,/ribbonIcons/64/mp3.png"/>
                     <Custom:RibbonButton Label="MP4" Tag="mp4" LargeImageSource="pack://application:,,,/ribbonIcons/64/MP4.png"/>
                     <Custom:RibbonButton Label="WAV" Tag="wav" LargeImageSource="pack://application:,,,/ribbonIcons/64/wav.png"/>
                     <Custom:RibbonButton Label="MOV" Tag="mov" LargeImageSource="pack://application:,,,/ribbonIcons/64/mov.png"/>
                     <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/64/aiff.png" />
                     <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
-                </Custom:RibbonGroup>
+                    <Custom:RibbonButton Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png" IsDefault="True"/>
+               </Custom:RibbonGroup>
             </Custom:RibbonTab>
         </Custom:Ribbon>
         <me:Zero_UI x:Name="uiCtl" Grid.Row="1"/>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="2" Background="#E6F0F0F0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="25"/>

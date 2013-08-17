@@ -49,6 +49,7 @@ Module downloadViaGDataapi
         Dim cookie As String
         Dim VideoInfo As Object
         Dim sourceext As String
+        Dim thumbUrl As String
         Public Function getFmtIdWhichContains() As List(Of Integer)
             Dim l As New List(Of Integer)
             For Each key As Integer In Me.Uris.Keys

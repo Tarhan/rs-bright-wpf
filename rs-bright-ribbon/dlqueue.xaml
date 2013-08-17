@@ -4,7 +4,7 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 xmlns:ee="http://schemas.microsoft.com/expression/2010/effects" x:Class="dlqueue"
-mc:Ignorable="d" Height="60" Width="320" HorizontalAlignment="Left" OpacityMask="#FFE6E6E6" Background="#FFE6E6E6" BorderThickness="0.6" BorderBrush="Black">
+mc:Ignorable="d" Height="60" Width="320" HorizontalAlignment="Left" OpacityMask="#FFE6E6E6" Background="#FFE6E6E6" BorderThickness="0.6" BorderBrush="Black" VerticalAlignment="Center">
     <UserControl.ContextMenu>
         <ContextMenu>
             <MenuItem x:Name="PauseButton" Header="一時停止" IsCheckable="True" Checked="PauseButton_Checked" Unchecked="PauseButton_Unchecked"/>
@@ -24,7 +24,7 @@ mc:Ignorable="d" Height="60" Width="320" HorizontalAlignment="Left" OpacityMask=
         </Grid.ColumnDefinitions>
         <ProgressBar x:Name="monitor" Grid.Row="3" Grid.ColumnSpan="3" Value="50"/>
         <TextBlock x:Name="speed" TextWrapping="Wrap" Text="{}{0}MB / {1}MB" Grid.Row="2" FontSize="9.666" TextAlignment="Center"/>
-        <Image Grid.RowSpan="2" Source="Image1.png"/>
+        <Image x:Name="thumb" Grid.RowSpan="2" Source="Image1.png"/>
         <TextBlock x:Name="title" TextWrapping="Wrap" Text="TextBlock" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="15" FontFamily="Microsoft YaHei UI"/>
         <TextBlock TextWrapping="NoWrap"  Grid.Column="1" Grid.Row="1" Text="{}{0} kB/s" FontSize="11.666" VerticalAlignment="Center"/>
         <TextBlock TextWrapping="NoWrap" Grid.Column="2" Grid.Row="1" TextAlignment="Right" Text="あと何分" FontSize="11.666" VerticalAlignment="Center"/>

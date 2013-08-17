@@ -130,24 +130,25 @@ Class MainWindow
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
             Dim fmt As Integer
-            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget_custom) Then
+            If param.getFmtIdWhichContains.Contains(getCurrentfmt) Then
                 fmt = getCurrentfmt()
             Else
                 fmt = 18
             End If
             Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
-            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "")
+            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url)
             ctrl_Inst.start()
         Catch ex As Net.WebException
 
         End Try
     End Sub
     Private Sub ytdl(url As String, ext As String)
+        If String.IsNullOrEmpty(ext) Then ytdl(url) : Return
         Try
             Dim param As UriCookiePair = downloadViaGDataapi.getDownloadParam(url)
             Dim ctrl_Inst As New dlqueue
             Dim fmt As Integer
-            If param.getFmtIdWhichContains.Contains(My.Settings.ytTarget_custom) Then
+            If param.getFmtIdWhichContains.Contains(getCurrentfmt) Then
                 fmt = getCurrentfmt()
             Else
                 fmt = 18
@@ -155,7 +156,7 @@ Class MainWindow
             Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
             Dim output As String = getStartupPath() + "\Download\" + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
             'TODO fmt値 Uris(18)ってとこ
-            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, "", getlinestr(ext, saveto, output))
+            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url, getlinestr(ext, saveto, output))
             ctrl_Inst.start()
         Catch ex As Net.WebException
 
@@ -166,16 +167,17 @@ Class MainWindow
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
         Dim saveto As String = getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext
         Dim ctrl_Inst As New dlqueue
-        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "")
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl)
         ctrl_Inst.start()
     End Sub
     Private Sub ncdl(url As String, ext As String)
+        If String.IsNullOrEmpty(ext) Then ncdl(url) : Return
         Dim res As New Dictionary(Of String, String)
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
         Dim saveto As String = getStartupPath() + "\temp\" + res("thread_id") + "." + param.sourceext
         Dim output As String = IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
         Dim ctrl_Inst As New dlqueue
-        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, "", getlinestr(ext, saveto, output))
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl, getlinestr(ext, saveto, output))
         ctrl_Inst.start()
     End Sub
     Function getlinestr(ext As String, input As String, Optional out As String = "") As String
@@ -218,7 +220,12 @@ Class MainWindow
         Dim uri As String
     End Structure
     Private Sub ContextClick(sender As Object, e As RoutedEventArgs)
-        'TODO: コンテキストタブのボタンの命令
+        Select Case DirectCast(cGroup.Tag, contextattributecollection).attribute
+            Case vServiceKind.Niconico
+                ncdl(DirectCast(cGroup.Tag, contextattributecollection).uri, sender.tag)
+            Case vServiceKind.Youtube
+                ytdl(DirectCast(cGroup.Tag, contextattributecollection).uri, sender.tag)
+        End Select
     End Sub
 #End Region
 #End Region

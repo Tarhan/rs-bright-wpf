@@ -33,18 +33,16 @@ Public Class dlqueue
     End Property
     Public _linestr As String   'ffmpeg
     Dim data As New List(Of Byte)   'downloaded
-    Dim thumbUri As Uri 'Thumbnail URI
 #End Region
 
 
 #Region "値チェック/開始"
-    Public Sub SetInfo(ByVal Url As Uri, ByVal dst As String, ByVal contentTitle As String, Optional ByVal ck As String = "", Optional ByVal rf As String = "", Optional linestr As String = "", Optional ByVal img As Uri = Nothing)
+    Public Sub SetInfo(ByVal Url As Uri, ByVal dst As String, ByVal contentTitle As String, Optional ByVal ck As String = "", Optional ByVal img As String = "", Optional linestr As String = "")
         Me.speed.Text = "Waiting..."
         Me.title.Text = contentTitle
-        If String.IsNullOrWhiteSpace(contentTitle) Then
-            Me.title.Text = IO.Path.GetFileName(dst)
-        End If
-        info = New dlInfo With {.url = Url, .ck = ck, .rf = rf, .dst = dst}
+        If String.IsNullOrWhiteSpace(contentTitle) Then Me.title.Text = IO.Path.GetFileName(dst)
+        If Not String.IsNullOrWhiteSpace(img) Then thumb.Source = New BitmapImage(New Uri(img))
+        info = New dlInfo With {.url = Url, .ck = ck, .dst = dst}
         _linestr = linestr
         DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Add(Me)
     End Sub

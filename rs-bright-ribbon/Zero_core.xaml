@@ -10,13 +10,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ToolBar Header="メニュー">
-            <ToolBar.Background>
-                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                    <GradientStop Color="#FFB3F9B6" Offset="0.293"/>
-                    <GradientStop Color="#FFF1F7F1" Offset="1"/>
-                </LinearGradientBrush>
-            </ToolBar.Background>
+        <ToolBar Header="メニュー" Background="#E6A1F1B3">
             <Button x:Name="back" BorderThickness="0" ClipToBounds="True" Click="Button_Click_1">
                 <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/戻る.png"/>
             </Button>

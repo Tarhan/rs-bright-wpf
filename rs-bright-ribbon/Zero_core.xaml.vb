@@ -62,10 +62,14 @@
     End Sub
 
     Private Sub Button_Click_1(sender As Object, e As RoutedEventArgs)
-        b.GoBack()
+        If b.CanGoBack Then b.GoBack()
     End Sub
 
     Private Sub forward_Click(sender As Object, e As RoutedEventArgs) Handles forward.Click
-        b.GoForward()
+        If b.CanGoForward Then b.GoForward()
+    End Sub
+
+    Private Sub url_GotKeyboardFocus(sender As Object, e As KeyboardFocusChangedEventArgs) Handles url.GotKeyboardFocus
+        url.SelectAll()
     End Sub
 End Class
