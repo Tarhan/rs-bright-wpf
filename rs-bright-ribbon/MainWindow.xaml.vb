@@ -123,6 +123,9 @@ Class MainWindow
         End If
         ActivateContextTab(uiCtl.UrlOfCurrentTab, attribute)
     End Sub
+    Private Sub DlQueueAdded(addedObj As DependencyObject) Handles Queueboard.vadded
+        expclbtn.IsCollapsed = False
+    End Sub
 #End Region
 #Region "ロジック"
     Private Sub ytdl(url As String)

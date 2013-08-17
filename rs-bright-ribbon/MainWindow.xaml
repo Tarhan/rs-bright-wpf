@@ -20,13 +20,53 @@
             <DataTemplate x:Key="itemHeaderTemplate">
                 <TextBlock Text="TabItem_test"/>
             </DataTemplate>
+            <Storyboard x:Key="OnExpanded1">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="expclbtn">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="grid">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="79">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            <Storyboard x:Key="OnCollapsed1">
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="grid">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="22">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="expclbtn">
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="180">
+                        <EasingDoubleKeyFrame.EasingFunction>
+                            <ExponentialEase EasingMode="EaseInOut"/>
+                        </EasingDoubleKeyFrame.EasingFunction>
+                    </EasingDoubleKeyFrame>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
         </ResourceDictionary>
     </Custom:RibbonWindow.Resources>
+    <Custom:RibbonWindow.Triggers>
+        <EventTrigger RoutedEvent="me:AccordionToggle.Expanded" SourceName="expclbtn">
+            <BeginStoryboard x:Name="OnExpanded1_BeginStoryboard" Storyboard="{StaticResource OnExpanded1}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="me:AccordionToggle.Collapsed" SourceName="expclbtn">
+            <BeginStoryboard x:Name="OnCollapsed1_BeginStoryboard" Storyboard="{StaticResource OnCollapsed1}"/>
+        </EventTrigger>
+    </Custom:RibbonWindow.Triggers>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
-            <RowDefinition Height="79"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Custom:Ribbon>
             <Custom:Ribbon.ContextualTabGroups>
@@ -113,37 +153,56 @@
                     <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/64/aiff.png" />
                     <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
                     <Custom:RibbonButton Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png" IsDefault="True"/>
-               </Custom:RibbonGroup>
+                </Custom:RibbonGroup>
             </Custom:RibbonTab>
         </Custom:Ribbon>
-        <me:Zero_UI x:Name="uiCtl" Grid.Row="1"/>
-        <Grid Grid.Row="2" Background="#E6F0F0F0">
+        <me:Zero_UI x:Name="uiCtl" Grid.Row="1" d:IsHidden="True"/>
+        <Grid x:Name="grid" Grid.Row="2" Background="#E6F0F0F0" RenderTransformOrigin="0.5,0.5" Height="79" VerticalAlignment="Bottom">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="25"/>
             </Grid.ColumnDefinitions>
             <TabControl TabStripPlacement="Bottom" FontSize="8.666">
                 <TabItem Header="ダウンロード中" Background="#FFE5E5E5">
-                    <WrapPanel x:Name="Queueboard">
-                        <WrapPanel.Background>
+                    <me:MyWrapPanel x:Name="Queueboard">
+                        <me:MyWrapPanel.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
                                 <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
                             </RadialGradientBrush>
-                        </WrapPanel.Background>
-                    </WrapPanel>
+                        </me:MyWrapPanel.Background>
+                    </me:MyWrapPanel>
                 </TabItem>
                 <TabItem Header="ダウンロード済" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60">
-                    <WrapPanel>
-                        <WrapPanel.Background>
+                    <me:MyWrapPanel>
+                        <me:MyWrapPanel.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
                                 <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
                             </RadialGradientBrush>
-                        </WrapPanel.Background>
-                    </WrapPanel>
+                        </me:MyWrapPanel.Background>
+                    </me:MyWrapPanel>
                 </TabItem>
             </TabControl>
+            <me:AccordionToggle x:Name="expclbtn" Grid.Column="1" Height="16" VerticalAlignment="Top" Width="16" RenderTransformOrigin="0.5,0.5" Margin="0,2.5,0,0">
+                <me:AccordionToggle.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </me:AccordionToggle.RenderTransform>
+                <Image Stretch="Fill" Source="ribbonIcons/16/下向き.png" RenderTransformOrigin="0.5,0.5"/>
+            </me:AccordionToggle>
         </Grid>
     </Grid>
 </Custom:RibbonWindow>

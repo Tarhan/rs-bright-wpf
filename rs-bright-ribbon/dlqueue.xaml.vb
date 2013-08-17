@@ -45,6 +45,7 @@ Public Class dlqueue
         info = New dlInfo With {.url = Url, .ck = ck, .dst = dst}
         _linestr = linestr
         DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Add(Me)
+
     End Sub
     Public Sub start()
         Me.speed.Text = "Connecting..."

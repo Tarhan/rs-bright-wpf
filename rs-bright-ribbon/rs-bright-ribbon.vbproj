@@ -115,8 +115,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccordionToggle.xaml.vb">
+      <DependentUpon>AccordionToggle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ExtendedTabItem.xaml.vb">
       <DependentUpon>ExtendedTabItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyWrapPanel.xaml.vb">
+      <DependentUpon>MyWrapPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="nc_dl.vb" />
     <Compile Include="rsun_loadconvertCfg.vb" />
@@ -128,6 +134,14 @@
     <Compile Include="Zero_UI.xaml.vb">
       <DependentUpon>Zero_UI.xaml</DependentUpon>
     </Compile>
+    <Page Include="AccordionToggle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyWrapPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -274,6 +288,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ffmpeg.exe" />
+    <Resource Include="ribbonIcons\16\下向き.png" />
     <Resource Include="Image1.png" />
     <Resource Include="ribbonIcons\24\戻る.png" />
     <Resource Include="ribbonIcons\24\戻る　カーソル.png" />
