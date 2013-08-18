@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:me="clr-namespace:rs_bright_ribbon"
     xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="MainWindow"
-    Title="MainWindow" Height="700" Width="1024" WindowStartupLocation="CenterScreen">
+    Title="MainWindow" Height="700" Width="1024" WindowStartupLocation="CenterScreen" Loaded="RibbonWindow_Loaded">
     <Custom:RibbonWindow.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="newTabButtonContentTemplate">
@@ -170,7 +170,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition Width="25"/>
             </Grid.ColumnDefinitions>
-            <TabControl TabStripPlacement="Bottom" FontSize="8.666">
+            <TabControl TabStripPlacement="Bottom" FontSize="8.666" SelectionChanged="TabControl_SelectionChanged">
                 <TabItem Header="ダウンロード中" Background="#FFE5E5E5">
                     <me:MyWrapPanel x:Name="Queueboard">
                         <me:MyWrapPanel.Background>

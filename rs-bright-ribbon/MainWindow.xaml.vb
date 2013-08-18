@@ -44,6 +44,7 @@ Class MainWindow
             Case vServiceKind.Niconico
                 ncdl(Urlbox.Text, CStr(ext))
         End Select
+        e.Handled = True
     End Sub
     Private Sub CustomResButtonClick(sender As Object, e As RoutedEventArgs) Handles CustomRes.Click
         With CustomRes
@@ -125,6 +126,12 @@ Class MainWindow
     End Sub
     Private Sub DlQueueAdded(addedObj As DependencyObject) Handles Queueboard.vadded
         expclbtn.IsCollapsed = False
+    End Sub
+    Private Sub RibbonWindow_Loaded(sender As Object, e As RoutedEventArgs)
+        Me.expclbtn.IsCollapsed = True
+    End Sub
+    Private Sub TabControl_SelectionChanged(sender As Object, e As SelectionChangedEventArgs)
+        Me.expclbtn.IsCollapsed = False
     End Sub
 #End Region
 #Region "ロジック"
@@ -225,10 +232,11 @@ Class MainWindow
     Private Sub ContextClick(sender As Object, e As RoutedEventArgs)
         Select Case DirectCast(cGroup.Tag, contextattributecollection).attribute
             Case vServiceKind.Niconico
-                ncdl(DirectCast(cGroup.Tag, contextattributecollection).uri, sender.tag)
+                ncdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
             Case vServiceKind.Youtube
-                ytdl(DirectCast(cGroup.Tag, contextattributecollection).uri, sender.tag)
+                ytdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
         End Select
+        e.Handled = True
     End Sub
 #End Region
 #End Region
@@ -236,4 +244,5 @@ Class MainWindow
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定
     End Sub
+
 End Class

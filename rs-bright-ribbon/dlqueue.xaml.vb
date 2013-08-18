@@ -91,7 +91,7 @@ Public Class dlqueue
             AddHandler FFMProcess.Exited, Sub()
                                               If FFMProcess.ExitCode <> 0 Then
                                                   Debug.Print("""" + getStartupPath() + "\ffmpeg.exe""" & " " & Me._linestr.Replace(vbCrLf, ""))
-                                                  MsgBox(FFMProcess.ExitCode)
+                                                  MsgBox("変換エラー Exitcode:" + FFMProcess.ExitCode)
                                               End If
                                               FFMProcess.Dispose()
                                               IO.File.Delete(info.dst)
@@ -149,7 +149,6 @@ Public Class dlqueue
         Else
             Exit Sub
         End If
-        On Error Resume Next
 Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
         If r1.Count > 0 Then
             Dim current As Double = CInt(TimeSpan.Parse(r1.Item(0).Value).TotalMilliseconds)
@@ -157,6 +156,7 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
             Dispatcher.Invoke(Sub()
                                   monitor.Maximum = total
                                   monitor.Value = current
+                                  speed.Text = "変換中... " + Format(current / total * 100, "0.0")
                               End Sub)
         End If
     End Sub
