@@ -185,7 +185,7 @@ Class MainWindow
         Dim res As New Dictionary(Of String, String)
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
         Dim saveto As String = getStartupPath() + "\temp\" + res("thread_id") + "." + param.sourceext
-        Dim output As String = IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
+        Dim output As String = getStartupPath() + "\Download\" + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
         Dim ctrl_Inst As New dlqueue
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl, getlinestr(ext, saveto, output))
         ctrl_Inst.start()
@@ -244,5 +244,4 @@ Class MainWindow
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定
     End Sub
-
 End Class

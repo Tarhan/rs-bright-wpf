@@ -17,6 +17,7 @@ Public Class dlqueue
     Private _stopflag As Boolean
     Private resume_req As HttpWebRequest
     Private ReqDisposeProvider As IDisposable
+    Private time As New Stopwatch
     Public Property IsStopped() As Boolean
         Get
             Return _stopflag
@@ -45,13 +46,13 @@ Public Class dlqueue
         info = New dlInfo With {.url = Url, .ck = ck, .dst = dst}
         _linestr = linestr
         DirectCast(Application.Current.MainWindow, MainWindow).Queueboard.Children.Add(Me)
-
     End Sub
     Public Sub start()
         Me.speed.Text = "Connecting..."
         With info
             Proc(.url, .dst, .ck, .rf)
         End With
+        time.Start()
     End Sub
 #End Region
 #Region "メイン"
@@ -105,9 +106,6 @@ Public Class dlqueue
         End If
     End Sub
 #End Region
-#Region "演算系"
-    ' download
-
 #Region "中断用オブジェクトの付与"
     Private Function setOperation() As IDisposable
         Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
@@ -121,6 +119,8 @@ Public Class dlqueue
                                             Function(list, p)
                                                 Debug.WriteLine(String.Format("AddRange {0} +{1}", list.Count, p.Value.Length))
                                                 list.AddRange(p.Value)
+                                                state = p
+                                                add_downloaded()
                                                 Return list
                                             End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
                                                                                        If TryCast(ex, Net.WebException) Is Nothing Then
@@ -132,7 +132,25 @@ Public Class dlqueue
                                                                                    End Sub, AddressOf Oncompleted)
     End Function
 #End Region
-
+#Region "演算系"
+    ' download
+    Structure downloadspeed
+        Dim progress As AsynchronousExtensions.Progress(Of Byte())
+        Dim time As TimeSpan
+        Sub New(p As AsynchronousExtensions.Progress(Of Byte()), timer As Stopwatch)
+            progress = p
+            If Not timer.IsRunning Then Throw New Exception
+            time = timer.Elapsed
+        End Sub
+    End Structure
+    Public state As AsynchronousExtensions.Progress(Of Byte()) 'これのTotalBytesToReceiveで全体が求まる
+    Public speedlist As New List(Of downloadspeed)
+    Private Sub add_downloaded()
+        If Not state Is Nothing Then speedlist.Add(New downloadspeed(state, time))
+    End Sub
+    Public Function getCurrentSpeed() As Integer
+        'TODO
+    End Function
 
     ' ffmpeg
 
@@ -156,7 +174,7 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
             Dispatcher.Invoke(Sub()
                                   monitor.Maximum = total
                                   monitor.Value = current
-                                  speed.Text = "変換中... " + Format(current / total * 100, "0.0")
+                                  speed.Text = "変換中... " + Format(current / total * 100, "0.0") + "%"
                               End Sub)
         End If
     End Sub
@@ -169,6 +187,7 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
         resume_req.CookieContainer = cc
         cc.SetCookies(info.url, info.ck)
         ReqDisposeProvider = setOperation()
+        time.Restart()
     End Sub
     Public Sub pause()
         ReqDisposeProvider.Dispose()
