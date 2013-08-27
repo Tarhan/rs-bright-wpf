@@ -103,6 +103,7 @@
                     <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/64/aiff.png" />
                     <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
                 </Custom:RibbonGroup>
+                <TextBox x:Name="tb" Text="http://www.ustream.tv/channel/japanswim-tv"/>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="プレイヤー">
                 <Custom:RibbonGroup Header="コントロール">
@@ -143,7 +144,6 @@
                 <Custom:RibbonGroup Header="保存先">
                     <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png" Click="FolderChangeButton_Click"/>
                 </Custom:RibbonGroup>
-                <Button Content="Button" Height="100" Width="75" Click="dbg"/>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール" Custom:RibbonButton.Click="ContextClick">
                 <Custom:RibbonGroup x:Name="convertgroup_b" Header="変換">
@@ -200,6 +200,7 @@
                                 <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
                             </RadialGradientBrush>
                         </me:MyWrapPanel.Background>
+                        <Button Content="Button" Click="dbg"/>
                     </me:MyWrapPanel>
                 </TabItem>
             </TabControl>

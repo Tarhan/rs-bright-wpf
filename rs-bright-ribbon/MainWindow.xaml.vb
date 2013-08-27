@@ -268,6 +268,10 @@ Class MainWindow
     End Sub
 
     Private Sub dbg(sender As Object, e As RoutedEventArgs)
-        ustRecord("http://www.ustream.tv/channel/nikko-circuit")
+        If tb.Text Like "http://www.ustream.tv/channel/*" Then
+            ustRecord(tb.Text)
+        Else
+            MsgBox("URL形式が違います")
+        End If
     End Sub
 End Class
