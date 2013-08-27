@@ -78,6 +78,9 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Google.GData.Client">
       <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
@@ -126,9 +129,11 @@
     </Compile>
     <Compile Include="nc_dl.vb" />
     <Compile Include="rsun_loadconvertCfg.vb" />
+    <Compile Include="rtmpRecorder.xaml.vb">
+      <DependentUpon>rtmpRecorder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.vb" />
     <Compile Include="Startuppath.vb" />
-    <Compile Include="ustRec.vb" />
     <Compile Include="Zero_core.xaml.vb">
       <DependentUpon>Zero_core.xaml</DependentUpon>
     </Compile>
@@ -140,6 +145,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MyWrapPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="rtmpRecorder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

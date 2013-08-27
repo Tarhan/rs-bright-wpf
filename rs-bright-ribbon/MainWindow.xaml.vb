@@ -1,5 +1,6 @@
 Imports Microsoft.Windows.Controls.Ribbon
 Imports System.Text.RegularExpressions
+Imports libSpirit.html
 
 Class MainWindow
     Inherits RibbonWindow
@@ -8,6 +9,7 @@ Class MainWindow
         Niconico
         Niconama
         Youtube
+        Ustream
     End Enum
 
 #Region "イベントハンドラ"
@@ -17,6 +19,8 @@ Class MainWindow
                 ytdl(Urlbox.Text)
             Case vServiceKind.Niconico
                 ncdl(Urlbox.Text)
+            Case vServiceKind.Ustream
+                ustdl(Urlbox.Text)
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
@@ -24,6 +28,8 @@ Class MainWindow
             dlbutton.Tag = vServiceKind.Youtube
         ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
             dlbutton.Tag = vServiceKind.Niconico
+        ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?ustream.tv/recorded/.*") Then
+            dlbutton.Tag = vServiceKind.Ustream
         Else
             dlbutton.Tag = Nothing
             dlbutton.IsEnabled = False
@@ -190,6 +196,16 @@ Class MainWindow
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl, getlinestr(ext, saveto, output))
         ctrl_Inst.start()
     End Sub
+    Private Sub ustdl(url As String)
+        Dim info As KK_HTTP_REQ = ust(url)
+        Dim ctrl_Inst As New dlqueue
+        Dim x As New Xml.XmlDocument
+        x.Load(New Xml.XmlTextReader(url.Replace("www.ustream.tv/recorded", "api.ustream.tv/xml/video") + "/getinfo"))
+        Dim title As String = x.SelectSingleNode("/xml/results/title").FirstChild.Value
+        ctrl_Inst.SetInfo(info.KK_HTTP_TARGET_URI, getStartupPath() + "\Download\" + ustRec.getCID(url) + "." + info.KK_HTTP_PRELOADED_FILENAME, title)
+        ctrl_Inst.start()
+    End Sub
+
 #Region "録画"
     Public Sub ustRecord(url As String)
         Dim fixed As String = ustRec.getCID(url)
@@ -264,7 +280,7 @@ Class MainWindow
 #End Region
 
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
-        'TODO フォルダ指定
+        'TODO フォルダ指定  My.Settings.Savepath
     End Sub
 
     Private Sub dbg(sender As Object, e As RoutedEventArgs)

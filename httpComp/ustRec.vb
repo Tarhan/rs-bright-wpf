@@ -1,5 +1,5 @@
-﻿Module ustRec
-    Friend Function getCID(pageUrl As String) As String
+﻿Public Module ustRec
+    Function getCID(pageUrl As String) As String
         Dim fixed As String
         If pageUrl Like "http://www.ustream.tv/channel/*" Then
             fixed = pageUrl.Replace("/theater", "")
@@ -11,10 +11,10 @@
         x.Load(New Xml.XmlTextReader(pageUrl.Replace("www.ustream.tv/", "api.ustream.tv/xml/") + "/getinfo"))
         Return (x.DocumentElement.FirstChild.FirstChild.FirstChild.Value)
     End Function
-    Function getLiveUrl(cid As String)
+    Function getLiveUrl(cid As String) As String
         Return String.Format("http://iphone-streaming.ustream.tv/ustreamVideo/{0}/streams/live/playlist.m3u8", cid)
     End Function
-    Function getRecordedLiveUrl(cid As String)
+    Function getRecordedLiveUrl(cid As String) As String
         Return String.Format("http://tcdn.ustream.tv/video/{0}", cid)
     End Function
 End Module

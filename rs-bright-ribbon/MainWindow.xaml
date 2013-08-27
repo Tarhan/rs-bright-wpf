@@ -103,7 +103,7 @@
                     <Custom:RibbonButton Label="AIFF" Tag="aiff" LargeImageSource="pack://application:,,,/ribbonIcons/64/aiff.png" />
                     <Custom:RibbonButton Label="AVI" Tag="avi" LargeImageSource="pack://application:,,,/ribbonIcons/64/avi.png"/>
                 </Custom:RibbonGroup>
-                <TextBox x:Name="tb" Text="http://www.ustream.tv/channel/japanswim-tv"/>
+                <TextBox x:Name="tb" Text="http://www.ustream.tv/channel/channeljapan"/>
             </Custom:RibbonTab>
             <Custom:RibbonTab Header="プレイヤー">
                 <Custom:RibbonGroup Header="コントロール">

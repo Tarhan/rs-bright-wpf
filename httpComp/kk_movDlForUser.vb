@@ -87,4 +87,13 @@ Public Module kk_movDlForUser
         req_head.Add(Net.HttpRequestHeader.Cookie, ck)
         Return New KK_HTTP_REQ With {.KK_HTTP_HEADER = req_head, .KK_HTTP_PRELOADED_FILENAME = fn, .KK_HTTP_TARGET_URI = New Uri(downloadUri)}
     End Function
+    Function ust(targetUri As String) As KK_HTTP_REQ
+        Dim targ_raw As String = getRecordedLiveUrl(getCID(targetUri))
+        Dim r As New KK_HTTP_REQ With {.KK_HTTP_PRELOADED_FILENAME = ust_Extention(targ_raw), .KK_HTTP_TARGET_URI = New Uri(targ_raw)}
+        Return r
+    End Function
+    Private Function ust_Extention(targetUri As String) As String
+        Dim t As String = HEAD(targetUri).ResponseUri.AbsolutePath
+        Return t.Substring(t.LastIndexOf("."c) + 1)
+    End Function
 End Module
