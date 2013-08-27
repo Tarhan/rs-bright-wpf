@@ -117,10 +117,10 @@ Public Class dlqueue
                                                              End Sub).
                                   Aggregate(data,
                                             Function(list, p)
-                                                Debug.WriteLine(String.Format("AddRange {0} +{1}", list.Count, p.Value.Length))
                                                 list.AddRange(p.Value)
                                                 state = p
                                                 add_downloaded()
+                                                Dispatcher.Invoke(Sub() speed.Text = String.Format("{0} kB/s", getCurrentSpeedkb()))
                                                 Return list
                                             End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
                                                                                        If TryCast(ex, Net.WebException) Is Nothing Then
@@ -145,11 +145,20 @@ Public Class dlqueue
     End Structure
     Public state As AsynchronousExtensions.Progress(Of Byte()) 'これのTotalBytesToReceiveで全体が求まる
     Public speedlist As New List(Of downloadspeed)
+    Public speedvalList As New List(Of Integer)
     Private Sub add_downloaded()
+        If speedlist.Count > 0 AndAlso (time.Elapsed - speedlist.Last.time).Seconds < 1 Then Return
         If Not state Is Nothing Then speedlist.Add(New downloadspeed(state, time))
     End Sub
-    Public Function getCurrentSpeed() As Integer
-        'TODO
+
+    Public Function getCurrentSpeedkb() As Integer
+        If speedlist.Count < 2 Then Return 0
+        Dim lastitem As downloadspeed = speedlist.Last
+        Dim prev As downloadspeed = speedlist(speedlist.Count - 2)
+        On Error GoTo err
+        speedvalList.Add((lastitem.progress.BytesReceived - prev.progress.BytesReceived) / (lastitem.time - prev.time).Milliseconds)
+        Return speedvalList.Last
+err:    Return 0
     End Function
 
     ' ffmpeg

@@ -190,6 +190,28 @@ Class MainWindow
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl, getlinestr(ext, saveto, output))
         ctrl_Inst.start()
     End Sub
+#Region "録画"
+    Public Sub ustRecord(url As String)
+        Dim fixed As String = ustRec.getCID(url)
+        Dim command As String = String.Format("-re -y -i {0} out.mov", ustRec.getLiveUrl(fixed))
+        Dim FFMProcess As New Process
+        With FFMProcess.StartInfo
+            .FileName = getStartupPath() + "\ffmpeg.exe"
+            .Arguments = command
+            '.ErrorDialog = True
+            '.WindowStyle = ProcessWindowStyle.Minimized
+            '.UseShellExecute = False
+            '.CreateNoWindow = True
+            '.RedirectStandardError = True
+        End With
+        FFMProcess.EnableRaisingEvents = True
+        'AddHandler FFMProcess.ErrorDataReceived, Sub(sender, e) Debug.WriteLine(e.Data)
+        FFMProcess.Start()
+        'FFMProcess.BeginErrorReadLine()
+    End Sub
+#End Region
+
+    '動画サイト用
     Function getlinestr(ext As String, input As String, Optional out As String = "") As String
         Dim linestr As String = rs_loadconvertCfg.getConvertablefileKinds(False)(ext)
         linestr = linestr.Replace("<input>", input)
@@ -243,5 +265,9 @@ Class MainWindow
 
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定
+    End Sub
+
+    Private Sub dbg(sender As Object, e As RoutedEventArgs)
+        ustRecord("http://www.ustream.tv/channel/nikko-circuit")
     End Sub
 End Class

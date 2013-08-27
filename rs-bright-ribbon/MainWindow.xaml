@@ -143,6 +143,7 @@
                 <Custom:RibbonGroup Header="保存先">
                     <Custom:RibbonButton Label="フォルダ指定" LargeImageSource="pack://application:,,,/ribbonIcons/64/folder.png" Click="FolderChangeButton_Click"/>
                 </Custom:RibbonGroup>
+                <Button Content="Button" Height="100" Width="75" Click="dbg"/>
             </Custom:RibbonTab>
             <Custom:RibbonTab x:Name="context" Header="ブラウザ" ContextualTabGroupHeader="ダウンロード ツール" Custom:RibbonButton.Click="ContextClick">
                 <Custom:RibbonGroup x:Name="convertgroup_b" Header="変換">
@@ -182,6 +183,16 @@
                     </me:MyWrapPanel>
                 </TabItem>
                 <TabItem Header="ダウンロード済" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60">
+                    <me:MyWrapPanel>
+                        <me:MyWrapPanel.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
+                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
+                            </RadialGradientBrush>
+                        </me:MyWrapPanel.Background>
+                    </me:MyWrapPanel>
+                </TabItem>
+                <TabItem Header="録画" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60">
                     <me:MyWrapPanel>
                         <me:MyWrapPanel.Background>
                             <RadialGradientBrush>

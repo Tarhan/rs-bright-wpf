@@ -128,6 +128,7 @@
     <Compile Include="rsun_loadconvertCfg.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Startuppath.vb" />
+    <Compile Include="ustRec.vb" />
     <Compile Include="Zero_core.xaml.vb">
       <DependentUpon>Zero_core.xaml</DependentUpon>
     </Compile>
@@ -288,8 +289,38 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ffmpeg.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="licenses\bzip2.txt" />
+    <Content Include="licenses\fontconfig.txt" />
+    <Content Include="licenses\freetype.txt" />
+    <Content Include="licenses\frei0r.txt" />
+    <Content Include="licenses\gnutls.txt" />
+    <Content Include="licenses\lame.txt" />
+    <Content Include="licenses\libass.txt" />
+    <Content Include="licenses\libbluray.txt" />
+    <Content Include="licenses\libcaca.txt" />
+    <Content Include="licenses\libgsm.txt" />
+    <Content Include="licenses\libiconv.txt" />
+    <Content Include="licenses\libilbc.txt" />
+    <Content Include="licenses\libmodplug.txt" />
+    <Content Include="licenses\libtheora.txt" />
+    <Content Include="licenses\libvorbis.txt" />
+    <Content Include="licenses\libvpx.txt" />
+    <Content Include="licenses\opencore-amr.txt" />
+    <Content Include="licenses\openjpeg.txt" />
+    <Content Include="licenses\opus.txt" />
+    <Content Include="licenses\rtmpdump.txt" />
+    <Content Include="licenses\schroedinger.txt" />
+    <Content Include="licenses\soxr.txt" />
+    <Content Include="licenses\speex.txt" />
+    <Content Include="licenses\twolame.txt" />
+    <Content Include="licenses\vo-aacenc.txt" />
+    <Content Include="licenses\vo-amrwbenc.txt" />
+    <Content Include="licenses\x264.txt" />
+    <Content Include="licenses\xavs.txt" />
+    <Content Include="licenses\xvid.txt" />
+    <Content Include="licenses\zlib.txt" />
     <Resource Include="ribbonIcons\16\下向き.png" />
     <Resource Include="Image1.png" />
     <Resource Include="ribbonIcons\24\戻る.png" />

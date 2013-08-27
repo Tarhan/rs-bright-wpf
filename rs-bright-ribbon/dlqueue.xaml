@@ -26,7 +26,7 @@ mc:Ignorable="d" Height="60" Width="320" HorizontalAlignment="Left" OpacityMask=
         <TextBlock x:Name="speed" TextWrapping="Wrap" Text="{}{0}MB / {1}MB" Grid.Row="2" FontSize="9.666" TextAlignment="Center"/>
         <Image x:Name="thumb" Grid.RowSpan="2" Source="Image1.png"/>
         <TextBlock x:Name="title" TextWrapping="Wrap" Text="TextBlock" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="15" FontFamily="Microsoft YaHei UI"/>
-        <TextBlock TextWrapping="NoWrap"  Grid.Column="1" Grid.Row="1" Text="{}{0} kB/s" FontSize="11.666" VerticalAlignment="Center"/>
+        <TextBlock TextWrapping="NoWrap"  Grid.Column="1" Grid.Row="1" Text="Waiting..." FontSize="11.666" VerticalAlignment="Center"/>
         <TextBlock TextWrapping="NoWrap" Grid.Column="2" Grid.Row="1" TextAlignment="Right" Text="あと何分" FontSize="11.666" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>
