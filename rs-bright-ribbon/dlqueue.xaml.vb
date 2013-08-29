@@ -26,8 +26,11 @@ Public Class dlqueue
             If value Then
                 pause()
                 Debug.WriteIf(value, String.Format("I/Oは{0}バイトで正常に中断", data.Count))
+                time.Stop()
+                Debug.Print("Stopwatch successfully stopped.")
             Else
                 restart_connection()
+                Debug.Print("Conection successfully restarted, and stopwatch")
             End If
             _stopflag = value
         End Set
@@ -118,47 +121,23 @@ Public Class dlqueue
                                   Aggregate(data,
                                             Function(list, p)
                                                 list.AddRange(p.Value)
-                                                state = p
-                                                add_downloaded()
-                                                Dispatcher.Invoke(Sub() speed.Text = String.Format("{0} kB/s", getCurrentSpeedkb()))
+                                                Dispatcher.Invoke(Sub()
+                                                                      kbpers.Text = String.Format("{0} kB/s", getCurrentSpeedkb(p.BytesReceived))
+                                                                      Dim t As String = CStr(Format(getLeftTime(p.BytesReceived, p.TotalBytesToReceive), "0.0"))
+                                                                      If 3.5 < t <= 6 Then t = "数"
+                                                                      Nokori.Text = String.Format("{0}秒後...", t)
+                                                                  End Sub)
                                                 Return list
-                                            End Function).Subscribe(Sub(s) Return, Sub(ex As Exception)
-                                                                                       If TryCast(ex, Net.WebException) Is Nothing Then
-                                                                                       ElseIf DirectCast(ex, Net.WebException).Status = Net.WebExceptionStatus.RequestCanceled Then
-                                                                                           'TODO
-                                                                                       Else
-                                                                                           Dispatcher.Invoke(Sub() speed.Text = DirectCast(ex, Net.WebException).Message)
-                                                                                       End If
-                                                                                   End Sub, AddressOf Oncompleted)
+                                            End Function).Subscribe(Sub(s) Return, AddressOf Oncompleted)
     End Function
 #End Region
 #Region "演算系"
     ' download
-    Structure downloadspeed
-        Dim progress As AsynchronousExtensions.Progress(Of Byte())
-        Dim time As TimeSpan
-        Sub New(p As AsynchronousExtensions.Progress(Of Byte()), timer As Stopwatch)
-            progress = p
-            If Not timer.IsRunning Then Throw New Exception
-            time = timer.Elapsed
-        End Sub
-    End Structure
-    Public state As AsynchronousExtensions.Progress(Of Byte()) 'これのTotalBytesToReceiveで全体が求まる
-    Public speedlist As New List(Of downloadspeed)
-    Public speedvalList As New List(Of Integer)
-    Private Sub add_downloaded()
-        If speedlist.Count > 0 AndAlso (time.Elapsed - speedlist.Last.time).Seconds < 1 Then Return
-        If Not state Is Nothing Then speedlist.Add(New downloadspeed(state, time))
-    End Sub
-
-    Public Function getCurrentSpeedkb() As Integer
-        If speedlist.Count < 2 Then Return 0
-        Dim lastitem As downloadspeed = speedlist.Last
-        Dim prev As downloadspeed = speedlist(speedlist.Count - 2)
-        On Error GoTo err
-        speedvalList.Add((lastitem.progress.BytesReceived - prev.progress.BytesReceived) / (lastitem.time - prev.time).Milliseconds)
-        Return speedvalList.Last
-err:    Return 0
+    Private Function getCurrentSpeedkb(bytesReceived As Integer) As Integer
+        Return bytesReceived / time.ElapsedMilliseconds
+    End Function
+    Private Function getLeftTime(bytesReceived As Integer, total As Integer)
+        Return (total - bytesReceived) / (bytesReceived / time.Elapsed.Seconds)
     End Function
 
     ' ffmpeg
@@ -184,6 +163,7 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
                                   monitor.Maximum = total
                                   monitor.Value = current
                                   speed.Text = "変換中... " + Format(current / total * 100, "0.0") + "%"
+                                  Nokori.Text = "しばらくお待ちください..."
                               End Sub)
         End If
     End Sub
@@ -196,7 +176,6 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
         resume_req.CookieContainer = cc
         cc.SetCookies(info.url, info.ck)
         ReqDisposeProvider = setOperation()
-        time.Restart()
     End Sub
     Public Sub pause()
         ReqDisposeProvider.Dispose()

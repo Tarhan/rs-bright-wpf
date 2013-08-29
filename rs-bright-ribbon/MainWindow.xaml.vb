@@ -11,6 +11,7 @@ Class MainWindow
         Youtube
         Ustream
     End Enum
+    Dim rtmpController As New RecCtrl
 
 #Region "イベントハンドラ"
     Private Sub dlbutton_Click(sender As Object, e As RoutedEventArgs) Handles dlbutton.Click
@@ -151,7 +152,7 @@ Class MainWindow
             Else
                 fmt = 18
             End If
-            Dim saveto As String = getStartupPath() + "\Download\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
+            Dim saveto As String = my.settings.savepath + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
             ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url)
             ctrl_Inst.start()
         Catch ex As Net.WebException
@@ -170,7 +171,7 @@ Class MainWindow
                 fmt = 18
             End If
             Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
-            Dim output As String = getStartupPath() + "\Download\" + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
+            Dim output As String = my.settings.savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
             'TODO fmt値 Uris(18)ってとこ
             ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url, getlinestr(ext, saveto, output))
             ctrl_Inst.start()
@@ -181,7 +182,7 @@ Class MainWindow
     Private Sub ncdl(url As String)
         Dim res As New Dictionary(Of String, String)
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
-        Dim saveto As String = getStartupPath() + "\Download\" + res("thread_id") + "." + param.sourceext
+        Dim saveto As String = my.settings.savepath + res("thread_id") + "." + param.sourceext
         Dim ctrl_Inst As New dlqueue
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl)
         ctrl_Inst.start()
@@ -191,7 +192,7 @@ Class MainWindow
         Dim res As New Dictionary(Of String, String)
         Dim param As UriCookiePair = nc_dl.getDownloadParam(url, res)
         Dim saveto As String = getStartupPath() + "\temp\" + res("thread_id") + "." + param.sourceext
-        Dim output As String = getStartupPath() + "\Download\" + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
+        Dim output As String = my.settings.savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
         Dim ctrl_Inst As New dlqueue
         ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, "", param.cookie, param.thumbUrl, getlinestr(ext, saveto, output))
         ctrl_Inst.start()
@@ -202,7 +203,7 @@ Class MainWindow
         Dim x As New Xml.XmlDocument
         x.Load(New Xml.XmlTextReader(url.Replace("www.ustream.tv/recorded", "api.ustream.tv/xml/video") + "/getinfo"))
         Dim title As String = x.SelectSingleNode("/xml/results/title").FirstChild.Value
-        ctrl_Inst.SetInfo(info.KK_HTTP_TARGET_URI, getStartupPath() + "\Download\" + ustRec.getCID(url) + "." + info.KK_HTTP_PRELOADED_FILENAME, title)
+        ctrl_Inst.SetInfo(info.KK_HTTP_TARGET_URI, My.Settings.Savepath + ustRec.getCID(url) + "." + info.KK_HTTP_PRELOADED_FILENAME, title)
         ctrl_Inst.start()
     End Sub
 
@@ -225,6 +226,15 @@ Class MainWindow
         FFMProcess.Start()
         'FFMProcess.BeginErrorReadLine()
     End Sub
+
+
+    Public Class RecCtrl
+        Sub Add(dstDir As String, uri As String)
+            If Not IO.Directory.Exists(dstDir) Then Throw New Exception
+
+        End Sub
+    End Class
+
 #End Region
 
     '動画サイト用
@@ -238,9 +248,10 @@ Class MainWindow
         End If
         Return linestr
     End Function
-    Private Sub loadytcfg() Handles Me.Loaded
+    Private Sub load() Handles Me.Loaded
         ytconfigure(My.Settings.ytTarget_custom)
         AddHandler My.Settings.PropertyChanged, Sub() My.Settings.Save()
+        If Not IO.Directory.Exists(My.Settings.Savepath) Then My.Settings.Savepath = Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos)
     End Sub
     ' yt画質の設定の読込
     'Private _loaded As Boolean = False
@@ -281,6 +292,11 @@ Class MainWindow
 
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定  My.Settings.Savepath
+        Using d As New Windows.Forms.FolderBrowserDialog
+            d.RootFolder = Environment.SpecialFolder.MyVideos
+            d.ShowNewFolderButton = True
+            If d.ShowDialog = Forms.DialogResult.OK Then My.Settings.Savepath = d.SelectedPath
+        End Using
     End Sub
 
     Private Sub dbg(sender As Object, e As RoutedEventArgs)

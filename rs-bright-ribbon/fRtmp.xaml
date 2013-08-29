@@ -1,0 +1,12 @@
+﻿<Window x:Class="fRtmp"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="fRtmp" Height="340" Width="540" WindowStyle="ToolWindow">
+    <ListView SelectionChanged="ListView_SelectionChanged">
+        <ListView.View>
+            <GridView>
+                <GridViewColumn/>
+            </GridView>
+        </ListView.View>
+    </ListView>
+</Window>
