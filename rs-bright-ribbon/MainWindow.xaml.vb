@@ -251,7 +251,7 @@ Class MainWindow
     Private Sub load() Handles Me.Loaded
         ytconfigure(My.Settings.ytTarget_custom)
         AddHandler My.Settings.PropertyChanged, Sub() My.Settings.Save()
-        If Not IO.Directory.Exists(My.Settings.Savepath) Then My.Settings.Savepath = Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos)
+        If Not IO.Directory.Exists(My.Settings.Savepath) Then My.Settings.Savepath = Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos) + "\"
     End Sub
     ' yt画質の設定の読込
     'Private _loaded As Boolean = False
@@ -295,7 +295,7 @@ Class MainWindow
         Using d As New Windows.Forms.FolderBrowserDialog
             d.RootFolder = Environment.SpecialFolder.MyVideos
             d.ShowNewFolderButton = True
-            If d.ShowDialog = Forms.DialogResult.OK Then My.Settings.Savepath = d.SelectedPath
+            If d.ShowDialog = Forms.DialogResult.OK Then My.Settings.Savepath = d.SelectedPath + "\"
         End Using
     End Sub
 
