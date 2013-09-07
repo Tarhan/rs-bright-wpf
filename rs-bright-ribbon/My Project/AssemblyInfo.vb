@@ -15,7 +15,7 @@ Imports System.Windows
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
 <Assembly: AssemblyProduct("rs_bright_ribbon")> 
-<Assembly: AssemblyCopyright("Copyright ©  2013")> 
+<Assembly: AssemblyCopyright("Copyright ©  2013 Win2 Dev")> 
 <Assembly: AssemblyTrademark("")> 
 <Assembly: ComVisible(false)>
 

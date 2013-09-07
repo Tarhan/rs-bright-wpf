@@ -56,4 +56,11 @@ Module Utils
             Return Nothing
         End If
     End Function
+    Function RemoveChar(src As String) As String
+        Dim r As String = src
+        For Each c As Char In IO.Path.GetInvalidFileNameChars
+            r = r.Replace(c, "_"c)
+        Next
+        Return r
+    End Function
 End Module

@@ -128,12 +128,13 @@
     <Compile Include="fRtmp.xaml.vb">
       <DependentUpon>fRtmp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="fRtmpItem.xaml.vb">
-      <DependentUpon>fRtmpItem.xaml</DependentUpon>
+    <Compile Include="fRtmpContentBase.xaml.vb">
+      <DependentUpon>fRtmpContentBase.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyWrapPanel.xaml.vb">
       <DependentUpon>MyWrapPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="m_rtmpctrl.vb" />
     <Compile Include="m_RtmpMgmt.vb" />
     <Compile Include="nc_dl.vb" />
     <Compile Include="rsun_loadconvertCfg.vb" />
@@ -153,7 +154,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="fRtmpItem.xaml">
+    <Page Include="fRtmpContentBase.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

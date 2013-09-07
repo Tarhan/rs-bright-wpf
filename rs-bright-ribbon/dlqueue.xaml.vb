@@ -112,7 +112,7 @@ Public Class dlqueue
 #Region "中断用オブジェクトの付与"
     Private Function setOperation() As IDisposable
         Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
-                                                                 Dim s As String = String.Format("{0}MB / {1}MB", Format(p.BytesReceived / 1000000, "0.00"), Format(p.TotalBytesToReceive / 1000000, "0.00"))
+                                                                 Dim s As String = String.Format("{0}MB / {1}MB", Format(p.BytesReceived / 1000000, "0.0"), Format(p.TotalBytesToReceive / 1000000, "0.0"))
                                                                  Dispatcher.Invoke(Sub()
                                                                                        speed.Text = s
                                                                                        monitor.Value = p.ProgressPercentage

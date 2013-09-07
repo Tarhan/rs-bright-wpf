@@ -11,7 +11,6 @@ Class MainWindow
         Youtube
         Ustream
     End Enum
-    Dim rtmpController As New RecCtrl
 
 #Region "イベントハンドラ"
     Private Sub dlbutton_Click(sender As Object, e As RoutedEventArgs) Handles dlbutton.Click
@@ -171,7 +170,7 @@ Class MainWindow
                 fmt = 18
             End If
             Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
-            Dim output As String = my.settings.savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
+            Dim output As String = My.Settings.Savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
             'TODO fmt値 Uris(18)ってとこ
             ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url, getlinestr(ext, saveto, output))
             ctrl_Inst.start()
@@ -227,14 +226,6 @@ Class MainWindow
         'FFMProcess.BeginErrorReadLine()
     End Sub
 
-
-    Public Class RecCtrl
-        Sub Add(dstDir As String, uri As String)
-            If Not IO.Directory.Exists(dstDir) Then Throw New Exception
-
-        End Sub
-    End Class
-
 #End Region
 
     '動画サイト用
@@ -251,7 +242,7 @@ Class MainWindow
     Private Sub load() Handles Me.Loaded
         ytconfigure(My.Settings.ytTarget_custom)
         AddHandler My.Settings.PropertyChanged, Sub() My.Settings.Save()
-        If Not IO.Directory.Exists(My.Settings.Savepath) Then My.Settings.Savepath = Environment.GetFolderPath(Environment.SpecialFolder.CommonVideos) + "\"
+        If Not IO.Directory.Exists(My.Settings.Savepath) Then My.Settings.Savepath = getStartupPath() + "\Download\"
     End Sub
     ' yt画質の設定の読込
     'Private _loaded As Boolean = False
@@ -293,7 +284,7 @@ Class MainWindow
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定  My.Settings.Savepath
         Using d As New Windows.Forms.FolderBrowserDialog
-            d.RootFolder = Environment.SpecialFolder.MyVideos
+            d.SelectedPath = My.Settings.Savepath
             d.ShowNewFolderButton = True
             If d.ShowDialog = Forms.DialogResult.OK Then My.Settings.Savepath = d.SelectedPath + "\"
         End Using

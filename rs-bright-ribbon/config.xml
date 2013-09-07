@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <root>
 	<a>
-		<mp3 arg="-y -i &quot;&lt;input&gt;&quot; -f mp3 &quot;&lt;output&gt;.mp3&quot;">Mpeg Audio Layer-3</mp3>
-		<aiff arg="-y -i &quot;&lt;input&gt;&quot; -f avi &quot;&lt;output&gt;.avi&quot;">Audio Interchange File Format</aiff>
-		<wav arg="-y -i &quot;&lt;input&gt;&quot; -f wav &quot;&lt;output&gt;.wav&quot;">Wave サウンド(PCM(パルス符号変調)方式)</wav>
+		<mp3 arg="-y -i &quot;&lt;input&gt;&quot; -f mp3 &quot;&lt;output&gt;&quot;">Mpeg Audio Layer-3</mp3>
+		<aiff arg="-y -i &quot;&lt;input&gt;&quot; -f avi &quot;&lt;output&gt;&quot;">Audio Interchange File Format</aiff>
+		<wav arg="-y -i &quot;&lt;input&gt;&quot; -f wav &quot;&lt;output&gt;&quot;">Wave サウンド(PCM(パルス符号変調)方式)</wav>
 	</a>
 	<av>
-		<mp4 arg="-y -i &quot;&lt;input&gt;&quot; -f mp4 -vcodec libx264 -g 150 -qcomp 0.7 -qmin 10 -qmax 51 -qdiff 4 -subq 6 -me_range 16 -i_qfactor 0.714286 &quot;&lt;output&gt;.mp4&quot;
+		<mp4 arg="-y -i &quot;&lt;input&gt;&quot; -f mp4 -vcodec libx264 -g 150 -qcomp 0.7 -qmin 10 -qmax 51 -qdiff 4 -subq 6 -me_range 16 -i_qfactor 0.714286 &quot;&lt;output&gt;&quot;
 ">MPEG-4 (コーデックH.264)</mp4>
-		<avi arg="-y -i &quot;&lt;input&gt;&quot; -f avi &quot;&lt;output&gt;.avi&quot;">AVIファイル</avi>
-    <mov arg="-y -i &quot;&lt;input&gt;&quot; -f mov &quot;&lt;output&gt;.mov&quot;">Quick Time ムービー</mov>
+		<avi arg="-y -i &quot;&lt;input&gt;&quot; -f avi &quot;&lt;output&gt;&quot;">AVIファイル</avi>
+    <mov arg="-y -i &quot;&lt;input&gt;&quot; -f mov &quot;&lt;output&gt;&quot;">Quick Time ムービー</mov>
     </av>
 	ffmpeg.exe
 </root>

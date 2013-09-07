@@ -1,0 +1,14 @@
+﻿<UserControl x:Class="fRtmpContentBase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="78" Width="400" BorderThickness="1">
+    <DockPanel Margin="5">
+        <Image x:Name="thumbnail" Width="88"/>
+        <WrapPanel Height="66" VerticalAlignment="Top" Margin="8,0,0,0" Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <TextBlock x:Name="Live_name" TextWrapping="NoWrap" Text="タイトル" ToolTip="{Binding Text, ElementName=Live_name, Mode=OneWay, TargetNullValue=(Null)}" FontWeight="Bold" FontSize="15"/>
+            <TextBlock x:Name="Description" TextWrapping="Wrap" Text="#Description"/>
+        </WrapPanel>
+    </DockPanel>
+</UserControl>
