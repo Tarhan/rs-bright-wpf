@@ -284,6 +284,7 @@ Class MainWindow
     Private Sub FolderChangeButton_Click(sender As Object, e As RoutedEventArgs)
         'TODO フォルダ指定  My.Settings.Savepath
         Using d As New Windows.Forms.FolderBrowserDialog
+            d.Description = "動画の保存フォルダのパスを指定してください。"
             d.SelectedPath = My.Settings.Savepath
             d.ShowNewFolderButton = True
             If d.ShowDialog = Forms.DialogResult.OK Then My.Settings.Savepath = d.SelectedPath + "\"
@@ -291,10 +292,12 @@ Class MainWindow
     End Sub
 
     Private Sub dbg(sender As Object, e As RoutedEventArgs)
-        If tb.Text Like "http://www.ustream.tv/channel/*" Then
-            ustRecord(tb.Text)
-        Else
-            MsgBox("URL形式が違います")
-        End If
+        'If tb.Text Like "http://www.ustream.tv/channel/*" Then
+        '    ustRecord(tb.Text)
+        'Else
+        '    MsgBox("URL形式が違います")
+        'End If
+        Dim fr As New fRtmp
+        fr.Show()
     End Sub
 End Class

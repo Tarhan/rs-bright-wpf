@@ -24,9 +24,9 @@
             <Button x:Name="forward" BorderThickness="0" ClipToBounds="True">
                 <Image Width="42" Height="33" VerticalAlignment="Bottom" Source="ribbonIcons/24/進む.png"/>
             </Button>
-            <TextBox x:Name="url" Width="244"/>
+            <TextBox x:Name="url" Width="320"/>
             <Button BorderThickness="0" ClipToBounds="True" Click="Button_Click">
-                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/進む.png"/>
+                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/更新.png"/>
             </Button>
         </ToolBar>
         <WebBrowser x:Name="b" Grid.Row="1" Source="http://www.youtube.com" Navigated="Frame_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>

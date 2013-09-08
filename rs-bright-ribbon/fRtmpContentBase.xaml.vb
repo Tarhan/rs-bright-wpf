@@ -1,14 +1,23 @@
 ﻿Public Class fRtmpContentBase
-    Sub New(thumb As ImageSource)
-
-        ' この呼び出しはデザイナーで必要です。
-        InitializeComponent()
-
-        ' InitializeComponent() 呼び出しの後で初期化を追加します。
+    Inherits UserControl
+    Sub SetThumbnail(thumb As ImageSource)
         thumbnail.Source = thumb
     End Sub
-    Sub SetInfo(title As String, timelapse As TimeSpan)
-        Dim ts As String = timelapse.ToString("hh:mm:ss")
-        Description.Text = ts
-    End Sub
+    Public Property Time As TimeSpan
+        Get
+
+        End Get
+        Set(value As TimeSpan)
+            Dim ts As String = value.ToString("hh:mm:ss")
+            Description.Text = ts
+        End Set
+    End Property
+    Public Property title As String
+        Get
+
+        End Get
+        Set(value As String)
+            Live_name.Text = value
+        End Set
+    End Property
 End Class

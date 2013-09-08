@@ -22,8 +22,15 @@ Friend Class kkffmpegrtmpinfo
             Return Date.Now - _instance.StartTime
         End Get
     End Property
+    Dim _t As String
+    Public ReadOnly Property Title As String
+        Get
+            Return _t
+        End Get
+    End Property
     Sub New(ByVal p As Process, ByVal vtitle As String)
         _instance = p
+        _t = vtitle
         AddHandler _instance.ErrorDataReceived, AddressOf redirectError
         AddHandler _instance.Exited, Sub() If _instance.ExitCode = 0 Then _instance.Close()
     End Sub
@@ -32,6 +39,5 @@ Friend Class kkffmpegrtmpinfo
     End Sub
     Public Sub StopRec()
         _instance.StandardInput.Write("q"c)
-
     End Sub
 End Class

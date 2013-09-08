@@ -1,6 +1,10 @@
 ﻿Public Class fRtmp
-    WithEvents t As New Timers.Timer With {.Interval = 500, .Enabled = True}
-    Sub RefreshStatus() Handles t.Elapsed
+    Sub New()
 
+        ' この呼び出しはデザイナーで必要です。
+        InitializeComponent()
+
+        ' InitializeComponent() 呼び出しの後で初期化を追加します。
+        Me.DataContext = m_rtmpctrl._l
     End Sub
 End Class
