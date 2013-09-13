@@ -261,14 +261,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ribbonIcons\1373224036_camill_file1_mp4.png" />
-    <Resource Include="ribbonIcons\1373224062_camill_file1_wav.png" />
-    <Resource Include="ribbonIcons\1373224077_camill_file1_mp3.png" />
-    <Resource Include="ribbonIcons\20130708111825510_easyicon_net_256.png" />
-    <Resource Include="ribbonIcons\20130708111901913_easyicon_net_128.png" />
-    <Resource Include="ribbonIcons\20130708111911165_easyicon_net_256.png" />
-    <Resource Include="ribbonIcons\Comment Add.png" />
-    <Resource Include="ribbonIcons\Comment Remove.png" />
     <Resource Include="ribbonIcons\kuroda.png" />
     <Resource Include="ribbonIcons\停止.png" />
     <Resource Include="ribbonIcons\停止　64.png" />
@@ -339,11 +331,11 @@
     <Content Include="licenses\xavs.txt" />
     <Content Include="licenses\xvid.txt" />
     <Content Include="licenses\zlib.txt" />
+    <Resource Include="ribbonIcons\back.png" />
+    <Resource Include="ribbonIcons\next.png" />
     <Resource Include="ribbonIcons\16\下向き.png" />
     <Resource Include="Image1.png" />
-    <Resource Include="ribbonIcons\24\戻る.png" />
     <Resource Include="ribbonIcons\24\戻る　カーソル.png" />
-    <Resource Include="ribbonIcons\24\進む.png" />
     <Resource Include="ribbonIcons\24\進む　カーソル.png" />
     <Resource Include="ribbonIcons\64\aiff.png" />
     <Resource Include="ribbonIcons\64\avi.png" />
