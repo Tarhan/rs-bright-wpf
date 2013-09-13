@@ -2,12 +2,12 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:rs_bright_ribbon" x:Name="window" x:Class="fRtmp"
-    Title="fRtmp" WindowStyle="ToolWindow" Height="400">
-    <ItemsControl ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True">
+    Title="fRtmp" WindowStyle="ToolWindow" Width="400" Height="300">
+    <ListBox ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <local:fRtmpContentBase title="{Binding Title}"/>
+                <local:fRtmpContentBase title="{Binding Title}" Time="{Binding Time}"/>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    </ListBox>
 </Window>

@@ -1,8 +1,9 @@
 ﻿Module m_rtmpctrl
-    Public _l As New ObjectModel.ObservableCollection(Of kkffmpegrtmpinfo)
-    Function NewProcess(cmdoption As String, vtitle As String)
+    Friend _l As New ObjectModel.ObservableCollection(Of kkffmpegrtmpinfo)
+    Friend Function NewProcess(cmdoption As String, vtitle As String)
         Dim p As New Process
         With p.StartInfo
+            .FileName = getFFMpath()
             .Arguments = cmdoption
             .CreateNoWindow = True
             .RedirectStandardError = True
@@ -11,6 +12,7 @@
         End With
         p.EnableRaisingEvents = True
         Dim listItem As New kkffmpegrtmpinfo(p, vtitle)
+        _l.Add(listItem)
         Return listItem
     End Function
 End Module
@@ -23,6 +25,7 @@ Friend Class kkffmpegrtmpinfo
         End Get
     End Property
     Dim _t As String
+
     Public ReadOnly Property Title As String
         Get
             Return _t
@@ -33,6 +36,7 @@ Friend Class kkffmpegrtmpinfo
         _t = vtitle
         AddHandler _instance.ErrorDataReceived, AddressOf redirectError
         AddHandler _instance.Exited, Sub() If _instance.ExitCode = 0 Then _instance.Close()
+        _instance.Start()
     End Sub
     Private Sub redirectError(sender As Object, e As DataReceivedEventArgs)
 

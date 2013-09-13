@@ -208,22 +208,11 @@ Class MainWindow
 
 #Region "録画"
     Public Sub ustRecord(url As String)
-        Dim fixed As String = ustRec.getCID(url)
-        Dim command As String = String.Format("-re -y -i {0} out.mov", ustRec.getLiveUrl(fixed))
-        Dim FFMProcess As New Process
-        With FFMProcess.StartInfo
-            .FileName = getStartupPath() + "\ffmpeg.exe"
-            .Arguments = command
-            '.ErrorDialog = True
-            '.WindowStyle = ProcessWindowStyle.Minimized
-            '.UseShellExecute = False
-            '.CreateNoWindow = True
-            '.RedirectStandardError = True
-        End With
-        FFMProcess.EnableRaisingEvents = True
-        'AddHandler FFMProcess.ErrorDataReceived, Sub(sender, e) Debug.WriteLine(e.Data)
-        FFMProcess.Start()
-        'FFMProcess.BeginErrorReadLine()
+        Dim cid As String = ustRec.getCID(url)
+        Dim command As String = String.Format("-re -y -i {0} out.mov", ustRec.getLiveUrl(cid))
+        Dim title As String = ""
+        'title = ustRec.getXmlApiResult(url).
+        m_rtmpctrl.NewProcess(command, title)
     End Sub
 
 #End Region
@@ -292,11 +281,11 @@ Class MainWindow
     End Sub
 
     Private Sub dbg(sender As Object, e As RoutedEventArgs)
-        'If tb.Text Like "http://www.ustream.tv/channel/*" Then
-        '    ustRecord(tb.Text)
-        'Else
-        '    MsgBox("URL形式が違います")
-        'End If
+        If tb.Text Like "http://www.ustream.tv/channel/*" Then
+            ustRecord(tb.Text)
+        Else
+            MsgBox("URL形式が違います")
+        End If
         Dim fr As New fRtmp
         fr.Show()
     End Sub

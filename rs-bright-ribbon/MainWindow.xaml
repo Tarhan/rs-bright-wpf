@@ -159,6 +159,9 @@
                     <Custom:RibbonButton Label="ダウンロード" LargeImageSource="pack://application:,,,/ribbonIcons/kuroda.png" IsDefault="True"/>
                 </Custom:RibbonGroup>
             </Custom:RibbonTab>
+            <Custom:RibbonTab>
+                <!--ここに録画ツールを-->
+            </Custom:RibbonTab>
         </Custom:Ribbon>
         <me:Zero_UI x:Name="uiCtl" Grid.Row="1" d:IsHidden="True"/>
         <Grid x:Name="grid" Grid.Row="2" Background="#E6F0F0F0" RenderTransformOrigin="0.5,0.5" Height="79" VerticalAlignment="Bottom">

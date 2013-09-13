@@ -63,4 +63,8 @@ Module Utils
         Next
         Return r
     End Function
+    Function getFFMpath() As String
+        Dim ffmpath As String = getStartupPath() + "\ffmpeg.exe"
+        If IO.File.Exists(ffmpath) Then Return ffmpath
+    End Function
 End Module
