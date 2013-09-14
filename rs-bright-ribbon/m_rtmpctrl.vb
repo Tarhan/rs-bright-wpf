@@ -17,7 +17,7 @@
     End Function
 End Module
 
-Friend Class kkffmpegrtmpinfo
+Public Class kkffmpegrtmpinfo
     Dim _instance As Process
     Public ReadOnly Property Time As TimeSpan
         Get
@@ -36,7 +36,7 @@ Friend Class kkffmpegrtmpinfo
         _t = vtitle
         AddHandler _instance.ErrorDataReceived, AddressOf redirectError
         AddHandler _instance.Exited, Sub() If _instance.ExitCode = 0 Then _instance.Close()
-        _instance.Start()
+        '_instance.Start()
     End Sub
     Private Sub redirectError(sender As Object, e As DataReceivedEventArgs)
 
