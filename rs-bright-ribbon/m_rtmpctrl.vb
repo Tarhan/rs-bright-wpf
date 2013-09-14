@@ -1,5 +1,5 @@
 ﻿Module m_rtmpctrl
-    Friend _l As New ObjectModel.ObservableCollection(Of kkffmpegrtmpinfo)
+    Friend _l As New List(Of kkffmpegrtmpinfo)
     Friend Function NewProcess(cmdoption As String, vtitle As String)
         Dim p As New Process
         With p.StartInfo
@@ -19,24 +19,30 @@ End Module
 
 Public Class kkffmpegrtmpinfo
     Dim _instance As Process
-    Public ReadOnly Property Time As TimeSpan
+    Public Property Time As TimeSpan
         Get
             Return Date.Now - _instance.StartTime
         End Get
+        Set(value As TimeSpan)
+
+        End Set
     End Property
     Dim _t As String
 
-    Public ReadOnly Property Title As String
+    Public Property vTitle As String
         Get
             Return _t
         End Get
+        Set(value As String)
+
+        End Set
     End Property
     Sub New(ByVal p As Process, ByVal vtitle As String)
         _instance = p
         _t = vtitle
         AddHandler _instance.ErrorDataReceived, AddressOf redirectError
         AddHandler _instance.Exited, Sub() If _instance.ExitCode = 0 Then _instance.Close()
-        '_instance.Start()
+        _instance.Start()
     End Sub
     Private Sub redirectError(sender As Object, e As DataReceivedEventArgs)
 

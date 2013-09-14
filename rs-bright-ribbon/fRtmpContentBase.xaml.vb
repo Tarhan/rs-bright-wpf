@@ -21,7 +21,7 @@
                            GetType(TimeSpan), GetType(fRtmpContentBase), _
                            New PropertyMetadata(TimeSpan.Zero))
 
-    Public Property title As String
+    Public Property vtitle As String
         Get
             Return GetValue(titleProperty)
         End Get
