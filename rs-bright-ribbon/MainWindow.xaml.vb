@@ -10,6 +10,7 @@ Class MainWindow
         Niconama
         Youtube
         Ustream
+        Anitube
     End Enum
 
 #Region "イベントハンドラ"
@@ -21,6 +22,8 @@ Class MainWindow
                 ncdl(Urlbox.Text)
             Case vServiceKind.Ustream
                 ustdl(Urlbox.Text)
+            Case vServiceKind.Anitube
+
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
@@ -30,6 +33,8 @@ Class MainWindow
             dlbutton.Tag = vServiceKind.Niconico
         ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?ustream.tv/recorded/.*") Then
             dlbutton.Tag = vServiceKind.Ustream
+        ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?anitube.se/video/\d{5}/") Then
+            dlbutton.Tag = vServiceKind.Anitube
         Else
             dlbutton.Tag = Nothing
             dlbutton.IsEnabled = False
@@ -49,6 +54,8 @@ Class MainWindow
                 ytdl(Urlbox.Text, CStr(ext))
             Case vServiceKind.Niconico
                 ncdl(Urlbox.Text, CStr(ext))
+            Case vServiceKind.Anitube
+
         End Select
         e.Handled = True
     End Sub
@@ -125,6 +132,8 @@ Class MainWindow
             attribute = vServiceKind.Youtube
         ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
             attribute = vServiceKind.Niconico
+        ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?anitube.se/video/\d{5}/") Then
+            attribute = vServiceKind.Anitube
         Else
             attribute = vServiceKind.No
         End If
@@ -152,7 +161,7 @@ Class MainWindow
                 fmt = 18
             End If
             Dim saveto As String = my.settings.savepath + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
-            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url)
+            ctrl_Inst.SetInfo(New Uri(param.Uris(fmt)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url)
             ctrl_Inst.start()
         Catch ex As Net.WebException
 
@@ -172,7 +181,7 @@ Class MainWindow
             Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
             Dim output As String = My.Settings.Savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
             'TODO fmt値 Uris(18)ってとこ
-            ctrl_Inst.SetInfo(New Uri(param.Uris(18)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url, getlinestr(ext, saveto, output))
+            ctrl_Inst.SetInfo(New Uri(param.Uris(fmt)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url, getlinestr(ext, saveto, output))
             ctrl_Inst.start()
         Catch ex As Net.WebException
 
@@ -204,6 +213,10 @@ Class MainWindow
         Dim title As String = x.SelectSingleNode("/xml/results/title").FirstChild.Value
         ctrl_Inst.SetInfo(info.KK_HTTP_TARGET_URI, My.Settings.Savepath + ustRec.getCID(url) + "." + info.KK_HTTP_PRELOADED_FILENAME, title)
         ctrl_Inst.start()
+    End Sub
+    Private Sub atdl(url As String)
+        'TODO
+
     End Sub
 
 #Region "録画"

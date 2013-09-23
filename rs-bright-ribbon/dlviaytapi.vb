@@ -38,7 +38,6 @@ Module downloadViaGDataapi
     Public Function getVideoEntry(vid_Id As VideoId) As Video
         Dim videoEntryUrl As Uri = New Uri("http://gdata.youtube.com/feeds/api/videos/" & vid_Id.Value)
         Return getRequest.Retrieve(Of Video)(videoEntryUrl)
-        'Return getRequest.Service.Query(New YouTubeQuery(videoEntryUrl.AbsoluteUri))
     End Function
 
 

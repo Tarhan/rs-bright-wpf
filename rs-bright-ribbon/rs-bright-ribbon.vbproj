@@ -96,6 +96,7 @@
     </Reference>
     <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.1.30214.0\lib\Net40\System.Reactive.Core.dll</HintPath>
@@ -122,6 +123,7 @@
     <Compile Include="AccordionToggle.xaml.vb">
       <DependentUpon>AccordionToggle.xaml</DependentUpon>
     </Compile>
+    <Compile Include="at_dl.vb" />
     <Compile Include="ExtendedTabItem.xaml.vb">
       <DependentUpon>ExtendedTabItem.xaml</DependentUpon>
     </Compile>
