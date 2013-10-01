@@ -11,6 +11,7 @@ Class MainWindow
         Youtube
         Ustream
         Anitube
+        youku
     End Enum
 
 #Region "イベントハンドラ"
@@ -24,6 +25,8 @@ Class MainWindow
                 ustdl(Urlbox.Text)
             Case vServiceKind.Anitube
 
+            Case vServiceKind.youku
+                ykdl(Urlbox.Text)
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
@@ -35,6 +38,8 @@ Class MainWindow
             dlbutton.Tag = vServiceKind.Ustream
         ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?anitube.se/video/\d{5}/") Then
             dlbutton.Tag = vServiceKind.Anitube
+        ElseIf Regex.IsMatch(Urlbox.Text, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
+            dlbutton.Tag = vServiceKind.youku
         Else
             dlbutton.Tag = Nothing
             dlbutton.IsEnabled = False
@@ -56,6 +61,8 @@ Class MainWindow
                 ncdl(Urlbox.Text, CStr(ext))
             Case vServiceKind.Anitube
 
+            Case vServiceKind.youku
+                ykdl(Urlbox.Text, CStr(ext))
         End Select
         e.Handled = True
     End Sub
@@ -134,6 +141,8 @@ Class MainWindow
             attribute = vServiceKind.Niconico
         ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?anitube.se/video/\d{5}/") Then
             attribute = vServiceKind.Anitube
+        ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
+            attribute = vServiceKind.youku
         Else
             attribute = vServiceKind.No
         End If
@@ -215,8 +224,18 @@ Class MainWindow
         ctrl_Inst.start()
     End Sub
     Private Sub atdl(url As String)
-        'TODO
+        'TODO Anitube
 
+    End Sub
+    Private Sub atdl(url As String, ext As String)
+        If String.IsNullOrEmpty(ext) Then atdl(url) : Return
+    End Sub
+    Private Sub ykdl(url As String)
+        youku.test(url)
+
+    End Sub
+    Private Sub ykdl(url As String, ext As String)
+        If String.IsNullOrEmpty(ext) Then ykdl(url) : Return
     End Sub
 
 #Region "録画"
@@ -277,6 +296,8 @@ Class MainWindow
                 ncdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
             Case vServiceKind.Youtube
                 ytdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
+            Case vServiceKind.youku
+                ykdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
         End Select
         e.Handled = True
     End Sub

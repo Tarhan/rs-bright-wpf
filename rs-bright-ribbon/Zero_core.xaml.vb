@@ -46,11 +46,14 @@
     End Sub
 
     Private Sub Button_Click()
+        On Error GoTo Err
         If url.Tag Then
             b.Refresh()
         Else
             b.Navigate(New Uri(url.Text))
         End If
+Err:    'TODO: ナビゲーションをキャンセルする、入力を元に戻す
+
     End Sub
 
     Private Sub url_TextChanged(sender As Object, e As TextChangedEventArgs) Handles url.TextChanged
