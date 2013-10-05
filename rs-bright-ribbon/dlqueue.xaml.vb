@@ -114,10 +114,10 @@ Public Class dlqueue
 #Region "中断用オブジェクトの付与"
     Private Function setOperation() As IDisposable
         Return resume_req.DownloadDataAsyncWithProgress().Do(Sub(p)
-                                                                 Dim s As String = String.Format("{0}MB / {1}MB", Format(p.BytesReceived / 1000000, "0.0"), Format(p.TotalBytesToReceive / 1000000, "0.0"))
+                                                                 Dim s As String = String.Format("{0}MB / {1}MB", Format(data.Count / 1000000, "0.0"), Format((latestrange + p.TotalBytesToReceive) / 1000000, "0.0"))
                                                                  Dispatcher.Invoke(Sub()
                                                                                        speed.Text = s
-                                                                                       monitor.Value = p.ProgressPercentage
+                                                                                       monitor.Value = (data.Count / Convert.ToInt32(latestrange + p.TotalBytesToReceive)) * 100
                                                                                    End Sub)
                                                              End Sub).
                                   Aggregate(data,
@@ -125,7 +125,7 @@ Public Class dlqueue
                                                 list.AddRange(p.Value)
                                                 Dispatcher.Invoke(Sub()
                                                                       kbpers.Text = String.Format("{0} kB/s", getCurrentSpeedkb(p.BytesReceived))
-                                                                      Dim t As String = CStr(Format(getLeftTime(p.BytesReceived, p.TotalBytesToReceive), "0.0"))
+                                                                      Dim t As String = CStr(Format(getLeftTime(data.Count, latestrange + p.TotalBytesToReceive), "0.0"))
                                                                       If 3.5 < t <= 6 Then t = "数"
                                                                       Nokori.Text = String.Format("{0}秒後...", t)
                                                                   End Sub)
@@ -171,9 +171,11 @@ Getstate: r1 = Regex.Matches(t, "(?<=time\=)[0123456789\:\.]+")
     End Sub
 #End Region
 #Region "レジューム制御"
+    Dim latestrange As Integer = 0
     Private Sub restart_connection()
         resume_req = CType(Net.WebRequest.Create(info.url), Net.HttpWebRequest)
         resume_req.AddRange(data.Count)
+        latestrange = data.Count
         Dim cc As New Net.CookieContainer
         resume_req.CookieContainer = cc
         cc.SetCookies(info.url, info.ck)
