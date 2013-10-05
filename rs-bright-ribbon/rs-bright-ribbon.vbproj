@@ -81,6 +81,10 @@
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Google.GData.Client">
       <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
@@ -335,6 +339,11 @@
     <Content Include="licenses\xavs.txt" />
     <Content Include="licenses\xvid.txt" />
     <Content Include="licenses\zlib.txt" />
+    <Resource Include="ribbonIcons\24\下向き.png" />
+    <Resource Include="ribbonIcons\24\戻る.png" />
+    <Resource Include="ribbonIcons\24\更新 カーソル.png" />
+    <Resource Include="ribbonIcons\24\更新.png" />
+    <Resource Include="ribbonIcons\24\進む.png" />
     <Resource Include="ribbonIcons\back.png" />
     <Resource Include="ribbonIcons\next.png" />
     <Resource Include="ribbonIcons\16\下向き.png" />

@@ -19,14 +19,14 @@
                 </LinearGradientBrush>
             </ToolBar.Background>
             <Button x:Name="back" BorderThickness="0" ClipToBounds="True" Click="Button_Click_1">
-                <Image Width="31" Height="31" VerticalAlignment="Bottom" Source="C:\Users\Takahiro Kitagaki\Documents\rs-Bright\rs-bright-ribbon\ribbonIcons\back.png"/>
+                <Image Width="31" Height="31" VerticalAlignment="Bottom" Source="ribbonIcons\back.png"/>
             </Button>
             <Button x:Name="forward" BorderThickness="0" ClipToBounds="True">
-                <Image Width="31" Height="31" VerticalAlignment="Bottom" Source="C:\Users\Takahiro Kitagaki\Documents\rs-Bright\rs-bright-ribbon\ribbonIcons\next.png"/>
+                <Image Width="31" Height="31" VerticalAlignment="Bottom" Source="ribbonIcons\next.png"/>
             </Button>
-            <TextBox x:Name="url" Width="320"/>
+            <TextBox x:Name="url" Width="500"/>
             <Button BorderThickness="0" ClipToBounds="True" Click="Button_Click">
-                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons/24/更新.png"/>
+                <Image Width="24" Height="24" VerticalAlignment="Bottom" Source="ribbonIcons\24\更新.png"/>
             </Button>
         </ToolBar>
         <WebBrowser x:Name="b" Grid.Row="1" Source="http://www.youtube.com" Navigated="Frame_Navigated" LoadCompleted="WebBrowser_LoadCompleted"/>
