@@ -1,28 +1,43 @@
-﻿Imports Newtonsoft.Json
+﻿'Based on: http://code.google.com/p/savemedia/source/browse/SaveMedia/Sites/Youku.cs?r=144cdf9258962cbbe04075a25f8b96bb1e9b4424
+Imports Newtonsoft.Json
+
 Public Module youku
     Const crypt As Integer = &HA55AA5A5
     Const rndsource As String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ/\:._-1234567890"
-    Sub test(url As String, Optional pass As String = "")
+    Const type As String = "flv"
+    Function getVideoUrlAndInfo(url As String, Optional pass As String = "") As Hashtable
         Dim u As String = String.Format("http://v.youku.com/player/getPlayList/VideoIDS/{0}/timezone/+09/version/5/source/video?n=3&ran=3915&password={1}", Text.RegularExpressions.Regex.Match(url, "(?<=http://v.youku.com/v_show/id_).+(?=\.html)").Value, pass)
         Dim w As New Net.WebClient
         Dim j As Linq.JObject = Linq.JObject.Parse(w.DownloadString(u))
         'TODO
-        Dim key1, key2 As Int64
-        Dim K As String
-        Dim seed As Integer
+        Dim key1 As Int64
+        Dim key2 As String = ""
+        Dim final As String
+        Dim time, K, seed As String
+
+        Dim title As String = ""
+
+        Dim hash = j.SelectToken("data[0].streamfileids").Item(type).ToString
         With j.SelectToken("data[0]")
-            key1 = (crypt And Convert.ToInt32(.Item("key1").ToString, 16))
-            key2 = Convert.ToInt64(.Item("key2").ToString, 16)
-            K = Convert.ToString(key2 + key1, 16)
+            title = .Item("title").ToString
+            With j.SelectToken("data[0].segs." + type + "[0]")
+                K = .Item("k").ToString
+            End With
+            key1 = (crypt Xor Convert.ToInt32(.Item("key1").ToString, 16))
+            key2 = .Item("key2").ToString()
+            final = key2 & Convert.ToString(key1, 16)
 
-            seed = .Value(Of Integer)("seed")
-            seed = (seed * 211 + 30031) And &HFFFF
-            Dim hash = .SelectToken("data[0].streamfileids").Value(Of String)("flv").Split("*"c)
+            seed = .Value(Of String)("seed")
             Dim stlen As Integer = rndsource.Length
+            Dim dc As List(Of String) = Shuffle(seed)
+            hash = DecryptId(hash, dc)
+            time = SessionId()
         End With
-
-    End Sub
-    Public Function Shuffle(ByRef aSeed As [String]) As List(Of String)
+        u = " http://f.youku.com/player/getFlvPath/sid/" & time & "/st/" & 0 & "/fileid/" & hash & "?K=" & K & "&hd=1&myp=0&ts=" & j.SelectToken("data[0].segs.flv[0]").Item("seconds").ToString
+        Dim r As New Hashtable From {{"url", u}, {"title", title}, {"type", type}}
+        Return r
+    End Function
+    Function Shuffle(ByRef aSeed As [String]) As List(Of String)
         ' Modified Fisher-Yates shuffle
         ' http://en.wikipedia.org/wiki/Fisher-Yates_shuffle
 
@@ -46,7 +61,7 @@ Public Module youku
 
         Return theShuffle
     End Function
-    Public Function DecryptId(ByRef aEncryptedId As [String], ByRef aDecryptor As List(Of String)) As [String]
+    Function DecryptId(ByRef aEncryptedId As [String], ByRef aDecryptor As List(Of String)) As [String]
         Dim theId As String = ""
         Dim theChars As String() = aEncryptedId.Split("*"c)
         For Each theChar As String In theChars
@@ -63,7 +78,7 @@ Public Module youku
 
         Return theId
     End Function
-    Public Function SessionId() As [String]
+    Function SessionId() As [String]
         Dim t As DateTime = DateTime.Now
         Dim theTimeSpan As TimeSpan = (DateTime.UtcNow - New DateTime(1970, 1, 1, 0, 0, 0))
         Dim theUnixTime As Double = theTimeSpan.TotalSeconds

@@ -231,11 +231,20 @@ Class MainWindow
         If String.IsNullOrEmpty(ext) Then atdl(url) : Return
     End Sub
     Private Sub ykdl(url As String)
-        youku.test(url)
-
+        Dim param As UriCookiePair = yk_dl.getDownloadParam(url)
+        Dim ctrl_Inst As New dlqueue
+        Dim saveto As String = My.Settings.Savepath + param.VideoInfo + "." + param.sourceext
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, param.VideoInfo)
+        ctrl_Inst.start()
     End Sub
     Private Sub ykdl(url As String, ext As String)
         If String.IsNullOrEmpty(ext) Then ykdl(url) : Return
+        Dim param As UriCookiePair = yk_dl.getDownloadParam(url)
+        Dim ctrl_Inst As New dlqueue
+        Dim saveto As String = My.Settings.Savepath + param.VideoInfo + "." + param.sourceext
+        Dim output As String = My.Settings.Savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, param.VideoInfo, "", getlinestr(ext, saveto, output))
+        ctrl_Inst.start()
     End Sub
 
 #Region "録画"

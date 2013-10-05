@@ -61,9 +61,11 @@ Public Class dlqueue
 #Region "メイン"
     Private Sub Proc(ByVal Url As Uri, ByVal dst As String, Optional ByVal ck As String = "", Optional ByVal rf As String = "")
         resume_req = CType(Net.WebRequest.Create(info.url), Net.HttpWebRequest)
-        Dim cc As New Net.CookieContainer
-        resume_req.CookieContainer = cc
-        cc.SetCookies(info.url, info.ck)
+        If Not String.IsNullOrEmpty(info.ck) Then
+            Dim cc As New Net.CookieContainer
+            resume_req.CookieContainer = cc
+            cc.SetCookies(info.url, info.ck)
+        End If
         ReqDisposeProvider = setOperation()
     End Sub
     Sub Oncompleted()

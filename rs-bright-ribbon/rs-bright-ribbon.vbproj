@@ -142,6 +142,7 @@
     <Compile Include="rsun_loadconvertCfg.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Startuppath.vb" />
+    <Compile Include="yk_dl.vb" />
     <Compile Include="Zero_core.xaml.vb">
       <DependentUpon>Zero_core.xaml</DependentUpon>
     </Compile>
