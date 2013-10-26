@@ -11,7 +11,8 @@ Class MainWindow
         Youtube
         Ustream
         Anitube
-        youku
+        Youku
+        Pandoratv
     End Enum
 
 #Region "イベントハンドラ"
@@ -25,21 +26,26 @@ Class MainWindow
                 ustdl(Urlbox.Text)
             Case vServiceKind.Anitube
 
-            Case vServiceKind.youku
+            Case vServiceKind.Pandoratv
+                ptdl(Urlbox.Text)
+            Case vServiceKind.Youku
                 ykdl(Urlbox.Text)
         End Select
     End Sub
     Private Sub RibbonTextBox_TextChanged(sender As Object, e As TextChangedEventArgs)
-        If Regex.IsMatch(Urlbox.Text, "http://(www\.)?youtube\.com/watch\?.*") OrElse Regex.IsMatch(Urlbox.Text, "http://youtu\.be/\w+") Then
+        Dim ut As String = Urlbox.Text
+        If Regex.IsMatch(ut, "http://(www\.)?youtube\.com/watch\?.*") OrElse Regex.IsMatch(ut, "http://youtu\.be/\w+") Then
             dlbutton.Tag = vServiceKind.Youtube
-        ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
+        ElseIf Regex.IsMatch(ut, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
             dlbutton.Tag = vServiceKind.Niconico
-        ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?ustream.tv/recorded/.*") Then
+        ElseIf Regex.IsMatch(ut, "http://(www\.)?ustream.tv/recorded/.*") Then
             dlbutton.Tag = vServiceKind.Ustream
-        ElseIf Regex.IsMatch(Urlbox.Text, "http://(www\.)?anitube.se/video/\d{5}/") Then
+        ElseIf Regex.IsMatch(ut, "http://(www\.)?anitube.se/video/\d{5}/") Then
             dlbutton.Tag = vServiceKind.Anitube
-        ElseIf Regex.IsMatch(Urlbox.Text, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
-            dlbutton.Tag = vServiceKind.youku
+        ElseIf Regex.IsMatch(ut, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
+            dlbutton.Tag = vServiceKind.Youku
+        ElseIf ut.Contains("channel.pandora.tv/channel/video.ptv") Then
+            dlbutton.Tag = vServiceKind.Pandoratv
         Else
             dlbutton.Tag = Nothing
             dlbutton.IsEnabled = False
@@ -61,7 +67,9 @@ Class MainWindow
                 ncdl(Urlbox.Text, CStr(ext))
             Case vServiceKind.Anitube
 
-            Case vServiceKind.youku
+            Case vServiceKind.Pandoratv
+                'Todo
+            Case vServiceKind.Youku
                 ykdl(Urlbox.Text, CStr(ext))
         End Select
         e.Handled = True
@@ -135,14 +143,17 @@ Class MainWindow
     End Sub
     Private Sub currrenturichanged() Handles uiCtl.UrlOfCurrentTabChanged
         Dim attribute As vServiceKind
-        If Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?youtube\.com/watch\?.*") OrElse Regex.IsMatch(Urlbox.Text, "http://youtu\.be/\w+") Then
+        Dim ut As String = uiCtl.UrlOfCurrentTab
+        If Regex.IsMatch(ut, "http://(www\.)?youtube\.com/watch\?.*") OrElse Regex.IsMatch(Urlbox.Text, "http://youtu\.be/\w+") Then
             attribute = vServiceKind.Youtube
-        ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
+        ElseIf Regex.IsMatch(ut, "http://(www\.)?nicovideo\.jp/watch/[sn][mo]\d+") Then
             attribute = vServiceKind.Niconico
-        ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "http://(www\.)?anitube.se/video/\d{5}/") Then
+        ElseIf Regex.IsMatch(ut, "http://(www\.)?anitube.se/video/\d{5}/") Then
             attribute = vServiceKind.Anitube
-        ElseIf Regex.IsMatch(uiCtl.UrlOfCurrentTab, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
-            attribute = vServiceKind.youku
+        ElseIf Regex.IsMatch(ut, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
+            attribute = vServiceKind.Youku
+        ElseIf ut.Contains("channel.pandora.tv/channel/video.ptv") Then
+            dlbutton.Tag = vServiceKind.Pandoratv
         Else
             attribute = vServiceKind.No
         End If
@@ -189,7 +200,7 @@ Class MainWindow
             End If
             Dim saveto As String = getStartupPath() + "\temp\" + (System.Text.RegularExpressions.Regex.Match(url, "(?<=v=)[\w-]+").Value) + "." + UriCookiePair.getExtention(fmt)
             Dim output As String = My.Settings.Savepath + IO.Path.GetFileNameWithoutExtension(saveto) + "." + ext
-            'TODO fmt値 Uris(18)ってとこ
+
             ctrl_Inst.SetInfo(New Uri(param.Uris(fmt)), saveto, param.VideoInfo.Title, param.cookie, param.VideoInfo.Thumbnails.Item(0).Url, getlinestr(ext, saveto, output))
             ctrl_Inst.start()
         Catch ex As Net.WebException
@@ -305,7 +316,13 @@ Class MainWindow
                 ncdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
             Case vServiceKind.Youtube
                 ytdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
-            Case vServiceKind.youku
+            Case vServiceKind.Ustream
+                ustdl(Urlbox.Text)
+            Case vServiceKind.Anitube
+
+            Case vServiceKind.Pandoratv
+                ptdl(Urlbox.Text)
+            Case vServiceKind.Youku
                 ykdl(DirectCast(cGroup.Tag, contextattributecollection).uri, e.Source.Tag)
         End Select
         e.Handled = True
@@ -332,4 +349,16 @@ Class MainWindow
         Dim fr As New fRtmp
         fr.Show()
     End Sub
+
+    REM pandoratvテスト
+    Private Sub ptdl(url As String)
+        Dim cc As New Net.CookieContainer
+        Dim param As UriCookiePair = ptv.getFlvUrlSet(url)
+        Stop
+        Dim ctrl_Inst As New dlqueue
+        Dim saveto As String = My.Settings.Savepath + param.VideoInfo + "." + param.sourceext
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, param.VideoInfo)
+        ctrl_Inst.start()
+    End Sub
+
 End Class

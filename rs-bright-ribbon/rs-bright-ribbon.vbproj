@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="m_rtmpctrl.vb" />
     <Compile Include="nc_dl.vb" />
+    <Compile Include="ptv.vb" />
     <Compile Include="rsun_loadconvertCfg.vb" />
     <Compile Include="Settings.vb" />
     <Compile Include="Startuppath.vb" />

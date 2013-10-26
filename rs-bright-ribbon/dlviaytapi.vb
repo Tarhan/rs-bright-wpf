@@ -43,12 +43,12 @@ Module downloadViaGDataapi
 
     'Downloader
 
-    Structure UriCookiePair
-        Dim Uris As SortedDictionary(Of Integer, String)
-        Dim cookie As String
-        Dim VideoInfo As Object
-        Dim sourceext As String
-        Dim thumbUrl As String
+    Class UriCookiePair
+        Public Uris As SortedDictionary(Of Integer, String)
+        Public cookie As String
+        Public VideoInfo As Object = "VideoInfo: NotImpl_"
+        Public sourceext As String
+        Public thumbUrl As String
         Public Function getFmtIdWhichContains() As List(Of Integer)
             Dim l As New List(Of Integer)
             For Each key As Integer In Me.Uris.Keys
@@ -56,10 +56,13 @@ Module downloadViaGDataapi
             Next
             Return l
         End Function
+        Public Shared Function createSingleTarget(targetUri As String, ck_sourceContainer As Net.CookieContainer, Optional ext As String = "flv") As UriCookiePair
+            Return New UriCookiePair With {.Uris = New SortedDictionary(Of Integer, String) From {{0, targetUri}}, .sourceext = ext, .cookie = ck_sourceContainer.GetCookieHeader(New Uri(targetUri))}
+        End Function
         Public Shared Function getExtention(Fmt As Integer) As String
             Return CType(getResolution().Item(CStr(Fmt)), JObject).Item("format")
         End Function
-    End Structure
+    End Class
     Public Function getDownloadParam(Url As String) As UriCookiePair
         Dim dic As SortedDictionary(Of Integer, String) = libSpirit.html.yt(Url)
         Dim cookie As String = dic(-1)
