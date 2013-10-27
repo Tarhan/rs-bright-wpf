@@ -1,4 +1,4 @@
-﻿Option Strict Off
+ Option Strict Off
 Imports Newtonsoft.Json
 Imports System.Net
 Imports System.Text.RegularExpressions
@@ -147,7 +147,7 @@ Public Module pandoratv
         req.CookieContainer = cc
         req.GetResponse.Close()
 
-        Return String.Format("http://trans-idx.pandora.tv/flvemx2.pandora.tv/sd/_user/{0}.flv@key1={1}&key2={2}" + "&ft=FC&country=JP", flv_url, key1, key2)
+        Return String.Format("http://trans-idx.pandora.tv/flvemx2.pandora.tv/sd/_user/{0}@key1={1}&key2={2}" + "&ft=FC&country=JP", flv_url, key1, key2)
     End Function
 
 End Module
