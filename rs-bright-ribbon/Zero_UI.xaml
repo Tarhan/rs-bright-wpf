@@ -7,7 +7,8 @@
              mc:Ignorable="d" d:DesignWidth="450" d:DesignHeight="385" 
              >
     <me:ExtendedTabItem CurrentUriStateChanged="ExtendedTabItem_CurrentUriStateChanged"/>
-         <!--AddTab Method-->
+        
+    <!--AddTab Method-->
     <TabItem x:Name="addtab" Header="+">
         <TabItem.Resources>
             <ControlTemplate x:Key="templateTabItemButton5" TargetType="Button">

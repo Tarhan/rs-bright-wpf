@@ -343,11 +343,13 @@ Class MainWindow
     Private Sub dbg(sender As Object, e As RoutedEventArgs)
         If tb.Text Like "http://www.ustream.tv/channel/*" Then
             ustRecord(tb.Text)
+            Dim fr As New fRtmp
+            fr.Show()
         Else
             MsgBox("URL形式が違います")
+            MsgBox("enter pandora test")
+
         End If
-        Dim fr As New fRtmp
-        fr.Show()
     End Sub
 
     REM pandoratvテスト
@@ -357,7 +359,7 @@ Class MainWindow
         Stop
         Dim ctrl_Inst As New dlqueue
         Dim saveto As String = My.Settings.Savepath + param.VideoInfo + "." + param.sourceext
-        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, param.VideoInfo)
+        ctrl_Inst.SetInfo(New Uri(param.Uris(0)), saveto, param.VideoInfo, param.cookie)
         ctrl_Inst.start()
     End Sub
 

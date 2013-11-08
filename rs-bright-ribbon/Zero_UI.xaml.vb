@@ -93,6 +93,7 @@ Public Class PageCloseEventArgs
     Public Sub New(routedEvent As RoutedEvent, originalSource As [Object], closedItem As ExtendedTabItem)
         MyBase.New(routedEvent, originalSource)
         _closedItem = closedItem
+        DirectCast(closedItem.Content, Zero_core).b.Dispose()
     End Sub
 
     ''' <summary>

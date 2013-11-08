@@ -1,17 +1,18 @@
- Option Strict Off
+Option Strict Off
+Option Infer On
 Imports Newtonsoft.Json
 Imports System.Net
 Imports System.Text.RegularExpressions
 
 Public Module pandoratv
-    Private Function mkKey(firstkey As String) As String
+    Public Function mkKey(firstkey As String) As String
         Dim key1 As String = firstkey
         Dim key2 As String = ""
 
         Dim TA, RMA, VA As New ArrayList
 
-        Dim RA As ArrayList = ArrayList.Repeat("", 4)
-        Dim RAO As ArrayList = ArrayList.Repeat("", 4)
+        Dim RA As New ArrayList
+        Dim RAO As New ArrayList
 
         Dim ranKey As Object
 
@@ -63,22 +64,24 @@ Public Module pandoratv
         For i As Byte = 0 To (length - 1)
             Randomize()
             Dim rndNum = Math.Truncate(Rnd() * length)
-            Dim taihi = RMA(i)
-            RMA(i) = RMA(rndNum)
-            RMA(rndNum) = taihi
+            Dim taihi = CType(RMA(i), ArrayList).Clone
+            RMA(i) = CType(RMA(rndNum), ArrayList).Clone
+            Dim dst As ArrayList = CType(RMA(rndNum), ArrayList)
+            dst.Clear()
+            dst.AddRange(taihi)
         Next
         Dim order As Object
         For i As Byte = 0 To (length - 1)
             order += RMA(i)(1)
         Next
-        RAO(2) = RMA(0)(0) & RMA(1)(0)
-        RAO(3) = RMA(2)(0) & RMA(3)(0)
-        RA(2) = "0x" & RAO(2)
-        RA(3) = "0x" & RAO(3)
         order = Convert.ToInt32(order, 2)
         ranKey = Hex(order Xor &HA7)
-        RA(1) = "0x" & ranKey
-        RAO(1) = ranKey
+        RA.Insert(1, "0x" & ranKey)
+        RAO.Insert(1, ranKey)
+        RAO.Insert(2, RMA(0)(0) & RMA(1)(0))
+        RAO.Insert(3, RMA(2)(0) & RMA(3)(0))
+        RA.Insert(2, "0x" & RAO(2))
+        RA.Insert(3, "0x" & RAO(3))
 
         'setVertical
         For j As Byte = 0 To (retsu - 1)
@@ -93,7 +96,7 @@ Public Module pandoratv
         'setHorizontal
         For j As Byte = 0 To (TA.Count - 1)
             Dim preH As Int32 = Convert.ToInt32(TA(j)(0), 16) Xor Convert.ToInt32(TA(j)(1), 16)
-            For i As Byte = 2 To retsu - 1
+            For i As Byte = 2 To (retsu - 1)
                 preH = preH Xor Convert.ToInt32(TA(j)(i), 16)
             Next
             Dim H As Int32 = preH Xor Convert.ToInt32("0x" + RAO(j Mod 4), 16)
@@ -119,7 +122,8 @@ Public Module pandoratv
 
     Private Function mkDuration(min As Integer, max As Integer) As Int32
         Randomize()
-        Return Math.Truncate(Rnd() * (max - min)) + min
+        Dim r As Int32 = Math.Truncate(Rnd() * (max - min)) + min
+        Return r
     End Function
 
     Private Function keta(str As String, v_keta As Integer) As String
@@ -133,21 +137,30 @@ Public Module pandoratv
     Public Function getFlvUrl(pageUrl As String, ByRef cc As CookieContainer) As String
         If cc Is Nothing Then cc = New CookieContainer
         Dim base As New Uri(pageUrl)
-        Dim wb As New WebClient
-
-        wb.QueryString = New Specialized.NameValueCollection From {{"url", ""}, {"prgid", Regex.Match(base.Query, "(?<=prgid=)\w+").Value}, {"userid", Regex.Match(base.Query, "(?<=ch_userid=)\w+").Value}}
-        Dim first As Linq.JObject = Linq.JObject.Parse(wb.DownloadString("http://flvr.pandora.tv/flv2pan/embed.dll/info"))
-        Dim second As Linq.JObject = Linq.JObject.Parse(wb.DownloadString("http://channel.pandora.tv/channel/cryptKey.ptv?"))
-        Dim flv_url, key1, key2 As String
-        flv_url = first("flv_url").ToString
-        key1 = second("encrypt_key")
-        key2 = pandoratv.mkKey(key1)
-
+        Dim QueryString As String = "?prgid=" & Regex.Match(base.Query, "(?<=prgid=)\w+").Value & "&ch_userid=" & Regex.Match(base.Query, "(?<=ch_userid=)\w+").Value & "&HIT=off&player=channel&count=on&dummy=" & CStr(Math.Floor(Rnd() * 100000))
         Dim req As HttpWebRequest = WebRequest.CreateDefault(base)
         req.CookieContainer = cc
         req.GetResponse.Close()
+        req = WebRequest.Create("http://channel.pandora.tv/video/php/php.player.query.php" + QueryString)
+        req.CookieContainer = cc
+        Dim str As String
+        Using s As New IO.StreamReader(req.GetResponse.GetResponseStream)
+            str = s.ReadToEnd
+        End Using
 
-        Return String.Format("http://trans-idx.pandora.tv/flvemx2.pandora.tv/sd/_user/{0}@key1={1}&key2={2}" + "&ft=FC&country=JP", flv_url, key1, key2)
+        Dim first As Linq.JObject = Linq.JObject.Parse(str)
+        Dim flv_url, key1, key2 As String
+        flv_url = first("vodUrl").ToString.Replace("http://", "")
+        req = WebRequest.Create("http://channel.pandora.tv/channel/cryptKey.ptv?dummy=" & CStr(Rnd()))
+        req.CookieContainer = cc
+        Using s As New IO.StreamReader(req.GetResponse.GetResponseStream)
+            str = s.ReadToEnd
+        End Using
+        Dim second As Linq.JObject = Linq.JObject.Parse(str)
+        key1 = second("encrypt_key")
+        key2 = pandoratv.mkKey(key1)
+
+        Return String.Format("http://trans-idx.pandora.tv/{0}?key1={1}&key2={2}" + "&ft=FC&class=normal&country=JP&method=differ", flv_url, key1, key2)
     End Function
 
 End Module
