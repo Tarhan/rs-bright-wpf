@@ -79,7 +79,7 @@ Module downloadViaGDataapi
         For Each Id As String In getPlaylistVideoIdList(listId)
             l.Add(getDownloadParam(New VideoId(Id)))
             System.Threading.Thread.Sleep(300)
-            Debug.WriteLine("Processed")
+            Debug.WriteLine("Proceed")
         Next
         Return l
     End Function

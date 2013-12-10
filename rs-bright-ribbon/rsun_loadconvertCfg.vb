@@ -2,12 +2,12 @@
 Module rs_loadconvertCfg
     Dim _xml As XmlDocument
     Private Sub Main()
-        If chkExist() AndAlso _xml Is Nothing Then
+        If chk_CfgExist() AndAlso _xml Is Nothing Then
             _xml = New XmlDocument
             _xml.Load(New IO.FileStream(getStartupPath() + "\config.xml", IO.FileMode.Open, IO.FileAccess.Read, IO.FileShare.Read))
         End If
     End Sub
-    Private Function chkExist() As Boolean
+    Private Function chk_CfgExist() As Boolean
         Return IO.File.Exists(getStartupPath() + "\config.xml")
     End Function
 

@@ -126,7 +126,7 @@ Public Class dlqueue
                                                 Dispatcher.Invoke(Sub()
                                                                       kbpers.Text = String.Format("{0} kB/s", getCurrentSpeedkb(p.BytesReceived))
                                                                       Dim t As String = CStr(Format(getLeftTime(data.Count, latestrange + p.TotalBytesToReceive), "0.0"))
-                                                                      If 3.5 < t <= 6 Then t = "数"
+                                                                      'If 3.5 < t And t <= 6 Then t = "数"
                                                                       Nokori.Text = String.Format("{0}秒後...", t)
                                                                   End Sub)
                                                 Return list

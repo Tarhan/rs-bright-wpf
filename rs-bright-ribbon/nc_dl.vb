@@ -1,6 +1,4 @@
 ﻿Imports libSpirit.html
-Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Linq
 Imports System.Xml
 
 Module nc_dl

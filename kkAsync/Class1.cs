@@ -56,7 +56,7 @@ namespace AsynchronousExtensions
 
                 Observable.FromAsyncPattern<HttpWebResponse>(request.BeginGetResponse, ar =>
                 {
-                    var res = request.EndGetResponse(ar);
+                   var res = request.EndGetResponse(ar);
                     if (disposable.IsDisposed) res.Close();
                     return (HttpWebResponse)res;
                 })().Subscribe(observer);

@@ -152,7 +152,7 @@ Class MainWindow
             attribute = vServiceKind.Anitube
         ElseIf Regex.IsMatch(ut, "(?<=http://v.youku.com/v_show/id_)\w+(?=\.html)") Then
             attribute = vServiceKind.Youku
-        ElseIf ut.Contains("channel.pandora.tv/channel/video.ptv") Then
+        ElseIf ut.Contains(".channel.pandora.tv/channel/video.ptv") Then
             dlbutton.Tag = vServiceKind.Pandoratv
         Else
             attribute = vServiceKind.No

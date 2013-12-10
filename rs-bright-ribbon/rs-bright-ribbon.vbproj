@@ -141,6 +141,7 @@
     <Compile Include="fRtmpContentBase.xaml.vb">
       <DependentUpon>fRtmpContentBase.xaml</DependentUpon>
     </Compile>
+    <Compile Include="History.vb" />
     <Compile Include="MyWrapPanel.xaml.vb">
       <DependentUpon>MyWrapPanel.xaml</DependentUpon>
     </Compile>

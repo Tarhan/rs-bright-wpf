@@ -10,8 +10,8 @@
     </UserControl.ContextMenu>
     <Grid Margin="8,2,10,1">
         <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="10*"/>
-            <RowDefinition Height="6*"/>
             <RowDefinition Height="6*"/>
             <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
@@ -20,9 +20,7 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <Image x:Name="thumb" Grid.RowSpan="3" Source="Image1.png"/>
-        <TextBlock x:Name="title" TextWrapping="Wrap" Text="Title" Grid.Column="1" FontWeight="Bold" FontSize="15" FontFamily="Arial" Grid.RowSpan="1
-                   "/>
-        <Button Content="再生(アイコン)" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" FontSize="10" Margin="0,2,8,2" VerticalAlignment="Center" Grid.RowSpan="2"/>
-        <TextBlock x:Name="path" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" Grid.RowSpan="2" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="9.5"/>
+        <TextBlock x:Name="path" TextWrapping="Wrap" Text="pathName" Grid.Column="1" FontWeight="Bold" FontSize="15" FontFamily="Arial" Grid.RowSpan="1" Grid.Row="1"/>
+        <Button Content="Play" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" FontSize="10" Margin="0,2,8,2" VerticalAlignment="Center" Grid.RowSpan="2" Click="Button_Click"/>
     </Grid>
 </UserControl>

@@ -1,7 +1,10 @@
 ﻿Public Class DownloadedQueue
-    Sub New(title As String, path As String)
+    Sub New(path As String)
         InitializeComponent()
-        Me.title.Text = title
         Me.path.Text = path
+    End Sub
+
+    Private Sub Button_Click(sender As Object, e As RoutedEventArgs)
+
     End Sub
 End Class

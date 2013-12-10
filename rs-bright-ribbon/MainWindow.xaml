@@ -178,35 +178,15 @@
                 <ColumnDefinition Width="25"/>
             </Grid.ColumnDefinitions>
             <TabControl TabStripPlacement="Bottom" FontSize="8.666" SelectionChanged="TabControl_SelectionChanged">
-                <TabItem Header="ダウンロード中" Background="#FFE5E5E5">
-                    <me:MyWrapPanel x:Name="Queueboard">
-                        <me:MyWrapPanel.Background>
-                            <RadialGradientBrush>
-                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
-                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
-                            </RadialGradientBrush>
-                        </me:MyWrapPanel.Background>
-                    </me:MyWrapPanel>
+                <TabItem Header="ダウンロード中">
+                    <me:MyWrapPanel x:Name="Queueboard"/>
                 </TabItem>
                 <TabItem Header="ダウンロード済" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60">
-                    <me:MyWrapPanel>
-                        <me:MyWrapPanel.Background>
-                            <RadialGradientBrush>
-                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
-                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
-                            </RadialGradientBrush>
-                        </me:MyWrapPanel.Background>
-                    </me:MyWrapPanel>
+                    <me:MyWrapPanel/>
                 </TabItem>
                 <TabItem Header="録画" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60">
                     <me:MyWrapPanel>
-                        <me:MyWrapPanel.Background>
-                            <RadialGradientBrush>
-                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1"/>
-                                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}" Offset="0.188"/>
-                            </RadialGradientBrush>
-                        </me:MyWrapPanel.Background>
-                        <Button Content="Button" Click="dbg"/>
+                      <Button Content="Button" Click="dbg"/>
                     </me:MyWrapPanel>
                 </TabItem>
             </TabControl>
